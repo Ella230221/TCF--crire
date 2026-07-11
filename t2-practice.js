@@ -46,6 +46,11 @@ expressionToggle?.addEventListener('click', () => {
   expressionToggle.setAttribute('aria-label', collapsed ? '展开表达积累栏目' : '收起表达积累栏目');
 });
 
+function positionExpressionToggle() {
+  const expressionLink = document.querySelector('.t2-main-link[href="#expression-library"]');
+  if (expressionToggle && expressionLink) expressionToggle.style.top = `${expressionLink.offsetTop + 7}px`;
+}
+
 function getConversationLines() { return questionsEditor.value.split(/\n+/).map(line => line.trim()).filter(Boolean); }
 function getQuestions() { return getConversationLines().filter(line => /[?？]/.test(line)); }
 function getInteractionLines() { return getConversationLines().filter(line => !/[?？]/.test(line)); }
@@ -113,14 +118,38 @@ function renderPracticeLibrary() {
   const container = document.getElementById('savedPracticeList');
   const mode = document.getElementById('practiceSort').value;
   const items = [...practiceLibrary].sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'zh') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
+  renderSavedPracticeNav(items);
   if (!items.length) { container.innerHTML = '<div class="library-empty">还没有保存的真题。完成第一次评分后会自动出现在这里。</div>'; return; }
   container.innerHTML = items.map(item => `<article class="saved-practice-card ${item.favorite?'is-favorite':''}" data-id="${item.id}"><div class="saved-card-top"><h4>${escapePracticeHtml(item.title)}</h4><button class="favorite-button" type="button" title="收藏">★</button></div><p>${new Date(item.updatedAt).toLocaleString('zh-CN')} · ${item.questions.split(/\n+/).filter(Boolean).length} 句对话</p>${item.score==null?'':`<span class="saved-score">${item.score} 分</span>`}<div class="saved-card-actions"><button class="load-practice" type="button">载入练习</button><button class="delete-practice" type="button">删除</button></div></article>`).join('');
   container.querySelectorAll('.saved-practice-card').forEach(card => {
     const item = practiceLibrary.find(entry => entry.id === card.dataset.id);
-    card.querySelector('.load-practice').addEventListener('click', () => { topicZh.value=item.zh; topicFr.value=item.fr; questionsEditor.value=item.questions; lastPracticeScore=item.score; updateQuestionCount(); document.getElementById('t2-real-practice').scrollIntoView({behavior:'smooth'}); });
+    card.querySelector('.load-practice').addEventListener('click', () => loadSavedPractice(item));
     card.querySelector('.favorite-button').addEventListener('click', () => { item.favorite=!item.favorite; persistPracticeLibrary(); renderPracticeLibrary(); });
     card.querySelector('.delete-practice').addEventListener('click', () => { if(confirm('确定删除这条真题练习吗？')) { practiceLibrary=practiceLibrary.filter(entry=>entry.id!==item.id); persistPracticeLibrary(); renderPracticeLibrary(); } });
   });
+}
+
+function loadSavedPractice(item) {
+  topicZh.value = item.zh;
+  topicFr.value = item.fr;
+  questionsEditor.value = item.questions;
+  lastPracticeScore = item.score;
+  updateQuestionCount();
+  document.getElementById('t2-real-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderSavedPracticeNav(items = practiceLibrary) {
+  const nav = document.getElementById('savedPracticeNav');
+  nav.hidden = !items.length;
+  if (!items.length) { nav.innerHTML = ''; positionExpressionToggle(); return; }
+  nav.innerHTML = `<div class="saved-practice-nav-title">已保存真题</div>${items.map(item => `<button type="button" data-id="${item.id}" class="${item.favorite?'is-favorite':''}" title="${escapePracticeHtml(item.title)}">${escapePracticeHtml(item.title)}${item.score==null?'':` <small>${item.score}</small>`}</button>`).join('')}`;
+  nav.querySelectorAll('button[data-id]').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = practiceLibrary.find(entry => entry.id === button.dataset.id);
+      if (item) loadSavedPractice(item);
+    });
+  });
+  positionExpressionToggle();
 }
 
 function buildGptPrompt() {
