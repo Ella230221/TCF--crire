@@ -426,7 +426,21 @@
             <details class="gpt-settings"><summary>GPT 安全代理设置</summary><label for="gptEndpoint">代理地址</label><input id="gptEndpoint" type="url" placeholder="https://你的服务/api/evaluate-t2"><p>不要在此页面输入 API Key。密钥应保存在服务端的 <code>OPENAI_API_KEY</code> 环境变量中。</p></details>
           </div>
           <aside class="practice-reference">
-            <h3>参考提示</h3>
+            <details class="flow-reference" open>
+              <summary>提问流程参考</summary>
+              <div class="flow-reference-content">
+                <h4>① Ouverture（开场）</h4><p><b>熟人：</b> Bonjour ! J'espère que vous allez bien.<br><b>陌生人：</b> Bonjour ! Excusez-moi de vous déranger.<br>Vous auriez un moment pour me renseigner, s'il vous plaît ?</p>
+                <h4>② Présenter le contexte</h4><p>J'ai entendu dire que... / J'ai appris que...<br>C'est pourquoi je souhaiterais vous poser quelques questions afin d'y voir plus clair / d'en savoir plus.</p>
+                <h4>③ Première question</h4><p>Tout d'abord, j'aimerais vous poser une première question concernant...<br>La raison pour laquelle je vous pose cette question est que...</p>
+                <h4>④ Réagir et relancer</h4><p>D'accord, je comprends. / Je vois. Merci pour cette précision.<br>Dans ce cas, je me demandais si... / comment... / pourquoi...<br>Cela m'amène à une autre question.<br>Puisque vous évoquez ce point...<br>Justement, à ce sujet...<br>Concrètement, comment cela se passe-t-il ?<br>Pourriez-vous m'en dire un peu plus à ce sujet ?</p>
+                <h4>⑤ Deuxième question</h4><p>C'est très utile à savoir, j'en tiendrai compte.<br>Par ailleurs, pourriez-vous m'éclairer sur... ?<br>Parce que j'aurais besoin de...</p>
+                <h4>⑥ Exprimer un besoin</h4><p>Avant de prendre une décision, j'aimerais encore vérifier quelques détails.<br>J'aimerais m'assurer que...<br>Il est important pour moi de savoir si...</p>
+                <h4>⑦ Vérifier sa compréhension</h4><p>Si j'ai bien compris...<br>Autrement dit...<br>Est-ce que cela signifie que... ?</p>
+                <h4>⑧ Demander une recommandation</h4><p>Selon vous, quelle option conviendrait le mieux à ma situation ?<br>Je vois, merci pour votre conseil.<br>Je vais en tenir compte avant de prendre ma décision.</p>
+                <h4>⑨ Conclure（结束）</h4><p>Merci beaucoup pour toutes ces informations.<br>Grâce à vos explications, j'y vois beaucoup plus clair.<br>Je pense avoir toutes les informations dont j'avais besoin.<br>Je vous souhaite une excellente journée. Au revoir !</p>
+              </div>
+            </details>
+            <h3 class="evaluation-heading">评分与修改建议</h3>
             <div class="reference-empty" id="referenceHints">提交评分后，这里会显示：<br>• 总分与切题度<br>• 每个问题的语法检查<br>• 更地道的法语改写<br>• 尚未覆盖的追问角度</div>
           </aside>
         </div>
