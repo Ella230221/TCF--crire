@@ -1,0 +1,110 @@
+:root {
+  --studio-blue: #2563eb;
+  --studio-blue-dark: #1d4ed8;
+  --studio-ink: #172033;
+  --studio-muted: #64748b;
+  --studio-line: #e2e8f0;
+  --studio-paper: #f5f7fb;
+  --studio-surface: #ffffff;
+  --studio-radius: 16px;
+  --studio-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+}
+
+html { scroll-behavior: smooth; }
+body { color: var(--studio-ink); background: var(--studio-paper); }
+
+.site-switcher {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2000 !important;
+  min-height: 62px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 9px max(16px, calc((100vw - 1380px) / 2)) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid var(--studio-line);
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07) !important;
+  backdrop-filter: blur(14px);
+}
+
+.site-switcher::before {
+  content: "TCF Studio";
+  margin-right: auto;
+  padding: 0 12px;
+  color: var(--studio-blue);
+  font-size: 1.03rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.site-switcher::after {
+  content: "FR";
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.site-switcher a {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 15px !important;
+  color: #526077 !important;
+  background: transparent !important;
+  border: 1px solid transparent;
+  border-radius: 11px !important;
+  font-size: 0.92rem;
+  font-weight: 800 !important;
+  line-height: 1.2;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: 0.16s ease;
+}
+
+.site-switcher a:hover,
+.site-switcher a:focus-visible {
+  color: var(--studio-blue) !important;
+  background: #eff6ff !important;
+  border-color: #bfdbfe;
+  outline: none;
+}
+
+.site-switcher a.active {
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--studio-blue), var(--studio-blue-dark)) !important;
+  border-color: transparent;
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.23);
+}
+
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .site-switcher {
+    justify-content: flex-start !important;
+    min-height: 57px;
+    padding: 7px 9px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .site-switcher::-webkit-scrollbar { display: none; }
+  .site-switcher::before { content: "TCF"; margin-right: 2px; padding: 0 7px; }
+  .site-switcher::after { display: none; }
+  .site-switcher a { flex: none; min-height: 39px; padding: 8px 12px !important; font-size: 0.84rem; }
+}
+
+@media print { .site-switcher { display: none !important; } }
