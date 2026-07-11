@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modèle et questions - Webpage</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <h1>Modèle de réponse et questions</h1>
+      <p>Une page web structurée avec un modèle de phrases et des réponses organisées par question.</p>
+    </div>
+  </header>
+
+  <div class="share-card">
+    <div class="share-card__inner">
+      <h2>分享页面</h2>
+      <p>这个页面已经优化为移动端查看。将它上传到静态站点后，你和朋友都可以直接在手机上打开。</p>
+      <div class="share-card__actions">
+        <a class="writing-practice-link" href="writing.html">进入写作练习</a>
+        <button id="sharePageBtn" type="button">分享页面</button>
+        <button id="copyLinkBtn" type="button">复制链接</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebarNav">
+      <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="true" aria-label="收起导航">‹</button>
+      <h2>Navigation</h2>
+      <div class="annotation-controls">
+        <button id="highlightYellowBtn" type="button">黄色高亮</button>
+        <button id="highlightGreenBtn" type="button">绿色高亮</button>
+        <button id="noteBtn" type="button">批注</button>
+        <button id="clearHighlightsBtn" type="button">清除高亮</button>
+        <button id="clearNotesBtn" type="button">清除批注</button>
+        <div class="current-section">当前章节：<span id="currentSectionName">模版</span></div>
+      </div>
+      <ul>
+        <li class="nav-module"><a href="#modele">模版</a></li>
+        <li class="nav-module"><a href="#exemples-universels">万能例子</a></li>
+        <li class="nav-module nav-module--t3"><a href="#t3-oral">T3—oral</a><button id="t3NavToggle" class="nav-subtoggle" type="button" aria-expanded="true" aria-label="收起 T3—oral 题目">⌄</button>
+          <ul class="t3-question-list t3-category-list">
+            <li class="nav-category"><a href="#categorie-education">📚 Éducation（教育）</a><ul>
+              <li><a href="#etudes">Faut-il avoir fait de longues études pour réussir sa vie ?</a></li>
+              <li><a href="#trop-tard">Il n'est jamais trop tard pour apprendre.</a></li>
+              <li><a href="#education-maison">L'éducation à la maison est-elle une bonne solution ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-travail">💼 Travail（工作与职业）</a><ul>
+              <li><a href="#responsable">Tout le monde peut-il occuper des fonctions de responsable ?</a></li>
+              <li><a href="#travailler-etudier">Travailler et étudier en même temps est difficile.</a></li>
+              <li><a href="#salaire">Le salaire est-il la chose la plus importante dans un travail ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-famille">👨‍👩‍👧‍👦 Famille et relations humaines（家庭与人际关系）</a><ul>
+              <li><a href="#aides-sociales">Les aides sociales réduisent-elles la solidarité familiale ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-sante">❤️ Santé et bien-être（健康与幸福）</a><ul>
+              <li><a href="#medicaments">Est-il aujourd'hui impossible de vivre sans médicaments ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-technologie">💻 Technologie et numérique（科技与数字生活）</a><ul>
+              <li><a href="#reseaux-sociaux">Les parents doivent laisser leurs enfants utiliser les réseaux sociaux ?</a></li>
+              <li><a href="#telephone-ecole">L'utilisation du téléphone portable par les élèves à l'école.</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-societe">🌍 Société et environnement（社会与环境）</a><ul>
+              <li><a href="#integration-jeune">Est-il plus facile de s'intégrer dans un nouveau pays quand on est jeune ?</a></li>
+              <li><a href="#adaptation">Tout le monde est-il capable de s'adapter dans un pays étranger ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-argent">💰 Argent et consommation（金钱与消费）</a></li>
+            <li class="nav-category"><a href="#categorie-culture">🎭 Culture, loisirs et tourisme（文化、休闲与旅游）</a><ul>
+              <li><a href="#livres">Les livres sont-ils devenus inutiles aujourd'hui ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-mode-vie">🏙️ Mode de vie（生活方式）</a><ul>
+              <li><a href="#urbain-rural">Agréable pour les personnes âgées en milieu urbain ou rural ?</a></li>
+            </ul></li>
+            <li class="nav-category"><a href="#categorie-valeurs">⚖️ Valeurs et citoyenneté（价值观与公民责任）</a></li>
+          </ul>
+        </li>
+        <li class="nav-module"><a href="#corpus-logique">语料链</a></li>
+      </ul>
+      <div class="comments-panel">
+        <h3>批注列表</h3>
+        <div id="commentsList"></div>
+      </div>
+    </nav>
+
+    <main class="content">
+      <section id="modele" class="section collapsible-section">
+                <details open>
+          <summary><h2>1. 模版</h2></summary>
+        <p>Voici un modèle général pour structurer une réponse autour d'une question d'opinion.</p>
+
+        <div class="template-block">
+          <p>Si je comprends bien, il s'agit de savoir si...</p>
+
+          <h3>二选一</h3>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Pour ma part, je pense que <span class="fill-blue">[Sujet A]</span> et <span class="fill-blue">[Sujet B]</span> présentent tous deux des avantages. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+
+          <h3>优缺点</h3>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que <span class="fill-blue">[Sujet]</span> présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés à <span class="fill-blue">[Sujet]</span>. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+
+          <h3>多因素</h3>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que <span class="fill-blue">[Sujet]</span> présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+
+          <h3>个人</h3>
+          <p>Il serait intéressant de réfléchir à cette question. Si je devais en retenir quelques-unes, je choisirais <span class="fill-blue">[Sujet]</span>. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+
+          <p>Pour commencer, <span class="fill-blue">[Sujet]</span> constitue un véritable atout, car cela permet de <span class="fill-blue">[ ]</span>. En effet, cela favorise également <span class="fill-blue">[communication / autonomie / intégration / développement personnel / bien-être...]</span>.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que <span class="fill-blue">[idée]</span>. Cela montre que <span class="fill-blue">[conclusion]</span>.</p>
+
+          <p>Ensuite, <span class="fill-blue">[Sujet]</span> joue également un rôle essentiel dans <span class="fill-blue">[ ]</span>. Autrement dit, il contribue à... <span class="fill-blue">[ ]</span>.</p>
+          <p>Prenons l'exemple de <strong>mon frère Jean</strong>. <span class="fill-blue">[ ]</span>....Cet exemple prouve que <span class="fill-blue">[ ]</span>.</p>
+
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant <span class="fill-blue">[Sujet B]</span>. Même si <span class="fill-blue">[Sujet A]</span> offre de réels avantages, cela ne signifie pas que <span class="fill-blue">[Sujet B]</span> soit moins important. En effet, <span class="fill-blue">[Sujet B]</span> peut également apporter de nombreux bénéfices.</p>
+          <p>Prenons l'exemple de mon ami Paul....On voit donc que...</p>
+
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant <span class="fill-blue">[Sujet]</span>. Même si <span class="fill-blue">[Sujet]</span> offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, <span class="fill-blue">[Sujet]</span> peut s'avérer particulièrement bénéfique pour...</p>
+          <p>Prenons le cas de certaines personnes qui.....On voit donc que...</p>
+
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant <span class="fill-blue">[Sujet]</span>. Même si ce sujet offre de réels avantages, il ne convient pas pour autant négliger ses limites. En effet, <span class="fill-blue">[Sujet]</span> peut comporter certains risques pour...</p>
+          <p>Prenons l'exemple de mon ami Paul... On voit donc que...</p>
+
+          <p>En définitive, plutôt que d'opposer <span class="fill-blue">[Sujet A]</span> à <span class="fill-blue">[Sujet B]</span>, il me semble plus pertinent de reconnaître qu'ils peuvent se compléter. Tout l'enjeu consiste à trouver la manière la plus adaptée de les concilier selon les besoins de chacun.</p>
+
+          <h3>二选一</h3>
+          <p>En définitive, plutôt que d'opposer <span class="fill-blue">[Sujet A]</span> à <span class="fill-blue">[Sujet B]</span>, il me semble plus pertinent de reconnaître qu'ils peuvent se compléter. Il s'agit avant tout de trouver la meilleure manière de les concilier selon les besoins de chacun.</p>
+
+          <h3>优缺点</h3>
+          <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+
+          <h3>多因素</h3>
+          <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+
+          <h3>个人</h3>
+          <p>En définitive, ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs. Il s'agit avant tout de poursuivre un projet qui me permette de continuer à apprendre et à progresser.</p>
+        </div>
+              </details>
+      </section>
+
+      <section id="exemples-universels" class="section collapsible-section">
+                <details open>
+          <summary><h2>2. 万能例子</h2></summary>
+        <div class="example-block">
+          <p>Moi</p>
+          <p>Depuis mon arrivée au Canada, j'apprends le français tous les jours. Je vais régulièrement à la bibliothèque pour lire des livres en français et je participe à des activités de bénévolat. Cette expérience m'aide à progresser, à gagner en confiance et à mieux m'intégrer dans la société.</p>
+
+          <p>Mon mari</p>
+        <p>Mon mari travaille dans un centre de réadaptation physique et de gestion de la santé. Il accompagne des personnes souffrant de blessures sportives et les aide à retrouver leur mobilité. Grâce à son travail, je me rends compte que le bien-être dépend autant de la santé physique que de la confiance en soi.</p>
+
+        <p>Mon fils</p>
+        <p>Mon fils a dix ans et il est en école primaire à Vancouver. Depuis notre arrivée au Canada, je l'ai vu gagner en autonomie et en confiance. Même si apprendre une nouvelle langue n'a pas été facile, il s'est très bien adapté à son nouvel environnement.</p>
+        <p>Selon les sujets, tu peux ajouter un comportement fixe :</p>
+        <ul>
+          <li>Il lit souvent des livres pour l'école.</li>
+          <li>Il regarde parfois des vidéos pour mieux comprendre certains sujets.</li>
+          <li>Il joue au tennis avec moi le week-end.</li>
+        </ul>
+
+        <p>Mon frère</p>
+        <p>Mon frère n'aimait pas beaucoup étudier à l'école, mais il était passionné par le sport et aimait communiquer avec les autres. Aujourd'hui, il dirige une école de sport à Vancouver. Il a réussi à transformer sa passion en métier.</p>
+
+        <p>Mon ami Paul</p>
+        <p>Mon ami Paul est diplômé de l'université de Stanford. Il est très intelligent et possède de solides compétences techniques. Cependant, il a du mal à communiquer avec les autres et préfère souvent rester seul. À cause de cette situation, il souffre parfois de dépression.</p>
+
+        <p>Mon père</p>
+        <p>Mon père consulte toujours son médecin lorsqu'il est malade et suit les traitements qui lui sont prescrits. Cela lui permet de retrouver rapidement la santé.</p>
+
+        <p>Quotidien</p>
+        <p>J'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que...</p>
+        </div>
+              </details>
+      </section>
+
+      <section id="t3-oral" class="section module-intro collapsible-section">
+        <details open>
+          <summary><h2>3. T3—oral</h2></summary>
+          <div class="module-child-sections">
+
+      <section id="livres" class="section t3-question">
+        <details class="t3-details">
+          <summary>1. Les livres sont-ils devenus inutiles aujourd'hui ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si les livres sont devenus inutiles aujourd'hui.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les nouvelles technologies présentent de nombreux avantages, il est également essentiel de ne pas négliger les bénéfices liés aux livres. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, les livres constituent un véritable atout, car ils permettent d'acquérir de nouvelles connaissances. En effet, cela favorise également la concentration et le développement de l'esprit critique.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que la lecture aidait à mieux comprendre des sujets complexes. Cela montre que les livres restent un excellent moyen d'apprendre.</p>
+        <p>Ensuite, les livres jouent également un rôle essentiel dans l'apprentissage des langues. Autrement dit, ils permettent d'enrichir le vocabulaire et de mieux comprendre la langue.</p>
+        <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, je lis régulièrement des livres en français afin d'améliorer mon niveau de langue. Cette habitude m'aide à enrichir mon vocabulaire et à mieux comprendre le français. Cet exemple prouve que les livres restent très utiles pour apprendre.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant les livres. Même si les livres offrent de réels avantages, ils ne constituent pas le seul moyen d'apprendre. En effet, les ressources numériques peuvent également être utiles dans certaines situations.</p>
+        <p>Prenons le cas de mon fils. Il lit souvent des livres pour l'école, mais il regarde aussi des vidéos pour mieux comprendre certains sujets. On voit donc que les livres et les ressources numériques peuvent se compléter.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="medicaments" class="section t3-question">
+        <details class="t3-details">
+          <summary>2. Est-il aujourd'hui impossible de vivre sans médicaments ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir s'il est aujourd'hui impossible de vivre sans médicaments.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les médicaments présentent de nombreux avantages, il est également essentiel de ne pas négliger les risques liés aux médicaments. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, les médicaments constituent un véritable atout, car ils permettent de soigner certaines maladies. En effet, cela aide les personnes à se sentir mieux et à retrouver une vie normale.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les médicaments amélioraient leur état de santé. Cela montre que les médicaments jouent un rôle important dans notre vie.</p>
+        <p>Ensuite, les médicaments jouent également un rôle essentiel dans la protection de notre santé. Autrement dit, ils permettent d'éviter que certains problèmes de santé ne deviennent plus graves.</p>
+        <p>Prenons l'exemple de mon père. Lorsqu'il est malade, il prend les médicaments prescrits par son médecin. Cela lui permet de retrouver rapidement la santé.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant les médicaments. Même si les médicaments offrent de réels avantages, il ne convient pas pour autant de négliger leurs limites. En effet, une mauvaise utilisation peut avoir des conséquences négatives sur la santé.</p>
+        <p>Prenons le cas de certaines personnes qui prennent trop de médicaments sans suivre les conseils de leur médecin. Elles risquent d'avoir davantage de problèmes de santé. On voit donc qu'il est important d'utiliser les médicaments de manière raisonnable.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="aides-sociales" class="section t3-question">
+        <details class="t3-details">
+          <summary>3. Les aides sociales réduisent-elles la solidarité familiale ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si les aides sociales réduisent la solidarité familiale.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les aides sociales présentent de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, les aides sociales constituent un véritable atout, car elles permettent d'aider les personnes qui rencontrent des difficultés. En effet, elles aident les familles à répondre à leurs besoins essentiels et à améliorer leur qualité de vie.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les aides sociales étaient utiles aux familles en difficulté. Cela montre que les aides sociales peuvent apporter un soutien important aux personnes qui en ont besoin.</p>
+        <p>Ensuite, la solidarité familiale joue également un rôle essentiel dans la vie quotidienne. Autrement dit, elle permet aux membres d'une même famille de se soutenir et de surmonter les difficultés ensemble.</p>
+        <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours et mon mari m'encourage à continuer. Son soutien me motive à poursuivre mes efforts malgré les difficultés. Cet exemple prouve que le soutien de la famille reste essentiel au quotidien.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant la solidarité familiale. Même si les aides sociales offrent de réels avantages, elles ne constituent pas le seul facteur à prendre en compte. En effet, les valeurs familiales et l'entraide peuvent également jouer un rôle important.</p>
+        <p>Prenons l'exemple de mon frère. Il est toujours prêt à aider les membres de notre famille lorsqu'ils rencontrent des difficultés. Même lorsqu'une aide sociale est disponible, il préfère leur apporter son soutien. On voit donc que la solidarité familiale dépend davantage des valeurs familiales que des aides sociales.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="etudes" class="section t3-question">
+        <details class="t3-details">
+          <summary>4. Faut-il avoir fait de longues études pour réussir sa vie ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir s'il est nécessaire d'avoir fait de longues études pour réussir sa vie.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les longues études présentent de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, les longues études constituent un véritable atout, car elles permettent d'acquérir de nombreuses connaissances. En effet, elles aident aussi à développer des compétences utiles pour la vie professionnelle.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les longues études facilitaient l'accès à un emploi qualifié. Cela montre que les longues études représentent un véritable avantage pour préparer son avenir professionnel.</p>
+        <p>Ensuite, les compétences jouent également un rôle essentiel dans la réussite professionnelle. Autrement dit, elles permettent de mieux s'adapter aux nouvelles situations et de résoudre différents problèmes.</p>
+        <p>Prenons le cas de mon ami Paul. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail et évolue progressivement dans sa carrière. Cet exemple montre que les compétences constituent un véritable atout pour réussir professionnellement.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant la réussite professionnelle. Même si les longues études offrent de réels avantages, elles ne constituent pas le seul facteur à prendre en compte. En effet, l'expérience, la motivation et la passion peuvent également jouer un rôle important.</p>
+        <p>Prenons l'exemple de mon frère. Il n'aimait pas beaucoup étudier à l'école, mais il était passionné par le sport et aimait communiquer avec les autres. Aujourd'hui, il dirige une école de sport à Vancouver et il aime beaucoup son travail. On voit donc que la réussite dépend davantage des compétences, de l'expérience et de la motivation que de la durée des études.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="integration-jeune" class="section t3-question">
+        <details class="t3-details">
+          <summary>5. Est-il plus facile de s'intégrer dans un nouveau pays quand on est jeune ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si il est plus facile de s'intégrer dans un nouveau pays quand on est jeune.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le fait d'être jeune présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, être jeune constitue un véritable atout, car cela permet de s'adapter plus facilement à un nouvel environnement. En effet, cela aide aussi à apprendre une nouvelle langue plus rapidement.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées pensaient que les jeunes apprenaient une langue étrangère plus facilement. Cela montre que le fait d'être jeune peut faciliter l'intégration dans un nouveau pays.</p>
+        <p>Ensuite, la maîtrise de la langue joue également un rôle essentiel dans l'intégration. Autrement dit, elle permet de communiquer plus facilement avec les autres et de participer à la vie locale.</p>
+        <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours et mon mari m'encourage à continuer. Aujourd'hui, je communique plus facilement avec les autres. Cet exemple prouve que la maîtrise de la langue facilite l'intégration dans un nouveau pays.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant l'intégration. Même si être jeune offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, la motivation et la capacité à communiquer peuvent également jouer un rôle important.</p>
+        <p>Prenons l'exemple de mon frère. Il aime communiquer avec les autres et participe souvent à des activités sportives. Grâce à cela, il crée facilement des liens avec de nouvelles personnes. On voit donc que l'intégration dépend davantage de la capacité à communiquer et à s'adapter que de l'âge.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="trop-tard" class="section t3-question">
+        <details class="t3-details">
+          <summary>6. Il n'est jamais trop tard pour apprendre</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir s'il n'est jamais trop tard pour apprendre.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que l'âge puisse avoir une certaine influence, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, le fait de continuer à apprendre tout au long de sa vie constitue un véritable atout, car cela permet d'acquérir de nouvelles connaissances. En effet, cela favorise également le développement personnel et l'adaptation aux changements.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'il était possible d'apprendre à tout âge. Cela montre qu'il n'est jamais trop tard pour continuer à apprendre.</p>
+        <p>Ensuite, la jeunesse joue également un rôle essentiel dans l'apprentissage. Autrement dit, elle permet de s'adapter plus facilement à un nouvel environnement et d'acquérir de nouvelles compétences plus rapidement.</p>
+        <p>Prenons l'exemple de mon fils. Depuis son arrivée au Canada, il apprend le français à l'école et s'habitue rapidement à son nouvel environnement. Cet exemple prouve que les jeunes disposent souvent d'une grande capacité d'adaptation, ce qui facilite leur apprentissage.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant l'âge. Même si les jeunes apprennent souvent plus facilement, cela ne signifie pas que les personnes âgées soient moins capables d'apprendre. En effet, la motivation et les efforts personnels peuvent également jouer un rôle essentiel.</p>
+        <p>Prenons mon exemple. J'ai commencé à apprendre le français à l'âge de trente-sept ans après mon arrivée au Canada. Grâce à un travail régulier et à une forte motivation, je continue à progresser chaque jour. On voit donc qu'il est tout à fait possible de bien apprendre, quel que soit l'âge.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="adaptation" class="section t3-question">
+        <details class="t3-details">
+          <summary>7. Tout le monde est-il capable de s'adapter dans un pays étranger ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si tout le monde est capable de s'adapter dans un pays étranger.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que certaines personnes s'adaptent plus facilement que d'autres, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, la capacité d'adaptation constitue un véritable atout, car cela permet de mieux faire face à un nouvel environnement. En effet, cela aide aussi à découvrir une nouvelle culture et à rencontrer de nouvelles personnes.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que l'ouverture d'esprit facilitait l'intégration dans un nouveau pays. Cela montre que la capacité d'adaptation est essentielle pour vivre à l'étranger.</p>
+        <p>Ensuite, la maîtrise de la langue joue également un rôle essentiel dans l'intégration. Autrement dit, elle permet de communiquer plus facilement avec les autres et de participer à la vie locale.</p>
+        <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours et je communique de plus en plus facilement avec les autres. Cet exemple prouve que la langue facilite l'adaptation dans un nouveau pays.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant l'adaptation. Même si certaines personnes rencontrent davantage de difficultés, cela ne constitue pas le seul facteur à prendre en compte. En effet, la motivation et les efforts personnels peuvent également jouer un rôle important.</p>
+        <p>Prenons l'exemple de mon fils. Depuis notre arrivée au Canada, je l'ai vu gagner en autonomie et en confiance. Même si apprendre une nouvelle langue n'a pas été facile, il s'est très bien adapté à son nouvel environnement. On voit donc que l'adaptation dépend davantage de la motivation et des efforts que de l'âge ou de la situation de départ.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="reseaux-sociaux" class="section t3-question">
+        <details class="t3-details">
+          <summary>8. Les parents doivent laisser leurs enfants utiliser les réseaux sociaux ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si les parents doivent laisser leurs enfants utiliser les réseaux sociaux.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les réseaux sociaux présentent de nombreux avantages, il est également essentiel de ne pas négliger les risques liés aux réseaux sociaux. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, les réseaux sociaux constituent un véritable atout, car cela permet de communiquer facilement avec les autres. En effet, cela aide aussi à partager des informations et à rester en contact avec ses proches.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées utilisaient les réseaux sociaux pour communiquer avec leur famille ou leurs amis. Cela montre que les réseaux sociaux peuvent faciliter la communication.</p>
+        <p>Ensuite, les parents jouent également un rôle essentiel dans l'éducation de leurs enfants. Autrement dit, ils permettent d'apprendre à utiliser les réseaux sociaux de manière responsable.</p>
+        <p>Prenons l'exemple de mon fils. Je l'autorise à utiliser Internet pendant une durée limitée et je lui explique comment l'utiliser de manière responsable. Cet exemple prouve que l'accompagnement des parents est indispensable pour protéger les enfants.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant les réseaux sociaux. Même si les réseaux sociaux offrent de réels avantages, il ne convient pas pour autant de négliger leurs limites. En effet, une utilisation excessive peut nuire à la concentration et réduire le temps consacré aux études.</p>
+        <p>Prenons l'exemple de mon fils. Il regarde parfois des vidéos avant de faire ses devoirs. Il met alors plus de temps à terminer son travail. On voit donc qu'il est important de faire un usage raisonnable des réseaux sociaux.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="responsable" class="section t3-question">
+        <details class="t3-details">
+          <summary>9. Tout le monde peut-il occuper des fonctions de responsable ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si tout le monde est capable d'occuper des fonctions de responsable.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que certaines personnes possèdent les qualités nécessaires pour devenir responsables, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, être responsable constitue un véritable atout, car cela permet de mieux organiser le travail d'une équipe. En effet, cela aide aussi à prendre des décisions et à atteindre des objectifs communs.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les qualités humaines étaient indispensables pour diriger une équipe. Cela montre que les compétences relationnelles sont essentielles pour exercer des fonctions de responsable.</p>
+        <p>Ensuite, la communication joue également un rôle essentiel dans le travail d'un responsable. Autrement dit, elle permet de mieux écouter les autres et de résoudre les problèmes plus efficacement.</p>
+        <p>Prenons l'exemple de mon frère. Il n'aimait pas beaucoup étudier à l'école, mais il était passionné par le sport et aimait communiquer avec les autres. Aujourd'hui, il dirige une école de sport à Vancouver. Cet exemple prouve que la capacité à communiquer est une qualité importante pour un responsable.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant les fonctions de responsable. Même si certaines personnes possèdent de solides compétences techniques, elles ne constituent pas le seul facteur à prendre en compte. En effet, la capacité à communiquer et à travailler avec les autres peut également jouer un rôle important.</p>
+        <p>Prenons le cas de mon ami Paul. Il est diplômé de l'université de Stanford. Il est très intelligent et possède de solides compétences techniques. Cependant, il a du mal à communiquer avec les autres et préfère souvent rester seul. On voit donc que les compétences techniques ne suffisent pas pour devenir un bon responsable.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="travailler-etudier" class="section t3-question">
+        <details class="t3-details">
+          <summary>10. Travailler et étudier en même temps est difficile</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si travailler et étudier en même temps est difficile.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que travailler et étudier en même temps présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés au fait de travailler et d'étudier en même temps. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, travailler et étudier en même temps constitue un véritable atout, car cela permet d'acquérir de nouvelles connaissances. En effet, cela favorise également le développement personnel et l'acquisition de nouvelles compétences.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que poursuivre des études tout en travaillant permettait de développer davantage de compétences. Cela montre que continuer à apprendre représente un véritable atout pour l'avenir.</p>
+        <p>Ensuite, travailler et étudier en même temps joue également un rôle essentiel dans le développement professionnel. Autrement dit, il contribue à acquérir davantage d'expérience et à mettre ses connaissances en pratique.</p>
+        <p>Prenons mon propre exemple. Lorsque je travaillais dans les ressources humaines, j'ai développé mes compétences en communication et ma capacité d'adaptation. Aujourd'hui, ces compétences me sont encore utiles dans de nombreuses situations. Cet exemple prouve que l'expérience représente un véritable atout sur le marché du travail.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant le fait de travailler et d'étudier en même temps. Même si ce sujet offre de réels avantages, il ne convient pas pour autant de négliger ses limites. En effet, il peut rendre plus difficile l'équilibre entre les études, le travail et la vie personnelle.</p>
+        <p>Prenons l'exemple de mon mari. Il travaille dans un centre de réadaptation physique et de gestion de la santé. Après une journée de travail, il est parfois fatigué et a besoin de temps pour se reposer. On voit donc qu'il n'est pas toujours facile de concilier le travail avec d'autres activités.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="salaire" class="section t3-question">
+        <details class="t3-details">
+          <summary>11. Le salaire est-il la chose la plus importante dans un travail ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si le salaire est la chose la plus importante dans un travail.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le salaire présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, le salaire constitue un véritable atout, car cela permet d'assurer une certaine stabilité financière. En effet, cela favorise également une meilleure qualité de vie et la préparation de l'avenir.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'un salaire stable leur permettait de vivre plus sereinement. Cela montre que le salaire joue un rôle important dans la vie quotidienne.</p>
+        <p>Ensuite, le salaire joue également un rôle essentiel dans le développement personnel. Autrement dit, il contribue à investir dans la formation et à développer de nouvelles compétences.</p>
+        <p>Prenons mon propre exemple. Aujourd'hui, j'investis du temps et de l'argent dans l'apprentissage du français. Cette formation me permet de développer mes compétences linguistiques et de mieux préparer mon avenir professionnel. Cet exemple prouve que le salaire peut favoriser le développement personnel et professionnel.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant le salaire. Même si le salaire offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, un bon équilibre entre la vie professionnelle et la vie personnelle peut s'avérer particulièrement bénéfique pour le bien-être.</p>
+        <p>Prenons l'exemple de mon mari. Il travaille dans un centre de réadaptation physique et de gestion de la santé. Malgré son travail, il accorde toujours du temps à notre famille et m'encourage dans mes études de français. On voit donc que la satisfaction au travail dépend aussi de l'équilibre entre la vie professionnelle et la vie personnelle.</p>
+        <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="education-maison" class="section t3-question">
+        <details class="t3-details">
+          <summary>12. L'éducation à la maison est-elle une bonne solution ?</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si l'éducation à la maison est une bonne solution pour les enfants.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que l'éducation à la maison présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés à l'éducation à la maison. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, l'éducation à la maison constitue un véritable atout, car cela permet aux enfants d'apprendre à leur propre rythme. En effet, cela favorise également un apprentissage adapté à leurs besoins.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'un apprentissage adapté permettait aux enfants de progresser plus facilement. Cela montre que l'éducation à la maison peut répondre aux besoins de certains enfants.</p>
+        <p>Ensuite, l'éducation à la maison joue également un rôle essentiel dans le suivi de l'apprentissage des enfants. Autrement dit, elle contribue à suivre leurs progrès, à adapter la méthode d'enseignement et à répondre davantage à leurs besoins.</p>
+        <p>Prenons le cas de certaines familles qui choisissent d'enseigner elles-mêmes à leurs enfants. Elles peuvent suivre plus facilement leurs progrès et adapter leur méthode d'enseignement lorsque cela est nécessaire. Cet exemple prouve que l'éducation à la maison permet un accompagnement plus personnalisé.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant l'éducation à la maison. Même si ce sujet offre de réels avantages, il ne convient pas pour autant négliger ses limites. En effet, l'éducation à la maison peut comporter certains risques pour le développement des compétences sociales.</p>
+        <p>Prenons le cas de certaines personnes qui étudient uniquement à la maison. Elles ont parfois moins d'occasions de participer à des activités en groupe, de travailler en équipe et de développer leurs compétences sociales. On voit donc que les échanges avec les autres sont également essentiels au développement des enfants.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="telephone-ecole" class="section t3-question">
+        <details class="t3-details">
+          <summary>13. L'utilisation du téléphone portable par les élèves à l'école</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si l'utilisation du téléphone portable par les élèves dans les écoles est une bonne chose.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le téléphone portable présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés au téléphone portable. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, le téléphone portable constitue un véritable atout, car cela permet d'accéder rapidement à des informations utiles. En effet, cela favorise également l'apprentissage et la recherche d'informations.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées utilisaient leur téléphone pour rechercher des informations ou apprendre de nouvelles choses. Cela montre que le téléphone portable peut être un outil utile pour les études.</p>
+        <p>Ensuite, le téléphone portable joue également un rôle essentiel dans la communication. Autrement dit, il contribue à rester en contact avec les parents et à faire face aux situations d'urgence.</p>
+        <p>Prenons l'exemple de mon fils. Lorsqu'il participe à une activité après l'école, le téléphone permet de rester facilement en contact avec notre famille. Cet exemple prouve que le téléphone portable peut renforcer la sécurité des élèves.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant le téléphone portable. Même si ce sujet offre de réels avantages, il ne convient pas pour autant négliger ses limites. En effet, le téléphone portable peut comporter certains risques pour la concentration des élèves.</p>
+        <p>Prenons le cas de certaines personnes qui utilisent leur téléphone pendant les cours. Elles peuvent être moins attentives et avoir plus de difficultés à se concentrer sur leurs études. On voit donc que le téléphone portable doit être utilisé de manière raisonnable à l'école.</p>
+        <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="urbain-rural" class="section t3-question">
+        <details class="t3-details">
+          <summary>14. Les personnes âgées en milieu urbain ou rural</summary>
+<p class="template-text">Si je comprends bien, il s'agit de savoir si les personnes âgées vivent plus agréablement en milieu urbain ou en milieu rural.</p>
+        <p class="template-text">Il serait intéressant de s'interroger sur les différents aspects de cette question. Pour ma part, je pense que le milieu urbain et le milieu rural présentent tous deux des avantages. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+        <p>Pour commencer, le milieu urbain constitue un véritable atout, car cela permet d'accéder plus facilement aux hôpitaux, aux transports et aux commerces. En effet, cela favorise également une vie quotidienne plus pratique.</p>
+        <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les services de proximité amélioraient la qualité de vie des personnes âgées. Cela montre que le milieu urbain répond mieux à leurs besoins quotidiens.</p>
+        <p>Ensuite, le milieu urbain joue également un rôle essentiel dans la vie sociale des personnes âgées. Autrement dit, il contribue à offrir davantage d'activités et d'occasions de rencontrer d'autres personnes.</p>
+        <p>Prenons l'exemple de mon père. Il aime participer aux activités organisées par le centre communautaire lorsqu'il en a l'occasion. Cela lui permet de rencontrer d'autres personnes et de rester actif. Cet exemple prouve que la ville favorise la vie sociale des personnes âgées.</p>
+        <p>Toutefois, j'aimerais ajouter un dernier point concernant le milieu rural. Même si le milieu urbain offre de réels avantages, cela ne signifie pas que le milieu rural soit moins important. En effet, le milieu rural peut également apporter de nombreux bénéfices.</p>
+        <p>Prenons l'exemple de mon père. Il aime aussi passer du temps dans des endroits calmes et proches de la nature. Cela lui permet de se détendre et de profiter d'un environnement plus paisible. On voit donc que le milieu rural peut également offrir une bonne qualité de vie aux personnes âgées.</p>
+        <p>En définitive, plutôt que d'opposer le milieu urbain au milieu rural, il me semble plus pertinent de reconnaître qu'ils peuvent se compléter. Il s'agit avant tout de trouver la meilleure manière de les concilier selon les besoins de chacun.</p>
+        </details>
+      </section>
+
+          </div>
+        </details>
+      </section>
+
+
+      <section id="corpus-logique" class="section module-intro collapsible-section">
+        <details open>
+          <summary><h2>4. 语料链</h2></summary>
+        <details id="logique-1-logique-comment-utiliser-l-argent-economise" class="logic-details">
+          <summary>1. Logique : Comment utiliser l&#x27;argent économisé ?</summary>
+          <p class="logic-original-line logic-step-line">① Investir dans son développement personnel</p>
+          <p class="logic-original-line">Si j&#x27;économise de l&#x27;argent, je préfère avant tout l&#x27;investir dans mon développement personnel. Cela constitue un investissement durable, qui me permet d&#x27;acquérir des compétences transférables, d&#x27;élargir mes horizons et de renforcer ma capacité d&#x27;adaptation.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, je peux apprendre une nouvelle langue ou suivre une formation professionnelle. Ces compétences représentent un véritable atout sur le marché du travail et favorisent mon évolution professionnelle.</p>
+          <p class="logic-original-line logic-step-line">② Privilégier des achats utiles et réfléchis</p>
+          <p class="logic-original-line">Ensuite, je peux consacrer une partie de mon budget à des achats réellement utiles, comme des aliments sains, des équipements de fitness ou du matériel de travail. Je préfère privilégier une consommation réfléchie et responsable, afin d&#x27;améliorer durablement ma qualité de vie.</p>
+          <p class="logic-original-line">Par exemple, je peux acheter un ordinateur plus performant ou des équipements de sport. Ces achats me permettent de travailler plus efficacement et d&#x27;améliorer mon bien-être au quotidien.</p>
+          <p class="logic-original-line logic-step-line">③ Mettre de l&#x27;argent de côté</p>
+          <p class="logic-original-line">Par ailleurs, je préfère mettre une partie de mon argent de côté afin de préparer l&#x27;avenir. Cette habitude permet de faire face aux imprévus, de renforcer ma sécurité financière et de gérer mon budget de manière plus efficace.</p>
+          <p class="logic-original-line">Par exemple, en cas de dépenses imprévues, je n&#x27;ai pas besoin d&#x27;emprunter de l&#x27;argent. Cela me permet d&#x27;aborder l&#x27;avenir avec davantage de sérénité.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion (万能结尾)</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;une bonne gestion de l&#x27;argent ne consiste pas seulement à dépenser moins, mais surtout à faire des choix judicieux. À long terme, cette approche peut favoriser l&#x27;épanouissement personnel, renforcer la stabilité financière et apporter de nombreux changements positifs dans la vie.</p>
+          <p class="logic-original-line logic-star">⭐ 一条逻辑链（建议直接背）</p>
+          <p class="logic-original-line">Économiser de l&#x27;argent</p>
+          <p class="logic-original-line">Investir dans son développement personnel</p>
+          <p class="logic-original-line logic-arrow-line">→ acquérir des compétences transférables</p>
+          <p class="logic-original-line logic-arrow-line">→ élargir ses horizons</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer sa capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-arrow-line">→ constituer un véritable atout sur le marché du travail</p>
+          <p class="logic-original-line">Privilégier une consommation réfléchie et responsable</p>
+          <p class="logic-original-line logic-arrow-line">→ acheter des produits utiles</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer son bien-être au quotidien</p>
+          <p class="logic-original-line">Mettre de l&#x27;argent de côté</p>
+          <p class="logic-original-line logic-arrow-line">→ préparer l&#x27;avenir</p>
+          <p class="logic-original-line logic-arrow-line">→ faire face aux imprévus</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer sa sécurité financière</p>
+          <p class="logic-original-line logic-arrow-line">→ gérer son budget de manière plus rigoureuse</p>
+          <p class="logic-original-line">Faire des choix judicieux</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser l&#x27;épanouissement personnel</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer la stabilité financière</p>
+          <p class="logic-original-line logic-arrow-line">→ mener une vie plus sereine.</p>
+        </details>
+        <details id="logique-2-logique-preserver-sa-sante" class="logic-details">
+          <summary>2. Logique : Préserver sa santé</summary>
+          <p class="logic-original-line logic-step-line">① Adopter un mode de vie sain</p>
+          <p class="logic-original-line">Pour préserver ma santé, je pense qu&#x27;il est essentiel d&#x27;adopter un mode de vie sain. Cela permet de prévenir certaines maladies, de maintenir une bonne condition physique et d&#x27;améliorer durablement la qualité de vie.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, je fais de la marche presque tous les matins et je joue au tennis avec mon fils. Ces activités m&#x27;aident à rester en forme et à réduire le stress.</p>
+          <p class="logic-original-line logic-step-line">② Privilégier une alimentation équilibrée</p>
+          <p class="logic-original-line">Ensuite, il est important de privilégier une alimentation équilibrée et de limiter les produits trop gras ou trop sucrés. Une bonne alimentation contribue à préserver sa santé et à renforcer le système immunitaire.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;essaie de manger davantage de fruits et de légumes et de cuisiner à la maison. Je me sens ainsi plus énergique au quotidien.</p>
+          <p class="logic-original-line logic-step-line">③ Prendre soin de sa santé mentale</p>
+          <p class="logic-original-line">Par ailleurs, il ne faut pas négliger la santé mentale. Il est essentiel de trouver un équilibre entre la vie professionnelle et la vie personnelle, afin de limiter le stress et de préserver son bien-être.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;aime lire à la bibliothèque ou écouter de la musique après une journée chargée. Cela me permet de me détendre et de relâcher la pression accumulée au fil de la journée.</p>
+          <p class="logic-original-line logic-step-line">④ Prévenir plutôt que guérir</p>
+          <p class="logic-original-line">À mes yeux, il vaut mieux prévenir que guérir.Adopter un mode de vie sain et effectuer des examens médicaux réguliers permettent de détecter certains problèmes à un stade précoce et d&#x27;éviter des complications.</p>
+          <p class="logic-original-line">Par exemple, certaines personnes consultent leur médecin une fois par an pour faire un bilan de santé. Cela permet d&#x27;agir rapidement en cas de problème.</p>
+          <p class="logic-original-line">Par exemple, mon père fait un bilan de santé chaque année. Cela lui permet de suivre son état de santé et d&#x27;agir rapidement si nécessaire.</p>
+          <p class="logic-original-line">à un stade précoce= 在早期阶段</p>
+          <p class="logic-original-line">faire un bilan de santé= 做一次全面体检</p>
+          <p class="logic-original-line logic-step-line">⑤ Conclusion</p>
+          <p class="logic-original-line">En définitive, je suis convaincue que la santé constitue un véritable capital qu&#x27;il faut préserver au quotidien. Adopter de bonnes habitudes permet de mener une vie plus équilibrée, d’améliorer durablement sa qualité de vie et de vieillir en meilleure santé.</p>
+          <p class="logic-original-line">capital 资本、宝贵资源</p>
+          <p class="logic-original-line logic-star">⭐ 一条逻辑链</p>
+          <p class="logic-original-line">Préserver sa santé</p>
+          <p class="logic-original-line">Adopter un mode de vie sain</p>
+          <p class="logic-original-line logic-arrow-line">→ prévenir certaines maladies</p>
+          <p class="logic-original-line logic-arrow-line">→ maintenir une bonne condition physique</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement la qualité de vie</p>
+          <p class="logic-original-line">Privilégier une alimentation équilibrée</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver sa santé</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer le système immunitaire</p>
+          <p class="logic-original-line logic-arrow-line">→ avoir davantage d&#x27;énergie</p>
+          <p class="logic-original-line">Prendre soin de sa santé mentale</p>
+          <p class="logic-original-line logic-arrow-line">→ trouver un équilibre entre la vie professionnelle et la vie personnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ limiter le stress</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line">Prévenir plutôt que guérir</p>
+          <p class="logic-original-line logic-arrow-line">→ détecter les problèmes de santé à un stade précoce</p>
+          <p class="logic-original-line logic-arrow-line">→ éviter des complications</p>
+          <p class="logic-original-line logic-arrow-line">→ agir rapidement</p>
+          <p class="logic-original-line">Mener une vie plus équilibrée</p>
+          <p class="logic-original-line logic-arrow-line">→ vieillir en meilleure santé.</p>
+          <p class="logic-original-line">À mes yeux, il est essentiel d&#x27;adopter un mode de vie sain afin de préserver sa santé. Cela permet de prévenir certaines maladies, de maintenir une bonne condition physique et d&#x27;améliorer durablement la qualité de vie.</p>
+          <p class="logic-original-line">Par exemple, je fais de la marche presque tous les matins et je joue régulièrement au tennis avec mon fils. Ces activités m&#x27;aident à rester en forme et à réduire le stress.</p>
+          <p class="logic-original-line">Ensuite, il est important de privilégier une alimentation équilibrée et d&#x27;adopter des habitudes alimentaires adaptées à ses besoins. Une bonne alimentation contribue à préserver la santé, à renforcer le système immunitaire et à avoir davantage d&#x27;énergie au quotidien.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;essaie de manger davantage de fruits et de légumes et de cuisiner à la maison. Je me sens ainsi plus énergique et je prends davantage soin de ma santé.</p>
+          <p class="logic-original-line">Par ailleurs, la santé mentale est tout aussi importante que la santé physique. Il est essentiel de trouver un équilibre entre la vie professionnelle et la vie personnelle afin de limiter le stress et de préserver son bien-être.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;aime lire à la bibliothèque ou écouter de la musique après une journée chargée. Cela me permet de relâcher la pression accumulée au fil de la journée et de retrouver ma sérénité.</p>
+          <p class="logic-original-line">Enfin, je pense qu&#x27;il vaut mieux prévenir que guérir. Un suivi médical régulier permet de détecter certains problèmes de santé à un stade précoce et d&#x27;éviter des complications.</p>
+          <p class="logic-original-line">En définitive, je pense que la santé constitue un véritable capital qu&#x27;il faut préserver tout au long de la vie. Adopter de bonnes habitudes permet de vivre plus sereinement, de vieillir en meilleure santé et d&#x27;améliorer durablement sa qualité de vie.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-spaced-line">Privilégier une alimentation équilibrée / adopter des habitudes alimentaires adaptées</p>
+          <p class="logic-original-line logic-arrow-line logic-spaced-line">→ relâcher la pression accumulée</p>
+          <p class="logic-original-line logic-arrow-line logic-spaced-line">→ consulter un professionnel de santé régulièrement</p>
+          <p class="logic-original-line logic-spaced-line">Préserver sa santé sur le long terme</p>
+          <p class="logic-original-line logic-arrow-line">→ vieillir en meilleure santé</p>
+          <p class="logic-original-line logic-arrow-line">→ mener une vie plus équilibrée</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son bien-être</p>
+        </details>
+        <details id="logique-3-logique-developpement-personnel" class="logic-details">
+          <summary>3. Logique : Développement personnel</summary>
+          <p class="logic-original-line logic-step-line">① Investir dans son développement personnel</p>
+          <p class="logic-original-line">À mes yeux, investir dans son développement personnel représente un véritable investissement pour l&#x27;avenir. Cela permet d&#x27;acquérir de nouvelles connaissances, de développer de nombreuses compétences et de mieux préparer son avenir professionnel.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, j&#x27;apprends le français tous les jours depuis mon arrivée au Canada. Cela me permet de communiquer plus facilement avec les autres et de développer mes compétences linguistiques.</p>
+          <p class="logic-original-line logic-step-line">② Développer ses compétences</p>
+          <p class="logic-original-line">Ensuite, il est essentiel de continuer à apprendre tout au long de la vie. Cette démarche permet de développer sa capacité d&#x27;apprentissage, son esprit critique et sa capacité d&#x27;adaptation afin de mieux faire face aux nouvelles situations.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;aime lire à la bibliothèque et suivre des cours en ligne. Cela me permet d&#x27;acquérir de nouvelles connaissances et de progresser régulièrement.</p>
+          <p class="logic-original-line logic-step-line">③ Préparer son avenir professionnel</p>
+          <p class="logic-original-line">Par ailleurs, développer ses compétences représente un véritable atout sur le marché du travail. Plus on acquiert de l&#x27;expérience et de nouvelles compétences, plus il devient facile d&#x27;évoluer dans sa carrière.</p>
+          <p class="logic-original-line">Par exemple, lorsque je travaillais dans les ressources humaines, j&#x27;ai développé mes compétences en communication et en gestion. Aujourd&#x27;hui, ces compétences me sont encore utiles dans de nombreuses situations.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;investir dans son développement personnel constitue un choix bénéfique à long terme. L&#x27;essentiel est de continuer à apprendre, de développer ses compétences et de mieux préparer son avenir.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Investir dans son développement personnel</p>
+          <p class="logic-original-line">Acquérir de nouvelles connaissances</p>
+          <p class="logic-original-line logic-arrow-line">→ continuer à apprendre tout au long de la vie</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses connaissances</p>
+          <p class="logic-original-line">Développer de nombreuses compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses compétences linguistiques</p>
+          <p class="logic-original-line logic-arrow-line">→ développer sa capacité d&#x27;apprentissage</p>
+          <p class="logic-original-line logic-arrow-line">→ développer son esprit critique</p>
+          <p class="logic-original-line">Renforcer sa capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux faire face aux nouvelles situations</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux s&#x27;adapter à un nouvel environnement</p>
+          <p class="logic-original-line">Représenter un véritable atout sur le marché du travail</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son évolution professionnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ évoluer dans sa carrière</p>
+          <p class="logic-original-line">Mieux préparer son avenir</p>
+          <p class="logic-original-line logic-arrow-line">→ gagner en confiance</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+        </details>
+        <details id="logique-4-logique-construire-des-relations-solides" class="logic-details">
+          <summary>4. Logique : Construire des relations solides</summary>
+          <p class="logic-original-line logic-step-line">① Communiquer avec les autres</p>
+          <p class="logic-original-line">À mes yeux, il est essentiel de communiquer avec les autres afin de construire des relations solides et durables. Une bonne communication permet de mieux se comprendre, d&#x27;instaurer un climat de confiance et d&#x27;éviter les malentendus.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, depuis mon arrivée au Canada, je participe à des activités organisées dans la communauté. Cela me permet de rencontrer des personnes d&#x27;horizons variés et de développer progressivement mon réseau social.</p>
+          <p class="logic-original-line logic-step-line">② Renforcer les liens</p>
+          <p class="logic-original-line">Ensuite, passer du temps avec sa famille ou ses amis permet de renforcer les liens et d&#x27;entretenir des relations de confiance. Ces moments contribuent également au bien-être et permettent d&#x27;avancer avec davantage de sérénité.</p>
+          <p class="logic-original-line">Par exemple, le week-end, je fais souvent du tennis ou de la randonnée avec mon mari et mon fils. Ces moments nous permettent de partager des moments de qualité et de relâcher la pression accumulée au fil de la semaine.</p>
+          <p class="logic-original-line logic-step-line">③ S&#x27;entraider et se soutenir</p>
+          <p class="logic-original-line">Par ailleurs, Les relations humaines reposent sur la confiance, le respect et le soutien mutuel. Le soutien de personnes de confiance permet de faire face aux difficultés et de gagner en confiance.</p>
+          <p class="logic-original-line">reposer sur= 建立在……基础上= 依赖于……= 以……为基础=base on</p>
+          <p class="logic-original-line">Par exemple, lorsque je prépare le TCF Canada, mon mari m&#x27;encourage toujours lorsque je manque de motivation. Grâce à son soutien, je garde davantage confiance en moi et je progresse plus facilement.</p>
+          <p class="logic-original-line logic-step-line">④ Faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line">Enfin, il est important de respecter les différences et de faire preuve d&#x27;ouverture d&#x27;esprit. Accepter des opinions différentes permet de mieux vivre ensemble et de construire des relations plus enrichissantes.</p>
+          <p class="logic-original-line">Par exemple, grâce à mes cours de français, j&#x27;ai rencontré des personnes de cultures différentes. Nos échanges m&#x27;ont permis d&#x27;élargir mon point de vue et de mieux comprendre d&#x27;autres façons de penser.</p>
+          <p class="logic-original-line logic-step-line">⑤ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que les relations humaines jouent un rôle essentiel dans notre vie. L&#x27;essentiel est de communiquer avec les autres, de s&#x27;entraider et d&#x27;entretenir des relations solides fondées sur le respect et la confiance.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Construire des relations solides</p>
+          <p class="logic-original-line logic-spaced-line">Communiquer avec les autres</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux se comprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ éviter les malentendus</p>
+          <p class="logic-original-line logic-arrow-line">→ instaurer un climat de confiance</p>
+          <p class="logic-original-line logic-spaced-line">Renforcer les liens</p>
+          <p class="logic-original-line logic-arrow-line">→ partager des moments de qualité</p>
+          <p class="logic-original-line logic-arrow-line">→ entretenir des relations solides et durables</p>
+          <p class="logic-original-line logic-arrow-line">→ développer progressivement son réseau social</p>
+          <p class="logic-original-line logic-arrow-line">→créer des liens</p>
+          <p class="logic-original-line logic-arrow-line">→renforcer les liens familiaux</p>
+          <p class="logic-original-line logic-arrow-line">→partager des moments de qualité</p>
+          <p class="logic-original-line logic-arrow-line">→ constituer un véritable soutien</p>
+          <p class="logic-original-line logic-arrow-line">→ rencontrer des personnes d&#x27;horizons variés</p>
+          <p class="logic-original-line logic-spaced-line">S&#x27;entraider / se soutenir mutuellement</p>
+          <p class="logic-original-line logic-arrow-line">→ compter sur des personnes de confiance</p>
+          <p class="logic-original-line logic-arrow-line">→ surmonter les difficultés</p>
+          <p class="logic-original-line logic-arrow-line">→ avancer avec davantage de sérénité</p>
+          <p class="logic-original-line logic-spaced-line">Faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line logic-arrow-line">→ accepter des opinions différentes</p>
+          <p class="logic-original-line logic-arrow-line">→ découvrir de nouvelles façons de penser</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser l&#x27;intégration</p>
+          <p class="logic-original-line logic-spaced-line">Mener une vie épanouie</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer son sentiment d&#x27;appartenance</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+        </details>
+        <details id="logique-5-logique-construire-et-entretenir-des-relations-humaines" class="logic-details">
+          <summary>5. Logique : Construire et entretenir des relations humaines</summary>
+          <p class="logic-original-line logic-step-line">① Créer des liens avec les autres</p>
+          <p class="logic-original-line">À mes yeux, il est essentiel de créer des liens avec les autres. Cela permet de rencontrer des personnes d&#x27;horizons variés, de développer progressivement son réseau social et de favoriser son intégration.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, depuis mon arrivée au Canada, je participe à des activités organisées dans la communauté. Cela me permet de rencontrer de nouvelles personnes et de mieux m&#x27;intégrer.</p>
+          <p class="logic-original-line logic-step-line">② Renforcer les relations</p>
+          <p class="logic-original-line">Ensuite, il est important d&#x27;entretenir des relations solides et durables avec sa famille et ses amis. Ces relations constituent un véritable soutien, permettent de partager des moments de qualité et de relâcher la pression accumulée au fil de la semaine.</p>
+          <p class="logic-original-line">Par exemple, le week-end, je fais souvent du tennis ou de la randonnée avec mon mari et mon fils. Ces moments renforcent nos liens familiaux et contribuent à notre bien-être.</p>
+          <p class="logic-original-line logic-step-line">③ S&#x27;entraider et faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line">Par ailleurs, de bonnes relations reposent sur l&#x27;entraide, le respect et l&#x27;ouverture d&#x27;esprit. Pouvoir compter sur des personnes de confiance permet de surmonter les difficultés et d&#x27;avancer avec davantage de sérénité.</p>
+          <p class="logic-original-line">Par exemple, lorsque je prépare le TCF Canada, mon mari m&#x27;encourage toujours lorsque je manque de motivation. Grâce à son soutien, je garde davantage confiance en moi et je progresse plus facilement.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que les relations humaines jouent un rôle essentiel dans notre vie. L&#x27;essentiel est de communiquer avec les autres, d&#x27;entretenir des relations solides et de faire preuve d&#x27;ouverture d&#x27;esprit.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Créer des liens avec les autres</p>
+          <p class="logic-original-line logic-spaced-line">Rencontrer des personnes d&#x27;horizons variés</p>
+          <p class="logic-original-line logic-arrow-line">→ développer progressivement son réseau social</p>
+          <p class="logic-original-line logic-arrow-line">→ participer davantage à la vie locale</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son intégration</p>
+          <p class="logic-original-line logic-spaced-line">Entretenir des relations solides et durables</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer les liens familiaux</p>
+          <p class="logic-original-line logic-arrow-line">→ partager des moments de qualité</p>
+          <p class="logic-original-line logic-arrow-line">→ constituer un véritable soutien</p>
+          <p class="logic-original-line logic-spaced-line">Pouvoir compter sur des personnes de confiance</p>
+          <p class="logic-original-line logic-arrow-line">→ s&#x27;entraider / s&#x27;encourager mutuellement</p>
+          <p class="logic-original-line logic-arrow-line">→ surmonter les difficultés</p>
+          <p class="logic-original-line logic-arrow-line">→ avancer avec davantage de sérénité</p>
+          <p class="logic-original-line logic-spaced-line">Faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line logic-arrow-line">→ accepter des opinions différentes</p>
+          <p class="logic-original-line logic-arrow-line">→ découvrir d&#x27;autres cultures</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux comprendre les autres</p>
+          <p class="logic-original-line logic-spaced-line">Mener une vie épanouie</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line">Élargir ses horizons</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux comprendre la culture locale</p>
+          <p class="logic-original-line logic-arrow-line">→ rencontrer des personnes d&#x27;horizons variés</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser l&#x27;ouverture d&#x27;esprit</p>
+        </details>
+        <details id="logique-6-logique-gerer-son-argent-de-maniere-responsable" class="logic-details">
+          <summary>6. Logique : Gérer son argent de manière responsable</summary>
+          <p class="logic-original-line logic-step-line">① Investir dans des dépenses utiles</p>
+          <p class="logic-original-line">À mes yeux, il est important de faire des achats réfléchis en fonction de ses besoins réels. Je préfère investir dans des dépenses utiles afin d&#x27;améliorer durablement ma qualité de vie.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, je peux acheter des livres, des équipements de fitness ou suivre une formation. Ces investissements me permettent de développer mes compétences et de prendre soin de ma santé.</p>
+          <p class="logic-original-line logic-step-line">② Adopter une consommation responsable</p>
+          <p class="logic-original-line">Ensuite, il est essentiel d&#x27;adopter un mode de consommation plus responsable. Il vaut mieux privilégier la qualité plutôt que la quantité et éviter la surconsommation.</p>
+          <p class="logic-original-line">Par exemple, lorsque je fais des achats sur Internet, je compare souvent les prix avant de passer commande. Cela me permet de respecter mon budget et de faire des achats plus réfléchis.</p>
+          <p class="logic-original-line logic-step-line">③ Préparer l&#x27;avenir</p>
+          <p class="logic-original-line">Par ailleurs, je pense qu&#x27;il est important de mettre une partie de son argent de côté afin de préparer l&#x27;avenir. Cette habitude permet de faire face aux imprévus et de renforcer sa sécurité financière.</p>
+          <p class="logic-original-line">Par exemple, je préfère économiser une partie de mon argent chaque mois plutôt que de tout dépenser immédiatement. Cela me permet d&#x27;aborder l&#x27;avenir avec davantage de sérénité.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;une bonne gestion de l&#x27;argent ne consiste pas seulement à dépenser moins, mais surtout à faire des choix réfléchis et responsables. L&#x27;essentiel est de répondre à ses besoins réels tout en préparant l&#x27;avenir.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Gérer son argent de manière responsable</p>
+          <p class="logic-original-line logic-spaced-line">Faire des achats réfléchis</p>
+          <p class="logic-original-line logic-arrow-line">→ répondre à des besoins réels</p>
+          <p class="logic-original-line logic-arrow-line">→ respecter son budget</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-spaced-line">Adopter un mode de consommation plus responsable</p>
+          <p class="logic-original-line logic-arrow-line">→ privilégier la qualité plutôt que la quantité</p>
+          <p class="logic-original-line logic-arrow-line">→ comparer les prix</p>
+          <p class="logic-original-line logic-arrow-line">→ éviter la surconsommation</p>
+          <p class="logic-original-line logic-spaced-line">Mettre de l&#x27;argent de côté</p>
+          <p class="logic-original-line logic-arrow-line">→ préparer l&#x27;avenir</p>
+          <p class="logic-original-line logic-arrow-line">→ faire face aux imprévus</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer sa sécurité financière</p>
+          <p class="logic-original-line logic-spaced-line">Faire des choix réfléchis et responsables</p>
+          <p class="logic-original-line logic-arrow-line">→ développer un esprit critique</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas être influencé par la publicité / les réseaux sociaux</p>
+          <p class="logic-original-line logic-arrow-line">→ consommer de manière réfléchie</p>
+          <p class="logic-original-line logic-spaced-line">Mieux gérer son budget</p>
+          <p class="logic-original-line logic-arrow-line">→ aborder l&#x27;avenir avec davantage de sérénité 更加从容地面对未来</p>
+          <p class="logic-original-line logic-label">Questions couvertes</p>
+          <p class="logic-original-line logic-arrow-line">Argent et bonheur</p>
+          <p class="logic-original-line logic-arrow-line">Économiser de l&#x27;argent</p>
+          <p class="logic-original-line logic-arrow-line">Les habitudes de consommation</p>
+          <p class="logic-original-line logic-arrow-line">La publicité</p>
+          <p class="logic-original-line logic-arrow-line">Les réseaux sociaux et la consommation</p>
+          <p class="logic-original-line logic-arrow-line">Les achats en ligne</p>
+          <p class="logic-original-line logic-arrow-line">Les vêtements</p>
+          <p class="logic-original-line logic-arrow-line">Les produits de luxe</p>
+          <p class="logic-original-line logic-arrow-line">La chirurgie esthétique（消费角度）</p>
+          <p class="logic-original-line logic-arrow-line">Le téléphone portable（消费角度）</p>
+          <p class="logic-original-line logic-arrow-line">Les dépenses de la famille</p>
+          <p class="logic-original-line logic-arrow-line">Le salaire et l&#x27;argent</p>
+        </details>
+        <details id="logique-7-logique-utiliser-les-technologies-de-maniere-responsable" class="logic-details">
+          <summary>7. Logique : Utiliser les technologies de manière responsable</summary>
+          <p class="logic-original-line logic-step-line">① Profiter des avantages des technologies</p>
+          <p class="logic-original-line">À mes yeux, les technologies représentent un véritable atout dans la vie quotidienne. Elles permettent de faciliter la communication, d&#x27;accéder rapidement à l&#x27;information et d&#x27;améliorer notre efficacité.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, j&#x27;utilise mon téléphone pour communiquer avec mes parents qui vivent en Chine et pour organiser mes activités quotidiennes. Cela me permet de gagner du temps et de rester en contact avec ma famille.</p>
+          <p class="logic-original-line logic-step-line">② Les utiliser pour apprendre et travailler</p>
+          <p class="logic-original-line">Ensuite, les technologies facilitent également les études et le travail. Elles permettent de développer ses connaissances, de travailler plus efficacement et d&#x27;apprendre à son propre rythme.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;apprends le français en regardant des vidéos, en écoutant des podcasts et en suivant des cours en ligne. Cela me permet de progresser régulièrement.</p>
+          <p class="logic-original-line logic-step-line">③ Éviter les effets négatifs</p>
+          <p class="logic-original-line">Par ailleurs, une utilisation excessive peut avoir des conséquences négatives. Il est donc important de faire un usage raisonnable des technologies afin de préserver son bien-être et de maintenir un bon équilibre dans la vie quotidienne.</p>
+          <p class="logic-original-line">Par exemple, mon fils regarde parfois des vidéos avant de faire ses devoirs. Il met alors plus de temps à terminer son travail et sa concentration diminue.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que les technologies sont devenues indispensables dans notre société. L&#x27;essentiel est d&#x27;en tirer tous les bénéfices tout en limitant ses inconvénients.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Utiliser les technologies de manière responsable</p>
+          <p class="logic-original-line logic-spaced-line">Faciliter la communication</p>
+          <p class="logic-original-line logic-arrow-line">→ garder le contact avec les autres</p>
+          <p class="logic-original-line logic-arrow-line">→ accéder rapidement à l&#x27;information</p>
+          <p class="logic-original-line logic-arrow-line">→ gagner du temps</p>
+          <p class="logic-original-line logic-spaced-line">Faciliter les études et le travail</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses connaissances</p>
+          <p class="logic-original-line logic-arrow-line">→ apprendre à son propre rythme</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer son efficacité</p>
+          <p class="logic-original-line logic-spaced-line">Faire un usage raisonnable</p>
+          <p class="logic-original-line logic-arrow-line">→ éviter une utilisation excessive</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver sa concentration</p>
+          <p class="logic-original-line logic-arrow-line">→ maintenir un bon équilibre</p>
+          <p class="logic-original-line logic-spaced-line">Éviter les effets négatifs</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas créer une certaine dépendance</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas réduire les échanges en face à face</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line logic-spaced-line">Profiter des avantages des technologies</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer la qualité de vie</p>
+          <p class="logic-original-line logic-arrow-line">→ faciliter la vie quotidienne</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux s&#x27;adapter au monde actuel</p>
+          <p class="logic-original-line logic-step-line">① Faciliter la vie quotidienne</p>
+          <p class="logic-original-line">À mes yeux, les nouvelles technologies représentent un véritable atout dans la vie quotidienne. Elles permettent de faciliter la communication, d&#x27;accéder rapidement à l&#x27;information et de gagner du temps.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;utilise mon téléphone pour payer, envoyer des messages et organiser mes rendez-vous. Cela me permet de gérer mes activités plus efficacement.</p>
+          <p class="logic-original-line logic-step-line">② Faciliter les études et le travail</p>
+          <p class="logic-original-line">Ensuite, les technologies facilitent également les études et le travail. Elles permettent d&#x27;apprendre à son propre rythme, de développer ses connaissances et d&#x27;améliorer son efficacité.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;apprends le français en regardant des vidéos, en écoutant des podcasts et en suivant des cours en ligne. Je peux ainsi progresser régulièrement et pratiquer tous les jours.</p>
+          <p class="logic-original-line logic-step-line">③ Faire un usage raisonnable</p>
+          <p class="logic-original-line">Cependant, une utilisation excessive peut avoir des effets négatifs. Il est donc essentiel de faire un usage raisonnable des technologies afin de préserver sa concentration et son bien-être.</p>
+          <p class="logic-original-line">Par exemple, mon fils regarde parfois des vidéos avant de faire ses devoirs. Il met alors plus de temps à terminer son travail et ses résultats scolaires ont légèrement baissé.</p>
+          <p class="logic-original-line">En définitive, je pense que les technologies sont devenues indispensables dans notre société. L&#x27;essentiel est d&#x27;en tirer tous les bénéfices sans en subir les effets négatifs.</p>
+          <p class="logic-original-line logic-arrow-line logic-spaced-line">→ créer une certaine dépendance</p>
+          <p class="logic-original-line logic-arrow-line">→ réduire les échanges en face à face</p>
+          <p class="logic-original-line logic-arrow-line">→ nuire à la concentration</p>
+          <p class="logic-original-line logic-spaced-line">Profiter pleinement des avantages des technologies</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement la qualité de vie</p>
+        </details>
+        <details id="logique-8-logique-reussir-son-integration-dans-un-nouveau-pays" class="logic-details">
+          <summary>8. Logique : Réussir son intégration dans un nouveau pays</summary>
+          <p class="logic-original-line logic-step-line">① Maîtriser la langue du pays d&#x27;accueil</p>
+          <p class="logic-original-line">À mes yeux, maîtriser la langue du pays d&#x27;accueil représente un véritable atout. Cela facilite la communication au quotidien et permet de participer davantage à la vie locale.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, depuis mon arrivée au Canada, j&#x27;apprends le français tous les jours. Plus je progresse, plus il m&#x27;est facile de communiquer avec les autres.</p>
+          <p class="logic-original-line logic-step-line">② Participer à la vie locale</p>
+          <p class="logic-original-line">Ensuite, participer à la vie locale permet de créer des liens, de rencontrer des personnes d&#x27;horizons variés et de développer progressivement son réseau social. Ces expériences favorisent également l&#x27;intégration dans le pays d&#x27;accueil.</p>
+          <p class="logic-original-line">Par exemple, je participe parfois à des activités organisées dans la communauté. Cela me permet de rencontrer de nouvelles personnes et de mieux m&#x27;intégrer.</p>
+          <p class="logic-original-line logic-step-line">③ Comprendre la culture locale</p>
+          <p class="logic-original-line">Par ailleurs, réussir son intégration ne dépend pas uniquement de la langue. Il est également important de mieux comprendre la culture locale, les habitudes et les valeurs du pays d&#x27;accueil, tout en faisant preuve d&#x27;ouverture d&#x27;esprit.</p>
+          <p class="logic-original-line">Par exemple, lorsque je suis arrivée au Canada, beaucoup de choses étaient nouvelles pour moi. Petit à petit, j&#x27;ai appris à comprendre les habitudes locales et je me sens aujourd&#x27;hui beaucoup plus à l&#x27;aise dans mon environnement.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que réussir son intégration demande du temps et des efforts. L&#x27;essentiel est de communiquer avec les autres, de participer à la vie locale et de faire preuve d&#x27;ouverture d&#x27;esprit.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Réussir son intégration dans un nouveau pays</p>
+          <p class="logic-original-line logic-spaced-line">Maîtriser la langue du pays d&#x27;accueil</p>
+          <p class="logic-original-line logic-arrow-line">→ faciliter la communication au quotidien</p>
+          <p class="logic-original-line logic-arrow-line">→ communiquer plus facilement avec les autres</p>
+          <p class="logic-original-line logic-arrow-line">→ participer davantage à la vie locale</p>
+          <p class="logic-original-line logic-spaced-line">Participer à la vie locale</p>
+          <p class="logic-original-line logic-arrow-line">→ créer des liens</p>
+          <p class="logic-original-line logic-arrow-line">→ rencontrer des personnes d&#x27;horizons variés</p>
+          <p class="logic-original-line logic-arrow-line">→ développer progressivement son réseau social</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son intégration</p>
+          <p class="logic-original-line logic-spaced-line">Mieux comprendre la culture locale</p>
+          <p class="logic-original-line logic-arrow-line">→ comprendre le mode de vie du pays d&#x27;accueil</p>
+          <p class="logic-original-line logic-arrow-line">→ découvrir les habitudes et les valeurs</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux s&#x27;adapter à un nouvel environnement</p>
+          <p class="logic-original-line logic-spaced-line">Faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line logic-arrow-line">→ respecter les différences culturelles</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux communiquer avec les autres</p>
+          <p class="logic-original-line logic-arrow-line">→ construire des relations durables</p>
+          <p class="logic-original-line logic-spaced-line">Réussir son intégration</p>
+          <p class="logic-original-line logic-arrow-line">→ mener une vie épanouie</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-arrow-line">→ construire son avenir avec davantage de sérénité</p>
+        </details>
+        <details id="logique-9-logique-reussir-sa-vie-professionnelle" class="logic-details">
+          <summary>9. Logique : Réussir sa vie professionnelle</summary>
+          <p class="logic-original-line logic-step-line">① Développer ses compétences</p>
+          <p class="logic-original-line">À mes yeux, il est essentiel de développer ses compétences tout au long de sa carrière. Cela permet de s&#x27;adapter plus facilement aux évolutions du monde du travail et de représenter un véritable atout sur le marché du travail.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, lorsque je travaillais dans les ressources humaines, j&#x27;ai développé mes compétences en communication et ma capacité d&#x27;adaptation. Aujourd&#x27;hui, ces compétences me sont encore très utiles.</p>
+          <p class="logic-original-line logic-step-line">② Acquérir de l&#x27;expérience professionnelle</p>
+          <p class="logic-original-line">Ensuite, l&#x27;expérience professionnelle permet de mettre ses connaissances en pratique et d&#x27;assumer davantage de responsabilités. Elle contribue également à évoluer progressivement dans sa carrière.</p>
+          <p class="logic-original-line">Par exemple, après plusieurs années de travail, je pouvais gérer des situations plus complexes avec davantage de confiance. Cette expérience m&#x27;a beaucoup aidée à évoluer professionnellement.</p>
+          <p class="logic-original-line logic-step-line">③ Trouver un juste équilibre</p>
+          <p class="logic-original-line">Par ailleurs, la réussite professionnelle ne dépend pas uniquement du salaire ou du poste occupé. Il est tout aussi important de maintenir un bon équilibre entre la vie professionnelle et la vie personnelle afin de préserver son bien-être.</p>
+          <p class="logic-original-line">Par exemple, le week-end, je passe du temps avec ma famille en faisant du tennis ou de la randonnée. Ces moments me permettent de relâcher la pression accumulée au fil de la semaine.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que la réussite professionnelle repose avant tout sur les compétences, l&#x27;expérience et la motivation. L&#x27;essentiel est de continuer à apprendre, à évoluer et à trouver un juste équilibre.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Développer ses compétences</p>
+          <p class="logic-original-line logic-spaced-line">Acquérir de nombreuses compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses compétences professionnelles</p>
+          <p class="logic-original-line logic-arrow-line">→ développer sa capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer ses capacités professionnelles</p>
+          <p class="logic-original-line logic-spaced-line">Acquérir de l&#x27;expérience professionnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ mettre ses connaissances en pratique</p>
+          <p class="logic-original-line logic-arrow-line">→ assumer davantage de responsabilités</p>
+          <p class="logic-original-line logic-arrow-line">→ évoluer progressivement dans sa carrière</p>
+          <p class="logic-original-line logic-spaced-line">Représenter un véritable atout sur le marché du travail</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son évolution professionnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer son efficacité au travail</p>
+          <p class="logic-original-line logic-arrow-line">→ se sentir utile à la société</p>
+          <p class="logic-original-line logic-spaced-line">Maintenir un bon équilibre entre la vie professionnelle et la vie personnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ relâcher la pression accumulée au fil de la semaine</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ rester motivé au quotidien</p>
+          <p class="logic-original-line logic-spaced-line">Réussir sa vie professionnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ assurer une stabilité financière</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son épanouissement professionnel</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+        </details>
+        <details id="logique-10-logique-faire-des-choix-de-consommation-reflechis" class="logic-details">
+          <summary>10. Logique : Faire des choix de consommation réfléchis</summary>
+          <p class="logic-original-line logic-step-line">① Répondre à ses besoins réels</p>
+          <p class="logic-original-line">À mes yeux, il est important de consommer de manière réfléchie. Avant d&#x27;acheter quelque chose, il vaut mieux réfléchir à ses besoins réels afin d&#x27;éviter les dépenses inutiles.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, lorsque j&#x27;achète un téléphone ou un ordinateur, je compare d&#x27;abord les différentes options. Je choisis le produit qui répond le mieux à mes besoins.</p>
+          <p class="logic-original-line logic-step-line">② Investir dans des dépenses utiles</p>
+          <p class="logic-original-line">Ensuite, je préfère consacrer une partie de mon budget à des dépenses utiles, comme les études, la santé ou le développement personnel. Ce type d&#x27;investissement permet d&#x27;améliorer durablement la qualité de vie.</p>
+          <p class="logic-original-line">Par exemple, je préfère suivre une formation ou acheter des équipements de fitness plutôt que de dépenser mon argent dans des achats impulsifs. Cela représente un investissement durable.</p>
+          <p class="logic-original-line logic-step-line">③ Préparer l&#x27;avenir</p>
+          <p class="logic-original-line">Par ailleurs, il est également important de mettre une partie de son argent de côté afin de préparer l&#x27;avenir. Cette habitude permet de faire face aux imprévus et d&#x27;aborder l&#x27;avenir avec davantage de sérénité.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;essaie d&#x27;économiser une partie de mon salaire chaque mois. Ainsi, je peux mieux gérer les dépenses imprévues.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;une bonne gestion de l&#x27;argent ne consiste pas à dépenser le moins possible, mais à faire des choix réfléchis et responsables. L&#x27;essentiel est de trouver un équilibre entre les dépenses d&#x27;aujourd&#x27;hui et les projets de demain.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Faire des choix de consommation réfléchis</p>
+          <p class="logic-original-line logic-spaced-line">Répondre à ses besoins réels</p>
+          <p class="logic-original-line logic-arrow-line">→ éviter les dépenses inutiles</p>
+          <p class="logic-original-line logic-arrow-line">→ comparer avant d&#x27;acheter</p>
+          <p class="logic-original-line logic-arrow-line">→ privilégier des achats utiles</p>
+          <p class="logic-original-line logic-spaced-line">Investir dans des dépenses utiles</p>
+          <p class="logic-original-line logic-arrow-line">→ investir dans son développement personnel</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver sa santé</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-spaced-line">Mettre de l&#x27;argent de côté</p>
+          <p class="logic-original-line logic-arrow-line">→ préparer l&#x27;avenir</p>
+          <p class="logic-original-line logic-arrow-line">→ faire face aux imprévus</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer sa sécurité financière</p>
+          <p class="logic-original-line logic-spaced-line">Faire des choix responsables</p>
+          <p class="logic-original-line logic-arrow-line">→ résister aux achats impulsifs</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas être influencé par la publicité</p>
+          <p class="logic-original-line logic-arrow-line">→ gérer son budget de manière plus rationnelle</p>
+          <p class="logic-original-line logic-spaced-line">Trouver un équilibre</p>
+          <p class="logic-original-line logic-arrow-line">→ vivre plus sereinement</p>
+          <p class="logic-original-line logic-arrow-line">→ construire son avenir</p>
+        </details>
+        <details id="logique-11-logique-proteger-l-environnement" class="logic-details">
+          <summary>11. Logique : Protéger l&#x27;environnement</summary>
+          <p class="logic-original-line logic-step-line">① Adopter des comportements responsables</p>
+          <p class="logic-original-line">À mes yeux, chacun peut contribuer à protéger l&#x27;environnement en adoptant des comportements responsables au quotidien. Même de petits gestes peuvent avoir un impact positif à long terme.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, je trie mes déchets et j&#x27;utilise des sacs réutilisables lorsque je fais les courses. Ces habitudes sont simples, mais elles permettent de limiter le gaspillage.</p>
+          <p class="logic-original-line logic-step-line">② Réduire notre impact sur l&#x27;environnement</p>
+          <p class="logic-original-line">Ensuite, il est important de limiter notre consommation de ressources naturelles et de privilégier des solutions plus durables. Cela contribue à protéger l&#x27;environnement et à préserver les ressources pour les générations futures.</p>
+          <p class="logic-original-line">Par exemple, lorsque cela est possible, je préfère marcher ou utiliser les transports en commun. Cela permet de réduire la pollution et de protéger l&#x27;environnement.</p>
+          <p class="logic-original-line logic-step-line">③ Sensibiliser davantage la population</p>
+          <p class="logic-original-line">Par ailleurs, chacun devrait être sensibilisé dès le plus jeune âge à la protection de l&#x27;environnement. Une meilleure éducation permet d&#x27;adopter plus facilement de bonnes habitudes.</p>
+          <p class="logic-original-line">Par exemple, à l&#x27;école, les enfants peuvent apprendre à recycler et à économiser l&#x27;énergie. Ces habitudes peuvent les accompagner tout au long de leur vie.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que la protection de l&#x27;environnement est une responsabilité collective. L&#x27;essentiel est d&#x27;agir dès aujourd&#x27;hui afin de construire un avenir plus durable.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Protéger l&#x27;environnement</p>
+          <p class="logic-original-line logic-spaced-line">Adopter des comportements responsables</p>
+          <p class="logic-original-line logic-arrow-line">→ réduire les déchets</p>
+          <p class="logic-original-line logic-arrow-line">→ limiter le gaspillage</p>
+          <p class="logic-original-line logic-arrow-line">→ recycler davantage</p>
+          <p class="logic-original-line logic-spaced-line">Préserver les ressources naturelles</p>
+          <p class="logic-original-line logic-arrow-line">→ économiser l&#x27;énergie</p>
+          <p class="logic-original-line logic-arrow-line">→ limiter la consommation de ressources</p>
+          <p class="logic-original-line logic-arrow-line">→ adopter des solutions plus durables</p>
+          <p class="logic-original-line logic-spaced-line">Réduire son impact sur l&#x27;environnement</p>
+          <p class="logic-original-line logic-arrow-line">→ privilégier les transports en commun</p>
+          <p class="logic-original-line logic-arrow-line">→ réduire la pollution</p>
+          <p class="logic-original-line logic-arrow-line">→ protéger la nature</p>
+          <p class="logic-original-line logic-spaced-line">Sensibiliser davantage la population</p>
+          <p class="logic-original-line logic-arrow-line">→ adopter de bonnes habitudes dès le plus jeune âge</p>
+          <p class="logic-original-line logic-arrow-line">→ développer une conscience environnementale</p>
+          <p class="logic-original-line logic-arrow-line">→ agir au quotidien</p>
+          <p class="logic-original-line logic-spaced-line">Construire un avenir plus durable</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver l&#x27;environnement pour les générations futures</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement la qualité de vie</p>
+        </details>
+        <details id="logique-12-logique-eduquer-et-preparer-l-avenir" class="logic-details">
+          <summary>12. Logique : Éduquer et préparer l&#x27;avenir</summary>
+          <p class="logic-original-line logic-step-line">① Acquérir des connaissances</p>
+          <p class="logic-original-line">À mes yeux, l&#x27;éducation joue un rôle essentiel dans le développement des individus. Elle permet d&#x27;acquérir des connaissances, de développer des compétences et de mieux préparer l&#x27;avenir.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, apprendre le français m&#x27;a permis d&#x27;acquérir de nouvelles connaissances et de communiquer plus facilement avec les autres. Cela représente un véritable atout pour mon avenir.</p>
+          <p class="logic-original-line logic-step-line">② Développer l&#x27;autonomie</p>
+          <p class="logic-original-line">Ensuite, l&#x27;école ne transmet pas seulement des connaissances. Elle aide également les jeunes à développer leur autonomie, leur sens des responsabilités et leur esprit critique.</p>
+          <p class="logic-original-line">Par exemple, mon fils apprend à organiser son travail et à résoudre certains problèmes par lui-même. Je pense que ces compétences lui seront utiles tout au long de sa vie.</p>
+          <p class="logic-original-line logic-step-line">③ Préparer le monde du travail</p>
+          <p class="logic-original-line">Par ailleurs, une bonne éducation facilite l&#x27;intégration dans la vie professionnelle. Elle permet de développer des compétences utiles et de mieux s&#x27;adapter aux évolutions de la société.</p>
+          <p class="logic-original-line">Par exemple, avant de venir au Canada, mon expérience dans les ressources humaines m&#x27;a montré que les employeurs recherchent avant tout des personnes capables d&#x27;apprendre et de s&#x27;adapter.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que l&#x27;éducation ne consiste pas uniquement à transmettre des connaissances. Elle permet également de développer des compétences, de préparer l&#x27;avenir et de favoriser l&#x27;épanouissement personnel.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Recevoir une bonne éducation</p>
+          <p class="logic-original-line logic-spaced-line">Acquérir des connaissances</p>
+          <p class="logic-original-line logic-arrow-line">→ développer de nouvelles compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ apprendre à apprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ développer son esprit critique</p>
+          <p class="logic-original-line logic-spaced-line">Développer son autonomie</p>
+          <p class="logic-original-line logic-arrow-line">→ prendre des responsabilités</p>
+          <p class="logic-original-line logic-arrow-line">→ résoudre des problèmes</p>
+          <p class="logic-original-line logic-arrow-line">→ gagner en confiance</p>
+          <p class="logic-original-line logic-spaced-line">Préparer son avenir</p>
+          <p class="logic-original-line logic-arrow-line">→ développer sa capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-arrow-line">→ faciliter l&#x27;intégration dans le monde du travail</p>
+          <p class="logic-original-line logic-arrow-line">→ représenter un véritable atout</p>
+          <p class="logic-original-line logic-spaced-line">Favoriser l&#x27;épanouissement personnel</p>
+          <p class="logic-original-line logic-arrow-line">→ continuer à apprendre tout au long de la vie</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+        </details>
+        <details id="logique-13-logique-s-ouvrir-au-monde-grace-aux-loisirs-et-a-la-culture" class="logic-details">
+          <summary>13. Logique : S&#x27;ouvrir au monde grâce aux loisirs et à la culture</summary>
+          <p class="logic-original-line logic-step-line">① Découvrir de nouvelles cultures</p>
+          <p class="logic-original-line">À mes yeux, les activités culturelles permettent de découvrir de nouvelles cultures et d&#x27;élargir ses horizons. Elles favorisent également l&#x27;ouverture d&#x27;esprit et permettent de mieux comprendre les autres.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, j&#x27;aime visiter des musées et participer à des activités organisées dans la communauté. Cela me permet de découvrir la culture locale et de rencontrer des personnes d&#x27;horizons variés.</p>
+          <p class="logic-original-line logic-step-line">② Développer ses connaissances</p>
+          <p class="logic-original-line">Ensuite, les loisirs permettent également d&#x27;apprendre de nouvelles choses et de développer ses connaissances. Ils représentent donc un excellent moyen de continuer à apprendre en dehors de l&#x27;école ou du travail.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;aime lire à la bibliothèque pendant mon temps libre. Cela me permet d&#x27;élargir mes connaissances et de développer progressivement mon esprit critique.</p>
+          <p class="logic-original-line logic-step-line">③ Se détendre et préserver son bien-être</p>
+          <p class="logic-original-line">Par ailleurs, les loisirs jouent un rôle important dans l&#x27;équilibre de vie. Ils permettent de relâcher la pression accumulée au fil de la semaine et de préserver son bien-être.</p>
+          <p class="logic-original-line">Par exemple, le week-end, je fais souvent de la randonnée ou du tennis avec mon mari et mon fils. Ces activités nous permettent de partager des moments de qualité et de profiter pleinement de la nature.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que les activités culturelles et les loisirs sont essentiels pour mener une vie équilibrée. Ils permettent à la fois d&#x27;apprendre, de se détendre et de s&#x27;ouvrir au monde.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">S&#x27;ouvrir au monde grâce aux loisirs et à la culture</p>
+          <p class="logic-original-line logic-spaced-line">Découvrir de nouvelles cultures</p>
+          <p class="logic-original-line logic-arrow-line">→ découvrir la culture locale</p>
+          <p class="logic-original-line logic-arrow-line">→ rencontrer des personnes d&#x27;horizons variés</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser l&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line logic-spaced-line">Développer ses connaissances</p>
+          <p class="logic-original-line logic-arrow-line">→ élargir ses horizons</p>
+          <p class="logic-original-line logic-arrow-line">→ développer sa créativité</p>
+          <p class="logic-original-line logic-arrow-line">→ continuer à apprendre</p>
+          <p class="logic-original-line logic-spaced-line">Partager des expériences enrichissantes</p>
+          <p class="logic-original-line logic-arrow-line">→ partager des moments de qualité</p>
+          <p class="logic-original-line logic-arrow-line">→ créer des souvenirs inoubliables</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer les relations</p>
+          <p class="logic-original-line logic-spaced-line">Préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ relâcher la pression accumulée au fil de la semaine</p>
+          <p class="logic-original-line logic-arrow-line">→ profiter pleinement de la nature</p>
+          <p class="logic-original-line logic-arrow-line">→ trouver un bon équilibre</p>
+          <p class="logic-original-line logic-spaced-line">Mener une vie plus épanouie</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser son épanouissement personnel</p>
+        </details>
+        <details id="logique-14-logique-apparence-et-estime-de-soi" class="logic-details">
+          <summary>14. Logique : Apparence et estime de soi</summary>
+          <p class="logic-original-line logic-step-line">① Prendre soin de son apparence</p>
+          <p class="logic-original-line">À mes yeux, prendre soin de son apparence peut représenter un véritable atout. Cela permet de gagner en confiance, de se sentir mieux dans sa peau et d&#x27;améliorer son bien-être.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, lorsque je participe à un entretien ou à une activité importante, je préfère porter des vêtements soignés. Cela me permet d&#x27;être plus à l&#x27;aise et de communiquer avec davantage de confiance.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">② Respecter son image sans rechercher la perfection</p>
+          <p class="logic-original-line">Ensuite, il est tout à fait normal de vouloir améliorer son apparence. Cependant, il ne faut pas chercher la perfection ni se comparer constamment aux autres.</p>
+          <p class="logic-original-line">Par exemple, certaines personnes suivent les tendances sur les réseaux sociaux. À mon avis, il vaut mieux choisir un style qui correspond à sa personnalité.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">③ La chirurgie esthétique présente aussi certaines limites</p>
+          <p class="logic-original-line">Par ailleurs, la chirurgie esthétique peut représenter une solution dans certaines situations. Cependant, elle ne constitue pas une condition indispensable pour se sentir bien dans sa peau.</p>
+          <p class="logic-original-line">Par exemple, certaines personnes retrouvent confiance après une opération. Toutefois, d&#x27;autres facteurs entrent également en jeu, comme la personnalité, la confiance en soi ou le mode de vie.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;il est tout à fait légitime de prendre soin de son apparence. L&#x27;essentiel est de s&#x27;accepter tel que l&#x27;on est et de trouver un juste équilibre.</p>
+          <p class="logic-original-line logic-star logic-spaced-line">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Prendre soin de son apparence</p>
+          <p class="logic-original-line logic-arrow-line">→ gagner en confiance</p>
+          <p class="logic-original-line logic-arrow-line">→ se sentir mieux dans sa peau</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer son bien-être</p>
+          <p class="logic-original-line">Respecter son image</p>
+          <p class="logic-original-line logic-arrow-line">→ exprimer sa personnalité</p>
+          <p class="logic-original-line logic-arrow-line">→ faire bonne impression</p>
+          <p class="logic-original-line logic-arrow-line">→ communiquer avec davantage de confiance</p>
+          <p class="logic-original-line">Ne pas rechercher la perfection</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas se comparer constamment aux autres</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son estime de soi</p>
+          <p class="logic-original-line logic-arrow-line">→ maintenir un bon équilibre</p>
+          <p class="logic-original-line">L&#x27;essentiel est de</p>
+          <p class="logic-original-line logic-arrow-line">→ s&#x27;accepter tel que l&#x27;on est</p>
+          <p class="logic-original-line logic-arrow-line">→ trouver un juste équilibre</p>
+          <p class="logic-original-line logic-label">Questions couvertes</p>
+          <p class="logic-original-line logic-arrow-line">La chirurgie esthétique</p>
+          <p class="logic-original-line logic-arrow-line">Paraître plus jeune</p>
+          <p class="logic-original-line logic-arrow-line">Les vêtements</p>
+          <p class="logic-original-line logic-arrow-line">La mode</p>
+          <p class="logic-original-line logic-arrow-line">Les produits de luxe (apparence)</p>
+          <p class="logic-original-line logic-arrow-line">L&#x27;apparence physique</p>
+        </details>
+        <details id="logique-15-logique-bonheur-et-epanouissement-personnel" class="logic-details">
+          <summary>15. Logique : Bonheur et épanouissement personnel</summary>
+          <p class="logic-original-line logic-step-line">① Donner un sens à sa vie</p>
+          <p class="logic-original-line">À mes yeux, le bonheur ne dépend pas d&#x27;un seul facteur. Il repose sur l&#x27;équilibre entre la vie personnelle, les relations humaines et les projets de chacun.</p>
+          <p class="logic-original-line logic-label">Exemple</p>
+          <p class="logic-original-line">Par exemple, je passe du temps avec mon mari et mon fils le week-end. Ces moments me rendent vraiment heureuse.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">② Se réaliser personnellement</p>
+          <p class="logic-original-line">Ensuite, continuer à apprendre, atteindre ses objectifs et développer ses compétences contribuent également à l&#x27;épanouissement personnel.</p>
+          <p class="logic-original-line">Par exemple, apprendre le français me donne confiance et me permet de progresser chaque jour.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">③ L&#x27;argent ne fait pas tout</p>
+          <p class="logic-original-line">Par ailleurs, l&#x27;argent représente un véritable atout, mais il ne constitue pas une condition suffisante pour être heureux.</p>
+          <p class="logic-original-line">Par exemple, certaines personnes gagnent bien leur vie mais manquent de temps pour leur famille.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que le bonheur dépend des besoins et des réalités de chacun. L&#x27;essentiel est de trouver un juste équilibre.</p>
+          <p class="logic-original-line logic-star logic-spaced-line">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Entretenir des relations humaines</p>
+          <p class="logic-original-line logic-arrow-line">→ partager des moments de qualité</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line">Continuer à apprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ développer son potentiel</p>
+          <p class="logic-original-line logic-arrow-line">→ gagner en confiance</p>
+          <p class="logic-original-line">L&#x27;argent représente un véritable atout</p>
+          <p class="logic-original-line logic-arrow-line">→ cependant</p>
+          <p class="logic-original-line logic-arrow-line">→ ne constitue pas une condition suffisante</p>
+          <p class="logic-original-line">Trouver un juste équilibre</p>
+          <p class="logic-original-line logic-arrow-line">→ mener une vie épanouie</p>
+          <p class="logic-original-line logic-label">Questions couvertes</p>
+          <p class="logic-original-line logic-arrow-line">Argent et bonheur</p>
+          <p class="logic-original-line logic-arrow-line">Être célibataire</p>
+          <p class="logic-original-line logic-arrow-line">Le plus important dans la vie</p>
+          <p class="logic-original-line logic-arrow-line">Le travail rend-il heureux ?</p>
+          <p class="logic-original-line logic-arrow-line">La réussite</p>
+        </details>
+        <details id="logique-16-logique-influence-et-esprit-critique" class="logic-details">
+          <summary>16. Logique : Influence et esprit critique</summary>
+          <p class="logic-original-line logic-step-line">① S&#x27;informer et apprendre</p>
+          <p class="logic-original-line">À mes yeux, les médias et les personnalités publiques peuvent avoir une influence positive. Ils permettent de découvrir de nouvelles idées et d&#x27;élargir ses horizons.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">② Inspirer les autres</p>
+          <p class="logic-original-line">Certaines personnes peuvent également servir d&#x27;exemple et encourager des comportements positifs.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">③ Développer son esprit critique</p>
+          <p class="logic-original-line">Cependant, il est important de développer son esprit critique et de ne pas suivre aveuglément toutes les tendances.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, l&#x27;essentiel est de réfléchir par soi-même et de faire des choix éclairés.</p>
+          <p class="logic-original-line logic-star logic-spaced-line">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Découvrir de nouvelles idées</p>
+          <p class="logic-original-line logic-arrow-line">→ élargir ses horizons</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses connaissances</p>
+          <p class="logic-original-line">Développer son esprit critique</p>
+          <p class="logic-original-line logic-arrow-line">→ faire des choix réfléchis</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas être influencé par toutes les tendances</p>
+          <p class="logic-original-line">Faire un usage raisonnable</p>
+          <p class="logic-original-line logic-arrow-line">→ en tirer le meilleur parti</p>
+          <p class="logic-original-line logic-arrow-line">→ limiter les effets négatifs</p>
+          <p class="logic-original-line logic-label">Questions couvertes</p>
+          <p class="logic-original-line logic-arrow-line">Les célébrités</p>
+          <p class="logic-original-line logic-arrow-line">Les influenceurs</p>
+          <p class="logic-original-line logic-arrow-line">Les réseaux sociaux</p>
+          <p class="logic-original-line logic-arrow-line">La publicité</p>
+          <p class="logic-original-line logic-arrow-line">Les médias</p>
+        </details>
+        <details id="logique-17-logique-solidarite-et-responsabilite-collective" class="logic-details">
+          <summary>17. Logique : Solidarité et responsabilité collective</summary>
+          <p class="logic-original-line logic-step-line">① S&#x27;entraider</p>
+          <p class="logic-original-line">À mes yeux, la solidarité joue un rôle essentiel dans notre société. Elle permet d&#x27;aider les personnes qui en ont besoin et de renforcer les liens entre les citoyens.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">② Chacun peut agir</p>
+          <p class="logic-original-line">Même de petits gestes peuvent avoir un impact positif sur la vie des autres.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">③ Les efforts individuels ne suffisent pas toujours</p>
+          <p class="logic-original-line">Cependant, les pouvoirs publics, les entreprises et les associations ont également un rôle essentiel à jouer.</p>
+          <p class="logic-original-line logic-step-line logic-spaced-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, chacun peut contribuer à améliorer la société. L&#x27;essentiel est de travailler ensemble.</p>
+          <p class="logic-original-line logic-star logic-spaced-line">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">S&#x27;entraider</p>
+          <p class="logic-original-line logic-arrow-line">→ soutenir les autres</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer les liens sociaux</p>
+          <p class="logic-original-line">Agir à son niveau</p>
+          <p class="logic-original-line logic-arrow-line">→ contribuer au bien-être collectif</p>
+          <p class="logic-original-line logic-arrow-line">→ encourager des comportements responsables</p>
+          <p class="logic-original-line">Les efforts individuels ne suffisent pas</p>
+          <p class="logic-original-line logic-arrow-line">→ les pouvoirs publics</p>
+          <p class="logic-original-line logic-arrow-line">→ les entreprises</p>
+          <p class="logic-original-line logic-arrow-line">→ les associations</p>
+          <p class="logic-original-line">Travailler ensemble</p>
+          <p class="logic-original-line logic-arrow-line">→ obtenir des résultats durables</p>
+          <p class="logic-original-line logic-label">Questions couvertes</p>
+          <p class="logic-original-line logic-arrow-line">Le bénévolat</p>
+          <p class="logic-original-line logic-arrow-line">Les personnes âgées</p>
+          <p class="logic-original-line logic-arrow-line">Les personnes en situation de handicap</p>
+          <p class="logic-original-line logic-arrow-line">La solidarité</p>
+          <p class="logic-original-line logic-arrow-line">Les associations</p>
+          <p class="logic-original-line logic-arrow-line">Les actions citoyennes</p>
+        </details>
+        <details id="logique-18-logique-de-l-opinion" class="logic-details">
+          <summary>18. Logique de l&#x27;opinion（万能观点）</summary>
+          <p class="logic-original-line logic-step-line">① Donner son opinion</p>
+          <p class="logic-original-line">Opinion nuancée（★★★★★）</p>
+          <p class="logic-original-line">Cette question mérite d&#x27;être nuancée.</p>
+          <p class="logic-original-line">À mes yeux,...</p>
+          <p class="logic-original-line">Pour ma part,...</p>
+          <p class="logic-original-line">Je pense que...</p>
+          <p class="logic-original-line logic-step-line">② Donner un avis favorable</p>
+          <p class="logic-original-line">Je suis plutôt favorable à cette idée.</p>
+          <p class="logic-original-line">À mes yeux, cette solution présente de nombreux avantages.</p>
+          <p class="logic-original-line">Elle représente un véritable atout.</p>
+          <p class="logic-original-line">Elle permet de...</p>
+          <p class="logic-original-line">Elle contribue à...</p>
+          <p class="logic-original-line">Elle favorise...</p>
+          <p class="logic-original-line logic-label">Exemple</p>
+          <p class="logic-original-line">Par exemple, apprendre une langue étrangère facilite la communication et favorise l&#x27;intégration.</p>
+          <p class="logic-original-line logic-step-line">③ Donner un avis défavorable</p>
+          <p class="logic-original-line">Je ne partage pas totalement cette opinion.</p>
+          <p class="logic-original-line">À mes yeux, cette solution présente également certaines limites.</p>
+          <p class="logic-original-line">Elle peut entraîner certaines difficultés.</p>
+          <p class="logic-original-line">Il ne faut pas négliger...</p>
+          <p class="logic-original-line">Elle n&#x27;est pas sans conséquences.</p>
+          <p class="logic-original-line">Par exemple, une utilisation excessive du téléphone peut nuire à la concentration.</p>
+          <p class="logic-original-line logic-step-line">④ Donner un avis nuancé（你的语料最高频）</p>
+          <p class="logic-original-line">Cependant,...</p>
+          <p class="logic-original-line">Cela ne signifie pas que...</p>
+          <p class="logic-original-line">Toutefois,...</p>
+          <p class="logic-original-line">Il convient également de souligner que...</p>
+          <p class="logic-original-line">Tout dépend des besoins et des réalités de chacun.</p>
+          <p class="logic-original-line">Par exemple, le télétravail offre davantage de flexibilité. Cependant, il peut réduire les échanges entre collègues.</p>
+          <p class="logic-original-line logic-step-line">⑤ Donner une solution</p>
+          <p class="logic-original-line">À mon avis, l&#x27;essentiel est de...</p>
+          <p class="logic-original-line">Il vaut mieux...</p>
+          <p class="logic-original-line">Il est préférable de...</p>
+          <p class="logic-original-line">Il est essentiel de...</p>
+          <p class="logic-original-line">Il est important de...</p>
+          <p class="logic-original-line">À mon avis, l&#x27;essentiel est de trouver un juste équilibre entre les avantages et les inconvénients.</p>
+          <p class="logic-original-line logic-step-line">⑥ Conclusion（全部来自你的语料）</p>
+          <p class="logic-original-line">En définitive,...</p>
+          <p class="logic-original-line">En conclusion,...</p>
+          <p class="logic-original-line">L&#x27;essentiel est de...</p>
+          <p class="logic-original-line">L&#x27;objectif est de...</p>
+          <p class="logic-original-line">Il convient de trouver un juste équilibre.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Donner son opinion</p>
+          <p class="logic-original-line logic-spaced-line">Présenter les avantages</p>
+          <p class="logic-original-line logic-arrow-line">→ représenter un véritable atout</p>
+          <p class="logic-original-line logic-arrow-line">→ permettre de...</p>
+          <p class="logic-original-line logic-arrow-line">→ contribuer à...</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser...</p>
+          <p class="logic-original-line logic-spaced-line">Reconnaître les limites</p>
+          <p class="logic-original-line logic-arrow-line">→ présenter certaines limites</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas être sans conséquences</p>
+          <p class="logic-original-line logic-arrow-line">→ entraîner certaines difficultés</p>
+          <p class="logic-original-line logic-arrow-line">→ nuire à...</p>
+          <p class="logic-original-line logic-spaced-line">Nuancer son opinion</p>
+          <p class="logic-original-line logic-arrow-line">→ cependant</p>
+          <p class="logic-original-line logic-arrow-line">→ toutefois</p>
+          <p class="logic-original-line logic-arrow-line">→ cela ne signifie pas que...</p>
+          <p class="logic-original-line logic-arrow-line">→ tout dépend des besoins et des réalités de chacun</p>
+          <p class="logic-original-line logic-spaced-line">Proposer une solution</p>
+          <p class="logic-original-line logic-arrow-line">→ il est préférable de...</p>
+          <p class="logic-original-line logic-arrow-line">→ il est essentiel de...</p>
+          <p class="logic-original-line logic-arrow-line">→ faire un usage raisonnable</p>
+          <p class="logic-original-line logic-arrow-line">→ adopter un mode de vie sain</p>
+          <p class="logic-original-line logic-arrow-line">→ trouver un juste équilibre</p>
+          <p class="logic-original-line logic-spaced-line">Conclure</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement la qualité de vie</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser le bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ construire un avenir plus serein</p>
+          <p class="logic-original-line logic-arrow-line">→ mener une vie plus épanouie</p>
+        </details>
+        <details id="logique-19-logique-une-condition-ne-suffit-pas-toujours" class="logic-details">
+          <summary>19. Logique : Une condition ne suffit pas toujours</summary>
+          <p class="logic-original-line logic-label">高频表达：</p>
+          <p class="logic-original-line logic-arrow-line">représenter un véritable atout</p>
+          <p class="logic-original-line logic-arrow-line">ne pas constituer une condition indispensable</p>
+          <p class="logic-original-line logic-arrow-line">ne pas constituer une condition suffisante</p>
+          <p class="logic-original-line logic-arrow-line">d&#x27;autres facteurs entrent également en jeu</p>
+          <p class="logic-original-line logic-arrow-line">dépendre davantage de..</p>
+          <p class="logic-original-line logic-step-line">① Représenter un véritable atout</p>
+          <p class="logic-original-line">À mes yeux, certains éléments représentent un véritable atout et permettent de faciliter de nombreux aspects de la vie. Cependant, ils ne constituent pas toujours une condition indispensable ou suffisante pour réussir.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, maîtriser la langue du pays d&#x27;accueil facilite la communication au quotidien et favorise l&#x27;intégration. Cependant, cela ne constitue pas une condition suffisante pour réussir son intégration.</p>
+          <p class="logic-original-line logic-step-line">② D&#x27;autres facteurs entrent également en jeu</p>
+          <p class="logic-original-line">En réalité, d&#x27;autres facteurs entrent également en jeu, comme les compétences, l&#x27;expérience, la motivation ou la capacité d&#x27;adaptation. Ces éléments jouent souvent un rôle tout aussi important.</p>
+          <p class="logic-original-line">Par exemple, les longues études représentent un véritable atout. Cependant, la réussite dépend davantage des compétences, de l&#x27;expérience et de la motivation que de la durée des études.</p>
+          <p class="logic-original-line logic-step-line">③ Continuer à apprendre et à évoluer</p>
+          <p class="logic-original-line">Par ailleurs, il est essentiel de continuer à apprendre et à développer ses compétences tout au long de la vie. Cette démarche permet de mieux s&#x27;adapter aux nouvelles situations et de favoriser son évolution professionnelle.</p>
+          <p class="logic-original-line">Par exemple, aujourd&#x27;hui, j&#x27;apprends le français tous les jours et je participe parfois à des activités organisées dans la communauté. Cela me permet de communiquer plus facilement avec les autres et de développer progressivement mon réseau social.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;aucun facteur ne garantit à lui seul la réussite. L&#x27;essentiel est de continuer à apprendre, de développer ses compétences, de faire preuve d&#x27;ouverture d&#x27;esprit et de s&#x27;adapter aux différentes situations.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Représenter un véritable atout</p>
+          <p class="logic-original-line logic-spaced-line">Ne pas constituer une condition indispensable / suffisante</p>
+          <p class="logic-original-line logic-spaced-line">D&#x27;autres facteurs entrent également en jeu</p>
+          <p class="logic-original-line logic-arrow-line">→ les compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ l&#x27;expérience</p>
+          <p class="logic-original-line logic-arrow-line">→ la motivation</p>
+          <p class="logic-original-line logic-arrow-line">→ la capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-spaced-line">Continuer à apprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ développer de nombreuses compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux s&#x27;adapter aux nouvelles situations</p>
+          <p class="logic-original-line logic-arrow-line">→ évoluer tout au long de sa carrière</p>
+          <p class="logic-original-line logic-spaced-line">L&#x27;essentiel est de...</p>
+          <p class="logic-original-line logic-arrow-line">→ continuer à apprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ développer ses compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ faire preuve d&#x27;ouverture d&#x27;esprit</p>
+          <p class="logic-original-line logic-arrow-line">→ s&#x27;adapter aux différentes situations</p>
+        </details>
+        <details id="logique-20-logique-une-utilisation-excessive-presente-certaines-limites" class="logic-details">
+          <summary>20. Logique : Une utilisation excessive présente certaines limites</summary>
+          <p class="logic-original-line logic-label">高频表达：</p>
+          <p class="logic-original-line logic-arrow-line">une utilisation excessive</p>
+          <p class="logic-original-line logic-arrow-line">créer une certaine dépendance</p>
+          <p class="logic-original-line logic-arrow-line">nuire à la concentration</p>
+          <p class="logic-original-line logic-arrow-line">réduire les échanges en face à face</p>
+          <p class="logic-original-line logic-arrow-line">faire un usage raisonnable</p>
+          <p class="logic-original-line logic-step-line">① Une utilisation excessive n&#x27;est pas sans conséquences</p>
+          <p class="logic-original-line">À mes yeux, de nombreux outils ou activités représentent aujourd&#x27;hui un véritable atout dans la vie quotidienne. Cependant, une utilisation excessive n&#x27;est pas sans conséquences.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, les appareils électroniques facilitent le travail, les études et la communication. Toutefois, une utilisation excessive peut nuire à la concentration.</p>
+          <p class="logic-original-line logic-step-line">② Certaines conséquences apparaissent progressivement</p>
+          <p class="logic-original-line">Une utilisation excessive peut créer une certaine dépendance, réduire les échanges en face à face et favoriser l&#x27;isolement social. À long terme, ces effets peuvent nuire au bien-être.</p>
+          <p class="logic-original-line">Par exemple, une amie travaille principalement à domicile. Elle sort beaucoup moins avec ses collègues et reconnaît qu&#x27;elle se sent parfois plus seule qu&#x27;auparavant.</p>
+          <p class="logic-original-line logic-step-line">③ Faire un usage raisonnable</p>
+          <p class="logic-original-line">Cela ne signifie pas qu&#x27;il faut renoncer à ces outils. L&#x27;essentiel est d&#x27;en faire un usage raisonnable afin d&#x27;en tirer tous les bénéfices sans en subir les effets négatifs.</p>
+          <p class="logic-original-line">Par exemple, j&#x27;utilise mon téléphone tous les jours pour communiquer, payer et organiser mes rendez-vous. Cependant, j&#x27;essaie aussi de limiter son utilisation afin de préserver un bon équilibre dans ma vie quotidienne.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense que le problème ne vient pas de l&#x27;outil lui-même, mais de la manière dont on l&#x27;utilise. L&#x27;essentiel est donc de faire un usage raisonnable afin de préserver son bien-être et de maintenir un bon équilibre dans la vie quotidienne.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Représenter un véritable atout</p>
+          <p class="logic-original-line logic-spaced-line">Une utilisation excessive n&#x27;est pas sans conséquences</p>
+          <p class="logic-original-line logic-spaced-line">Créer une certaine dépendance</p>
+          <p class="logic-original-line logic-arrow-line">→ nuire à la concentration</p>
+          <p class="logic-original-line logic-arrow-line">→ détourner l&#x27;attention</p>
+          <p class="logic-original-line logic-arrow-line">→ réduire les échanges en face à face</p>
+          <p class="logic-original-line logic-arrow-line">→ favoriser l&#x27;isolement social</p>
+          <p class="logic-original-line logic-spaced-line">En subir les effets négatifs</p>
+          <p class="logic-original-line logic-arrow-line">→ nuire au bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ réduire la qualité de vie</p>
+          <p class="logic-original-line logic-spaced-line">L&#x27;essentiel est de...</p>
+          <p class="logic-original-line logic-arrow-line">→ faire un usage raisonnable</p>
+          <p class="logic-original-line logic-arrow-line">→ en tirer tous les bénéfices</p>
+          <p class="logic-original-line logic-arrow-line">→ ne pas en subir les effets négatifs</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver un bon équilibre dans la vie quotidienne</p>
+        </details>
+        <details id="logique-21-logique-il-est-essentiel-de-trouver-un-juste-equilibre" class="logic-details">
+          <summary>21. Logique : Il est essentiel de trouver un juste équilibre</summary>
+          <p class="logic-original-line logic-label">高频表达：</p>
+          <p class="logic-original-line logic-arrow-line">maintenir un bon équilibre</p>
+          <p class="logic-original-line logic-arrow-line">vie professionnelle / vie personnelle</p>
+          <p class="logic-original-line logic-arrow-line">relâcher la pression</p>
+          <p class="logic-original-line logic-arrow-line">préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">tout dépend des besoins et des réalités de chacun</p>
+          <p class="logic-original-line logic-step-line">① Aucun aspect de la vie ne doit être négligé</p>
+          <p class="logic-original-line">À mes yeux, certains aspects de la vie sont tous importants. Lorsqu&#x27;on accorde trop d&#x27;importance à un seul domaine, on risque de négliger d&#x27;autres priorités tout aussi essentielles.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, le travail représente un véritable atout, mais la famille est tout aussi importante. Passer du temps avec sa famille permet de maintenir un bon équilibre entre la vie professionnelle et la vie personnelle.</p>
+          <p class="logic-original-line logic-step-line">② Maintenir un bon équilibre permet de préserver son bien-être</p>
+          <p class="logic-original-line">Maintenir un bon équilibre permet non seulement de préserver son bien-être, mais aussi de rester motivé et plus efficace au quotidien.</p>
+          <p class="logic-original-line">Par exemple, le week-end, je fais souvent du tennis ou de la randonnée avec mon mari et mon fils. Ces moments nous permettent de relâcher la pression accumulée au fil de la semaine et de renforcer les liens familiaux.</p>
+          <p class="logic-original-line logic-step-line">③ Chaque personne doit trouver son propre équilibre</p>
+          <p class="logic-original-line">Cependant, il n&#x27;existe pas de solution unique. Tout dépend des besoins et des réalités de chacun.</p>
+          <p class="logic-original-line">Par exemple, certaines personnes préfèrent travailler à distance, tandis que d&#x27;autres sont plus efficaces au bureau. L&#x27;essentiel est de choisir l&#x27;organisation qui convient le mieux à sa situation.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, je pense qu&#x27;il est difficile de privilégier un seul aspect de la vie. L&#x27;essentiel est de trouver un juste équilibre afin de préserver son bien-être, de maintenir de bonnes relations avec les autres et d&#x27;améliorer durablement sa qualité de vie.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Accorder de l&#x27;importance aux différents aspects de la vie</p>
+          <p class="logic-original-line logic-spaced-line">Ne pas négliger d&#x27;autres priorités</p>
+          <p class="logic-original-line logic-spaced-line">Maintenir un bon équilibre</p>
+          <p class="logic-original-line logic-arrow-line">→ entre la vie professionnelle et la vie personnelle</p>
+          <p class="logic-original-line logic-arrow-line">→ entre le travail et la famille</p>
+          <p class="logic-original-line logic-arrow-line">→ entre les études et les loisirs</p>
+          <p class="logic-original-line logic-spaced-line">Préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ relâcher la pression accumulée au fil de la semaine</p>
+          <p class="logic-original-line logic-arrow-line">→ rester motivé</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer son efficacité</p>
+          <p class="logic-original-line logic-spaced-line">Tout dépend des besoins et des réalités de chacun</p>
+          <p class="logic-original-line logic-spaced-line">L&#x27;essentiel est de trouver un juste équilibre</p>
+          <p class="logic-original-line logic-arrow-line">→ préserver son bien-être</p>
+          <p class="logic-original-line logic-arrow-line">→ renforcer les liens familiaux</p>
+          <p class="logic-original-line logic-arrow-line">→ améliorer durablement sa qualité de vie</p>
+        </details>
+        <details id="logique-22-logique-d-autres-facteurs-entrent-egalement-en-jeu" class="logic-details">
+          <summary>22. Logique : D&#x27;autres facteurs entrent également en jeu</summary>
+          <p class="logic-original-line logic-label">高频表达：</p>
+          <p class="logic-original-line logic-arrow-line">les efforts restent nécessaires</p>
+          <p class="logic-original-line logic-arrow-line">les efforts individuels ne suffisent pas</p>
+          <p class="logic-original-line logic-arrow-line">les pouvoirs publics ont également un rôle essentiel à jouer</p>
+          <p class="logic-original-line logic-arrow-line">poursuivre les efforts</p>
+          <p class="logic-original-line logic-arrow-line">mettre en place...</p>
+          <p class="logic-original-line logic-step-line">① Un facteur est important, mais il n&#x27;explique pas tout</p>
+          <p class="logic-original-line">À mes yeux, certains facteurs représentent un véritable atout. Cependant, ils ne suffisent pas à expliquer une situation à eux seuls, car d&#x27;autres éléments entrent également en jeu.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, les diplômes représentent un véritable atout pour trouver un travail. Cependant, ils ne garantissent pas toujours la réussite professionnelle.</p>
+          <p class="logic-original-line logic-step-line">② Les compétences et l&#x27;expérience jouent un rôle essentiel</p>
+          <p class="logic-original-line">En réalité, les compétences, l&#x27;expérience et la motivation sont souvent tout aussi importantes. Ces qualités permettent de mieux s&#x27;adapter aux nouvelles situations et d&#x27;évoluer plus facilement dans la vie professionnelle.</p>
+          <p class="logic-original-line">Par exemple, un de mes amis a commencé à travailler juste après ses études secondaires. Grâce à son expérience et à sa motivation, il occupe aujourd&#x27;hui un poste à responsabilités.</p>
+          <p class="logic-original-line logic-step-line">③ Il est essentiel de continuer à apprendre</p>
+          <p class="logic-original-line">Aujourd&#x27;hui, il est possible de développer ses compétences de différentes manières. L&#x27;essentiel est donc de continuer à apprendre et à évoluer tout au long de sa carrière.</p>
+          <p class="logic-original-line">Par exemple, aujourd&#x27;hui, il existe de nombreuses formations en ligne et des formations continues. Elles permettent d&#x27;améliorer ses compétences tout au long de la vie professionnelle.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, la réussite ne dépend pas d&#x27;un seul facteur. Elle dépend davantage des compétences, de l&#x27;expérience, de la motivation et de la capacité à continuer à apprendre.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Un facteur représente un véritable atout</p>
+          <p class="logic-original-line logic-spaced-line">Ne pas expliquer une situation à lui seul</p>
+          <p class="logic-original-line logic-spaced-line">D&#x27;autres facteurs entrent également en jeu</p>
+          <p class="logic-original-line logic-arrow-line">→ les compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ l&#x27;expérience</p>
+          <p class="logic-original-line logic-arrow-line">→ la motivation</p>
+          <p class="logic-original-line logic-arrow-line">→ la capacité d&#x27;adaptation</p>
+          <p class="logic-original-line logic-spaced-line">Continuer à apprendre</p>
+          <p class="logic-original-line logic-arrow-line">→ développer de nombreuses compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ évoluer tout au long de sa carrière</p>
+          <p class="logic-original-line logic-arrow-line">→ mieux s&#x27;adapter aux nouvelles situations</p>
+          <p class="logic-original-line logic-spaced-line">La réussite dépend davantage...</p>
+          <p class="logic-original-line logic-arrow-line">→ des compétences</p>
+          <p class="logic-original-line logic-arrow-line">→ de l&#x27;expérience</p>
+          <p class="logic-original-line logic-arrow-line">→ de la motivation</p>
+          <p class="logic-original-line logic-arrow-line">→ de la capacité à apprendre</p>
+        </details>
+        <details id="logique-23-logique-les-efforts-individuels-ne-suffisent-pas-toujours" class="logic-details">
+          <summary>23. Logique : Les efforts individuels ne suffisent pas toujours</summary>
+          <p class="logic-original-line logic-label">高频表达：</p>
+          <p class="logic-original-line logic-arrow-line">tout dépend des besoins et des réalités de chacun</p>
+          <p class="logic-original-line logic-arrow-line">il est préférable de...</p>
+          <p class="logic-original-line logic-arrow-line">à condition que...</p>
+          <p class="logic-original-line logic-arrow-line">mettre en place des règles claires</p>
+          <p class="logic-original-line logic-arrow-line">être raisonnablement encadré</p>
+          <p class="logic-original-line logic-step-line">① Les efforts individuels sont importants</p>
+          <p class="logic-original-line">À mes yeux, chacun peut agir à son niveau et contribuer à améliorer la situation. Cependant, les efforts individuels ne suffisent pas toujours à eux seuls.</p>
+          <p class="logic-original-line logic-label">Exemple (2 phrases)</p>
+          <p class="logic-original-line">Par exemple, chacun peut adopter de meilleures habitudes de consommation et produire moins de déchets. Ces petits gestes permettent de protéger l&#x27;environnement au quotidien.</p>
+          <p class="logic-original-line logic-step-line">② D&#x27;autres acteurs ont également un rôle essentiel à jouer</p>
+          <p class="logic-original-line">En réalité, les pouvoirs publics, les entreprises ou les établissements jouent également un rôle essentiel. Leur participation permet d&#x27;obtenir des résultats plus durables.</p>
+          <p class="logic-original-line">Par exemple, même si une famille trie correctement ses déchets, les résultats resteront limités si les entreprises continuent à utiliser trop d&#x27;emballages jetables. Les pouvoirs publics et les entreprises ont donc également un rôle essentiel à jouer.</p>
+          <p class="logic-original-line logic-step-line">③ Certaines difficultés persistent</p>
+          <p class="logic-original-line">Par ailleurs, certaines difficultés persistent encore aujourd&#x27;hui. Il est donc indispensable de poursuivre les efforts et de mettre en place des mesures adaptées.</p>
+          <p class="logic-original-line">Par exemple, les obstacles liés à l&#x27;accessibilité ou le manque d&#x27;adaptations peuvent encore limiter les possibilités offertes aux personnes en situation de handicap. Il est donc indispensable de poursuivre les efforts afin de construire une société plus inclusive.</p>
+          <p class="logic-original-line logic-step-line">④ Conclusion</p>
+          <p class="logic-original-line">En définitive, chacun peut contribuer au changement, mais les efforts individuels doivent être accompagnés par des actions collectives. L&#x27;essentiel est de travailler ensemble afin d&#x27;obtenir des résultats durables.</p>
+          <p class="logic-original-line logic-star">⭐ Une seule logique à retenir</p>
+          <p class="logic-original-line">Chacun peut agir à son niveau</p>
+          <p class="logic-original-line logic-spaced-line">Les efforts individuels ne suffisent pas toujours</p>
+          <p class="logic-original-line logic-spaced-line">D&#x27;autres acteurs ont également un rôle essentiel à jouer</p>
+          <p class="logic-original-line logic-arrow-line">→ les pouvoirs publics</p>
+          <p class="logic-original-line logic-arrow-line">→ les entreprises</p>
+          <p class="logic-original-line logic-arrow-line">→ les établissements</p>
+          <p class="logic-original-line logic-spaced-line">Certaines difficultés persistent</p>
+          <p class="logic-original-line logic-arrow-line">→ poursuivre les efforts</p>
+          <p class="logic-original-line logic-arrow-line">→ mettre en place des mesures adaptées</p>
+          <p class="logic-original-line logic-arrow-line">→ faciliter la participation</p>
+          <p class="logic-original-line logic-spaced-line">L&#x27;essentiel est de...</p>
+          <p class="logic-original-line logic-arrow-line">→ travailler ensemble</p>
+          <p class="logic-original-line logic-arrow-line">→ encourager des comportements plus responsables</p>
+          <p class="logic-original-line logic-arrow-line">→ obtenir des résultats durables</p>
+        </details>
+        </details>
+      </section>
+
+
+    </main>
+  </div>
+  <script>
+
+    function colorTemplateFragments() {
+      document.querySelectorAll('#t3-oral .template-fragment').forEach(fragment => {
+        fragment.replaceWith(...fragment.childNodes);
+      });
+      document.querySelectorAll('#t3-oral .t3-question p').forEach(paragraph => paragraph.normalize());
+
+      const templateFragments = [
+        "Si je comprends bien, il s'agit de savoir si",
+        "Si je comprends bien, il s'agit de savoir s'",
+        "Il serait intéressant de s'interroger sur les différents aspects de cette question.",
+        "Il serait intéressant de réfléchir à cette question.",
+        "Si je devais en retenir quelques-unes, je choisirais",
+        "Pour ma part, je pense que",
+        "Bien que",
+        "présente de nombreux avantages",
+        "présentent de nombreux avantages",
+        "présentent tous deux des avantages",
+        "il est également essentiel de ne pas négliger",
+        "les risques liés à",
+        "il convient également de prendre en considération d'autres facteurs.",
+        "J'aimerais développer trois arguments qui expliquent mon point de vue.",
+        "Pour commencer,",
+        "constitue un véritable atout, car",
+        "constituent un véritable atout, car",
+        "En effet,",
+        "cela favorise également",
+        "cela favorise aussi",
+        "cela permet de",
+        "cela aide",
+        "Par exemple,",
+        "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que",
+        "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées pensaient que",
+        "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées utilisaient",
+        "j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que",
+        "j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées pensaient que",
+        "j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées utilisaient",
+        "Cela montre que",
+        "Ensuite,",
+        "joue également un rôle essentiel dans",
+        "jouent également un rôle essentiel dans",
+        "Autrement dit,",
+        "il contribue à",
+        "elle contribue à",
+        "ils contribuent à",
+        "elles contribuent à",
+        "il permet de",
+        "elle permet de",
+        "ils permettent de",
+        "elles permettent de",
+        "Prenons mon propre exemple.",
+        "Prenons mon exemple.",
+        "Prenons l'exemple de",
+        "Prenons le cas de",
+        "Cet exemple prouve que",
+        "Cet exemple montre que",
+        "Toutefois, j'aimerais ajouter un dernier point concernant",
+        "Même si",
+        "Même si ce sujet offre de réels avantages,",
+        "offre de réels avantages",
+        "offrent de réels avantages",
+        "cela ne signifie pas que",
+        "il ne constitue pas le seul facteur à prendre en compte.",
+        "ils ne constituent pas les seuls facteurs à prendre en compte.",
+        "elles ne constituent pas les seuls facteurs à prendre en compte.",
+        "ne constitue pas le seul",
+        "ne constituent pas le seul",
+        "soit moins important.",
+        "il ne convient pas pour autant de négliger",
+        "il ne convient pas pour autant négliger ses limites.",
+        "facteur à prendre en compte.",
+        "facteurs à prendre en compte.",
+        "peut s'avérer particulièrement bénéfique pour",
+        "peuvent s'avérer particulièrement bénéfiques pour",
+        "peut comporter certains risques pour",
+        "peuvent comporter certains risques pour",
+        "peut également apporter de nombreux bénéfices.",
+        "peuvent également apporter de nombreux bénéfices.",
+        "peuvent également se compléter.",
+        "On voit donc que",
+        "En définitive,",
+        "il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question.",
+        "cette question ne peut être abordée sous un seul angle.",
+        "plutôt que d'opposer",
+        "il me semble plus pertinent de reconnaître qu'ils peuvent se compléter.",
+        "il me semble plus pertinent de reconnaître qu'elles peuvent se compléter.",
+        "Il s'agit avant tout de",
+        "Tout l'enjeu consiste à",
+        "trouver la manière la plus adaptée de les concilier selon les besoins de chacun.",
+        "trouver la meilleure manière de les concilier selon les besoins de chacun.",
+        "en tirer le meilleur parti tout en limitant ses éventuels inconvénients.",
+        "prendre en considération l'ensemble des facteurs avant de se faire une opinion.",
+        "ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs.",
+        "poursuivre un projet qui me permette de continuer à apprendre et à progresser.",
+      ].sort((a, b) => b.length - a.length);
+
+      const questionParagraphs = document.querySelectorAll(
+        '#t3-oral .t3-question p'
+      );
+
+      function wrapTextNode(textNode) {
+        const text = textNode.nodeValue;
+        let index = 0;
+        const fragment = document.createDocumentFragment();
+
+        while (index < text.length) {
+          let nextMatch = null;
+          let nextPosition = text.length;
+
+          for (const pattern of templateFragments) {
+            const position = text.indexOf(pattern, index);
+            if (position !== -1 && position < nextPosition) {
+              nextPosition = position;
+              nextMatch = pattern;
+            }
+          }
+
+          if (!nextMatch) {
+            fragment.appendChild(document.createTextNode(text.slice(index)));
+            break;
+          }
+
+          if (nextPosition > index) {
+            fragment.appendChild(document.createTextNode(text.slice(index, nextPosition)));
+          }
+
+          const span = document.createElement('span');
+          span.className = 'template-fragment';
+          span.textContent = nextMatch;
+          fragment.appendChild(span);
+          index = nextPosition + nextMatch.length;
+        }
+
+        textNode.replaceWith(fragment);
+      }
+
+      questionParagraphs.forEach(paragraph => {
+          const walker = document.createTreeWalker(
+          paragraph,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode(node) {
+              const parent = node.parentElement;
+              if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+              if (parent && parent.closest('.template-fragment')) return NodeFilter.FILTER_REJECT;
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          }
+        );
+
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(wrapTextNode);
+      });
+    }
+
+    colorTemplateFragments();
+
+    const sidebarNav = document.getElementById('sidebarNav');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    if (sidebarNav && sidebarToggle) {
+      sidebarToggle.addEventListener('click', () => {
+        const isCollapsed = sidebarNav.classList.toggle('is-collapsed');
+        sidebarToggle.textContent = isCollapsed ? '›' : '‹';
+        sidebarToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        sidebarToggle.setAttribute('aria-label', isCollapsed ? '展开导航' : '收起导航');
+      });
+    }
+
+    const t3NavToggle = document.getElementById('t3NavToggle');
+    const t3NavModule = document.querySelector('.nav-module--t3');
+    if (t3NavToggle && t3NavModule) {
+      t3NavToggle.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const isCollapsed = t3NavModule.classList.toggle('is-subcollapsed');
+        t3NavToggle.textContent = isCollapsed ? '›' : '⌄';
+        t3NavToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        t3NavToggle.setAttribute('aria-label', isCollapsed ? '展开 T3—oral 题目' : '收起 T3—oral 题目');
+      });
+    }
+
+    const currentSectionName = document.getElementById('currentSectionName');
+    const commentsList = document.getElementById('commentsList');
+    const highlightYellowBtn = document.getElementById('highlightYellowBtn');
+    const highlightGreenBtn = document.getElementById('highlightGreenBtn');
+    const noteBtn = document.getElementById('noteBtn');
+    const clearHighlightsBtn = document.getElementById('clearHighlightsBtn');
+    const clearNotesBtn = document.getElementById('clearNotesBtn');
+    const annotationStorageKey = 'tcf-t3-oral-annotations-v1';
+    const mainContent = document.querySelector('main.content');
+
+    function saveAnnotations() {
+      if (!mainContent) return;
+      localStorage.setItem(annotationStorageKey, mainContent.innerHTML);
+    }
+
+    function restoreAnnotations() {
+      if (!mainContent) return;
+      const saved = localStorage.getItem(annotationStorageKey);
+      if (saved) {
+        mainContent.innerHTML = saved;
+      }
+    }
+
+    function unwrapAnnotation(element) {
+      const parent = element.parentNode;
+      while (element.firstChild) {
+        parent.insertBefore(element.firstChild, element);
+      }
+      element.remove();
+      parent.normalize();
+    }
+
+    function rebuildCommentsList() {
+      if (!commentsList || !mainContent) return;
+      commentsList.innerHTML = '';
+      document.querySelectorAll('.floating-comment').forEach(item => item.remove());
+      document.querySelectorAll('.annotation-connector').forEach(line => line.remove());
+      mainContent.querySelectorAll('.annotation.note').forEach(element => {
+        addCommentItem(element, element.dataset.note || element.title || '');
+      });
+    }
+
+    restoreAnnotations();
+
+    const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
+      paragraph.textContent.includes("les diplômes ne garantissent pas à eux seuls la réussite professionnelle")
+    );
+    if (updatedPaulExample) {
+      updatedPaulExample.textContent = "Prenons le cas de mon ami Paul. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail et évolue progressivement dans sa carrière. Cet exemple montre que les compétences constituent un véritable atout pour réussir professionnellement.";
+    }
+    const updatedLifelongLearningArgument = Array.from(document.querySelectorAll('#trop-tard p')).find(paragraph =>
+      paragraph.textContent.includes("cela aide aussi à développer de nouvelles compétences et à gagner en confiance")
+    );
+    if (updatedLifelongLearningArgument) {
+      updatedLifelongLearningArgument.textContent = "Pour commencer, le fait de continuer à apprendre tout au long de sa vie constitue un véritable atout, car cela permet d'acquérir de nouvelles connaissances. En effet, cela favorise également le développement personnel et l'adaptation aux changements.";
+    }
+    const lifelongLearningParagraphs = Array.from(document.querySelectorAll('#trop-tard p'));
+    const oldSecondArgumentIndex = lifelongLearningParagraphs.findIndex(paragraph =>
+      paragraph.textContent.includes("l'expérience joue également un rôle essentiel dans l'apprentissage")
+    );
+    if (oldSecondArgumentIndex !== -1) {
+      const replacementParagraphs = [
+        "Ensuite, la jeunesse joue également un rôle essentiel dans l'apprentissage. Autrement dit, elle permet de s'adapter plus facilement à un nouvel environnement et d'acquérir de nouvelles compétences plus rapidement.",
+        "Prenons l'exemple de mon fils. Depuis son arrivée au Canada, il apprend le français à l'école et s'habitue rapidement à son nouvel environnement. Cet exemple prouve que les jeunes disposent souvent d'une grande capacité d'adaptation, ce qui facilite leur apprentissage.",
+        "Toutefois, j'aimerais ajouter un dernier point concernant l'âge. Même si les jeunes apprennent souvent plus facilement, cela ne signifie pas que les personnes âgées soient moins capables d'apprendre. En effet, la motivation et les efforts personnels peuvent également jouer un rôle essentiel.",
+        "Prenons mon exemple. J'ai commencé à apprendre le français à l'âge de trente-sept ans après mon arrivée au Canada. Grâce à un travail régulier et à une forte motivation, je continue à progresser chaque jour. On voit donc qu'il est tout à fait possible de bien apprendre, quel que soit l'âge.",
+        "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
+      ];
+      replacementParagraphs.forEach((text, index) => {
+        const paragraph = lifelongLearningParagraphs[oldSecondArgumentIndex + index];
+        if (paragraph) paragraph.textContent = text;
+      });
+    }
+    colorTemplateFragments();
+
+    function organizeT3QuestionsByCategory() {
+      const container = document.querySelector('#t3-oral .module-child-sections');
+      if (!container) return;
+
+      const questions = new Map();
+      container.querySelectorAll('.t3-question').forEach(question => {
+        questions.set(question.id, question);
+      });
+      container.querySelectorAll('.t3-category').forEach(category => category.remove());
+
+      const categories = [
+        ['categorie-education', '📚 Éducation', '教育', ['etudes', 'trop-tard', 'education-maison']],
+        ['categorie-travail', '💼 Travail', '工作与职业', ['responsable', 'travailler-etudier', 'salaire']],
+        ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', '家庭与人际关系', ['aides-sociales']],
+        ['categorie-sante', '❤️ Santé et bien-être', '健康与幸福', ['medicaments']],
+        ['categorie-technologie', '💻 Technologie et numérique', '科技与数字生活', ['reseaux-sociaux', 'telephone-ecole']],
+        ['categorie-societe', '🌍 Société et environnement', '社会与环境', ['integration-jeune', 'adaptation']],
+        ['categorie-argent', '💰 Argent et consommation', '金钱与消费', []],
+        ['categorie-culture', '🎭 Culture, loisirs et tourisme', '文化、休闲与旅游', ['livres']],
+        ['categorie-mode-vie', '🏙️ Mode de vie', '生活方式', ['urbain-rural']],
+        ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', '价值观与公民责任', []],
+      ];
+
+      categories.forEach(([id, title, chineseTitle, questionIds]) => {
+        const category = document.createElement('section');
+        category.id = id;
+        category.className = 't3-category';
+        const categoryDetails = document.createElement('details');
+        categoryDetails.className = 't3-category__details';
+        categoryDetails.open = true;
+        categoryDetails.innerHTML = `<summary><h3>${title}<span>${chineseTitle}</span></h3></summary>`;
+        const categoryQuestions = document.createElement('div');
+        categoryQuestions.className = 't3-category__questions';
+        questionIds.forEach((questionId, questionIndex) => {
+          const question = questions.get(questionId);
+          if (question) {
+            const summary = question.querySelector(':scope > details > summary');
+            if (summary) {
+              summary.textContent = `${questionIndex + 1}. ${summary.textContent.replace(/^\d+\.\s*/, '')}`;
+            }
+            categoryQuestions.appendChild(question);
+          }
+        });
+        if (!categoryQuestions.children.length) {
+          categoryQuestions.innerHTML = '<p class="t3-category__empty">暂无题目 · Aucune question pour le moment</p>';
+        }
+        categoryDetails.appendChild(categoryQuestions);
+        category.appendChild(categoryDetails);
+        container.appendChild(category);
+      });
+    }
+
+    organizeT3QuestionsByCategory();
+
+    document.querySelectorAll('.nav-category').forEach(category => {
+      const questions = category.querySelector(':scope > ul');
+      if (!questions) return;
+      const toggle = document.createElement('button');
+      toggle.className = 'nav-category-toggle';
+      toggle.type = 'button';
+      toggle.textContent = '⌄';
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', '收起该类别题目');
+      toggle.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const isCollapsed = category.classList.toggle('is-category-collapsed');
+        toggle.textContent = isCollapsed ? '›' : '⌄';
+        toggle.setAttribute('aria-expanded', String(!isCollapsed));
+        toggle.setAttribute('aria-label', isCollapsed ? '展开该类别题目' : '收起该类别题目');
+      });
+      category.insertBefore(toggle, questions);
+    });
+
+    const sectionLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const sections = document.querySelectorAll('main .section, main .t3-category');
+
+    function setActiveLink(id) {
+      sectionLinks.forEach(link => {
+        const item = link.parentElement;
+        if (link.getAttribute('href') === `#${id}`) {
+          item.classList.add('active');
+          currentSectionName.textContent = link.textContent;
+          if (window.matchMedia('(min-width: 1025px)').matches) {
+            item.scrollIntoView({ block: 'nearest' });
+          }
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveLink(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: '-35% 0px -55% 0px',
+      threshold: 0.25,
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+    sectionLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        const target = document.querySelector(link.hash);
+        if (target) {
+          const directDetails = target.querySelector(':scope > details');
+          if (directDetails) {
+            directDetails.open = true;
+          }
+          if (target.classList.contains('t3-category')) {
+            const categoryDetails = target.querySelector(':scope > .t3-category__details');
+            if (categoryDetails) categoryDetails.open = true;
+          }
+          const parentDetails = target.closest('details');
+          if (parentDetails) {
+            parentDetails.open = true;
+          }
+          const parentModule = target.closest('.module-child-sections');
+          if (parentModule) {
+            const moduleDetails = parentModule.closest('details');
+            if (moduleDetails) moduleDetails.open = true;
+          }
+          if (t3NavModule && (target.classList.contains('t3-question') || target.classList.contains('t3-category'))) {
+            t3NavModule.classList.remove('is-subcollapsed');
+            const questionDetails = target.querySelector(':scope > .t3-details');
+            if (questionDetails) questionDetails.open = true;
+            if (t3NavToggle) {
+              t3NavToggle.textContent = '⌄';
+              t3NavToggle.setAttribute('aria-expanded', 'true');
+              t3NavToggle.setAttribute('aria-label', '收起 T3—oral 题目');
+            }
+          }
+          setActiveLink(target.id);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    function wrapSelection(type, noteText) {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed || !selection.rangeCount) {
+        alert('请先选中文本');
+        return;
+      }
+      const range = selection.getRangeAt(0);
+      const container = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE
+        ? range.commonAncestorContainer
+        : range.commonAncestorContainer.parentElement;
+      if (!container || !container.closest('main')) {
+        alert('请选择正文区域内的文本');
+        return;
+      }
+      const wrapper = document.createElement('span');
+      wrapper.className = `annotation ${type}`;
+      if (type === 'note') {
+        wrapper.dataset.note = noteText;
+        wrapper.title = noteText;
+      }
+      const fragment = range.extractContents();
+      wrapper.appendChild(fragment);
+      range.insertNode(wrapper);
+      selection.removeAllRanges();
+      if (type === 'note') {
+        addCommentItem(wrapper, noteText);
+      }
+      saveAnnotations();
+    }
+
+    function addCommentItem(element, note) {
+      if (!commentsList) return;
+      const id = element.dataset.commentId || `comment-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      element.dataset.commentId = id;
+      let connectorLayer = document.getElementById('annotationConnectorLayer');
+      if (!connectorLayer) {
+        connectorLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        connectorLayer.id = 'annotationConnectorLayer';
+        connectorLayer.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(connectorLayer);
+      }
+      const connector = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      connector.classList.add('annotation-connector');
+      connector.dataset.commentId = id;
+      connectorLayer.appendChild(connector);
+
+      const item = document.createElement('div');
+      item.className = 'comment-item floating-comment';
+      item.id = id;
+      if (element.dataset.commentWidth) item.style.width = element.dataset.commentWidth;
+      if (element.dataset.commentHeight) item.style.height = element.dataset.commentHeight;
+
+      const badge = document.createElement('div');
+      badge.className = 'comment-badge';
+      badge.textContent = note;
+      const resizeHandle = document.createElement('button');
+      resizeHandle.className = 'comment-resize-handle';
+      resizeHandle.type = 'button';
+      resizeHandle.setAttribute('aria-label', '拖动调整批注框大小');
+      resizeHandle.title = '拖动调整大小';
+      item.append(badge, resizeHandle);
+
+      document.body.appendChild(item);
+      const markerRect = element.getBoundingClientRect();
+      const savedLeft = Number.parseFloat(element.dataset.commentLeft);
+      const savedTop = Number.parseFloat(element.dataset.commentTop);
+      const defaultLeft = Math.min(window.scrollX + window.innerWidth - 270, window.scrollX + markerRect.right + 38);
+      const defaultTop = window.scrollY + markerRect.top - 20;
+      item.style.left = `${Number.isFinite(savedLeft) ? savedLeft : Math.max(window.scrollX + 12, defaultLeft)}px`;
+      item.style.top = `${Number.isFinite(savedTop) ? savedTop : Math.max(window.scrollY + 12, defaultTop)}px`;
+      if (!element.dataset.commentHeight) item.style.height = '140px';
+
+      function updateConnector() {
+        if (!item.isConnected || !element.isConnected) return;
+        const source = element.getBoundingClientRect();
+        const box = item.getBoundingClientRect();
+        const x1 = window.scrollX + source.right;
+        const y1 = window.scrollY + source.top + source.height / 2;
+        const boxLeft = window.scrollX + box.left;
+        const boxRight = window.scrollX + box.right;
+        const x2 = Math.abs(boxLeft - x1) <= Math.abs(boxRight - x1) ? boxLeft : boxRight;
+        const y2 = window.scrollY + box.top + Math.min(box.height / 2, 34);
+        const curve = Math.max(35, Math.abs(x2 - x1) * 0.45);
+        const direction = x2 >= x1 ? 1 : -1;
+        connector.setAttribute('d', `M ${x1} ${y1} C ${x1 + curve * direction} ${y1}, ${x2 - curve * direction} ${y2}, ${x2} ${y2}`);
+      }
+
+      function syncCommentBoxSize() {
+        const width = item.offsetWidth;
+        const height = item.offsetHeight;
+        if (!width || !height) return;
+        const fontSize = Math.max(7, Math.min(32, 4.5 + Math.sqrt(width * height) / 17));
+        badge.style.fontSize = `${fontSize.toFixed(1)}px`;
+        element.dataset.commentWidth = `${width}px`;
+        element.dataset.commentHeight = `${height}px`;
+        element.dataset.commentLeft = Number.parseFloat(item.style.left).toFixed(1);
+        element.dataset.commentTop = Number.parseFloat(item.style.top).toFixed(1);
+        updateConnector();
+      }
+
+      item.addEventListener('pointerdown', event => {
+        if (event.target.closest('.comment-resize-handle')) return;
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        event.preventDefault();
+        const startX = event.clientX;
+        const startY = event.clientY;
+        const startLeft = Number.parseFloat(item.style.left);
+        const startTop = Number.parseFloat(item.style.top);
+        item.classList.add('is-dragging');
+        const moveComment = moveEvent => {
+          if (moveEvent.pointerId !== event.pointerId) return;
+          const pageRight = Math.max(document.documentElement.scrollWidth, window.scrollX + window.innerWidth);
+          const maxLeft = Math.max(8, pageRight - item.offsetWidth - 8);
+          const nextLeft = Math.max(8, Math.min(maxLeft, startLeft + moveEvent.clientX - startX));
+          const nextTop = Math.max(8, startTop + moveEvent.clientY - startY);
+          item.style.left = `${nextLeft}px`;
+          item.style.top = `${nextTop}px`;
+          syncCommentBoxSize();
+        };
+        const stopMoving = endEvent => {
+          if (endEvent.pointerId !== event.pointerId) return;
+          document.removeEventListener('pointermove', moveComment);
+          document.removeEventListener('pointerup', stopMoving);
+          document.removeEventListener('pointercancel', stopMoving);
+          item.classList.remove('is-dragging');
+          saveAnnotations();
+        };
+        document.addEventListener('pointermove', moveComment);
+        document.addEventListener('pointerup', stopMoving);
+        document.addEventListener('pointercancel', stopMoving);
+      });
+
+      resizeHandle.addEventListener('pointerdown', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const startX = event.clientX;
+        const startY = event.clientY;
+        const startWidth = item.offsetWidth;
+        const startHeight = item.offsetHeight;
+        const resize = moveEvent => {
+          if (moveEvent.pointerId !== event.pointerId) return;
+          const maxWidth = Math.min(760, window.innerWidth - 8);
+          const nextWidth = Math.max(80, Math.min(maxWidth, startWidth + moveEvent.clientX - startX));
+          const nextHeight = Math.max(48, Math.min(window.innerHeight * 0.92, startHeight + moveEvent.clientY - startY));
+          item.style.width = `${nextWidth}px`;
+          item.style.height = `${nextHeight}px`;
+          syncCommentBoxSize();
+        };
+        const stopResize = endEvent => {
+          if (endEvent.pointerId !== event.pointerId) return;
+          document.removeEventListener('pointermove', resize);
+          document.removeEventListener('pointerup', stopResize);
+          document.removeEventListener('pointercancel', stopResize);
+          saveAnnotations();
+        };
+        document.addEventListener('pointermove', resize);
+        document.addEventListener('pointerup', stopResize);
+        document.addEventListener('pointercancel', stopResize);
+      });
+
+      if ('ResizeObserver' in window) {
+        let resizeTimer;
+        const resizeObserver = new ResizeObserver(() => {
+          syncCommentBoxSize();
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(saveAnnotations, 200);
+        });
+        resizeObserver.observe(item);
+      } else {
+        syncCommentBoxSize();
+      }
+      requestAnimationFrame(syncCommentBoxSize);
+      window.addEventListener('resize', updateConnector);
+      window.addEventListener('scroll', updateConnector, { passive: true });
+    }
+
+    if (highlightYellowBtn) {
+      highlightYellowBtn.addEventListener('click', () => wrapSelection('highlight highlight-yellow'));
+    }
+    if (highlightGreenBtn) {
+      highlightGreenBtn.addEventListener('click', () => wrapSelection('highlight highlight-green'));
+    }
+    if (noteBtn) {
+      noteBtn.addEventListener('click', () => {
+        const noteText = prompt('请输入批注内容：');
+        if (noteText) {
+          wrapSelection('note', noteText);
+        }
+      });
+    }
+
+    if (clearHighlightsBtn) {
+      clearHighlightsBtn.addEventListener('click', () => {
+        document.querySelectorAll('main .annotation.highlight, main .annotation.highlight-yellow, main .annotation.highlight-green').forEach(unwrapAnnotation);
+        saveAnnotations();
+      });
+    }
+
+    if (clearNotesBtn) {
+      clearNotesBtn.addEventListener('click', () => {
+        document.querySelectorAll('main .annotation.note').forEach(unwrapAnnotation);
+        document.querySelectorAll('.floating-comment').forEach(item => item.remove());
+        document.querySelectorAll('.annotation-connector').forEach(line => line.remove());
+        if (commentsList) commentsList.innerHTML = '';
+        saveAnnotations();
+      });
+    }
+
+    rebuildCommentsList();
+
+    const sharePageBtn = document.getElementById('sharePageBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+    if (sharePageBtn) {
+      sharePageBtn.addEventListener('click', async () => {
+        const shareData = {
+          title: document.title,
+          text: '这是一个可在手机上查看的分享页面。',
+          url: window.location.href,
+        };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (error) {
+            console.warn('分享失败', error);
+          }
+        } else {
+          alert('当前设备不支持直接分享，请使用“复制链接”按钮。');
+        }
+      });
+    }
+
+    if (copyLinkBtn) {
+      copyLinkBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('链接已复制到剪贴板，可贴到手机或朋友圈。');
+        } catch (error) {
+          prompt('请手动复制以下链接：', window.location.href);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

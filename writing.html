@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TCF 法语写作练习</title>
+  <link rel="stylesheet" href="writing.css" />
+</head>
+<body>
+  <main class="writing-app">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">TCF Canada · Expression écrite</p>
+        <h1>法语写作练习</h1>
+      </div>
+      <a class="back-link" href="index.html">返回 T3 页面</a>
+    </header>
+
+    <section class="editor-card">
+      <div class="toolbar">
+        <div class="tabs" role="tablist" aria-label="写作功能">
+          <button class="tab is-active" id="practiceTab" type="button" role="tab" aria-selected="true">写作练习</button>
+          <button class="tab" id="templateTab" type="button" role="tab" aria-selected="false">范文模板 <span>AI</span></button>
+        </div>
+        <div class="toolbar-actions">
+          <button class="icon-button" id="undoBtn" type="button" title="撤销" aria-label="撤销">↶</button>
+          <button class="icon-button" id="redoBtn" type="button" title="重做" aria-label="重做">↷</button>
+          <span class="divider"></span>
+          <button class="secondary-button" id="saveBtn" type="button">▣ 保存</button>
+          <button class="submit-button" id="submitBtn" type="button">➤ 提交批改</button>
+        </div>
+      </div>
+
+      <div class="task-selector" aria-label="选择写作任务">
+        <span>练习题型</span>
+        <button class="task-button is-active" type="button" data-task="1" data-min="60" data-max="120">Tâche 1 <small>60–120 词</small></button>
+        <button class="task-button" type="button" data-task="2" data-min="120" data-max="150">Tâche 2 <small>120–150 词</small></button>
+        <button class="task-button" type="button" data-task="3" data-min="150" data-max="180">Tâche 3 <small>150–180 词</small></button>
+        <em>仅作参考，不限制输入或提交</em>
+      </div>
+
+      <div class="character-toolbar">
+        <div class="character-heading">
+          <strong>特殊字符</strong>
+          <button id="caseToggle" type="button">小写</button>
+        </div>
+        <div class="characters" id="characterButtons" aria-label="法语特殊字符"></div>
+      </div>
+
+      <div class="panel is-active" id="practicePanel" role="tabpanel">
+        <label class="sr-only" for="writingEditor">法语写作内容</label>
+        <textarea id="writingEditor" spellcheck="true" lang="fr" data-gramm="true" data-gramm_editor="true" placeholder="开始你的写作练习…"></textarea>
+      </div>
+
+      <div class="panel template-panel" id="templatePanel" role="tabpanel" hidden>
+        <div class="template-fields">
+          <label>
+            <span>模板名称</span>
+            <input id="templateName" type="text" placeholder="例如：T3 观点类模板" />
+          </label>
+          <label>
+            <span>目标字数</span>
+            <div class="word-range-inputs">
+              <input id="minWords" type="number" min="0" value="60" />
+              <span>—</span>
+              <input id="maxWords" type="number" min="1" value="120" />
+            </div>
+          </label>
+        </div>
+        <label class="template-content-label" for="templateEditor">录入需要对照的完整模板</label>
+        <textarea id="templateEditor" lang="fr" placeholder="在这里粘贴或输入法语模板…"></textarea>
+        <p class="template-tip">系统会比较固定模板句是否出现，不要求你的主题词和例子与模板完全相同。</p>
+      </div>
+
+      <footer class="status-bar">
+        <strong id="wordCount">0 词</strong>
+        <span id="wordRequirement">（参考：60–120 词）</span>
+        <span id="saveStatus">草稿会自动保存</span>
+        <span>写作练习，模拟考试场景</span>
+      </footer>
+      <div class="grammar-tools-note">
+        <span><strong>Grammarly 兼容：</strong>安装并启用浏览器扩展后，会直接在写作框中显示检查建议；提交后仍可查看本页的法语语法建议。</span>
+        <a href="https://support.grammarly.com/hc/en-us/articles/115000091552-How-to-install-the-Grammarly-browser-extension" target="_blank" rel="noopener noreferrer">安装说明 ↗</a>
+      </div>
+    </section>
+
+    <section class="results" id="resultsPanel" hidden>
+      <div class="result-heading">
+        <div>
+          <p class="eyebrow">RÉSULTATS</p>
+          <h2>写作检查结果</h2>
+        </div>
+        <div class="score" id="overallScore">—</div>
+      </div>
+      <div class="result-grid">
+        <article class="result-card">
+          <h3>模板一致性</h3>
+          <div id="templateResult"></div>
+        </article>
+        <article class="result-card">
+          <h3>语法与书写建议</h3>
+          <div id="grammarResult"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script src="writing.js"></script>
+</body>
+</html>
