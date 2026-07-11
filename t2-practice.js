@@ -1,4 +1,3 @@
-const topicZh = document.getElementById('practiceTopicZh');
 const topicFr = document.getElementById('practiceTopicFr');
 const questionsEditor = document.getElementById('practiceQuestions');
 const referenceHints = document.getElementById('referenceHints');
@@ -7,29 +6,6 @@ const practiceStorageKey = 'tcf-t2-practice-v1';
 const practiceLibraryKey = 'tcf-t2-practice-library-v1';
 let lastPracticeScore = null;
 let practiceLibrary = [];
-
-async function toggleTranslation() {
-  const panel = document.getElementById('translationPanel');
-  const button = document.getElementById('translationToggle');
-  const willShow = panel.hidden;
-  panel.hidden = !willShow;
-  button.setAttribute('aria-expanded', String(willShow));
-  button.textContent = willShow ? '中 隐藏中文翻译' : '中 显示中文翻译';
-  if (!willShow || topicZh.value.trim() || !topicFr.value.trim()) return;
-  const endpoint = gptEndpoint.value.trim();
-  const status = document.getElementById('translationStatus');
-  if (!endpoint) { status.textContent = '未连接 GPT，可手动填写'; return; }
-  status.textContent = 'GPT 翻译中…'; button.disabled = true;
-  try {
-    const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'translate', topicFr: topicFr.value }) });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    topicZh.value = data.result || data.translation || '';
-    status.textContent = 'GPT 自动翻译，可编辑';
-    savePractice();
-  } catch (error) { status.textContent = `自动翻译失败，可手动填写`; }
-  finally { button.disabled = false; }
-}
 
 const expressionToggle = document.getElementById('expressionNavToggle');
 const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
@@ -58,7 +34,7 @@ function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&am
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zœæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
 function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; savePractice(); }
-function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({zh:topicZh.value,fr:topicFr.value,questions:questionsEditor.value,endpoint:gptEndpoint.value})); }
+function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:questionsEditor.value,endpoint:gptEndpoint.value})); }
 
 function reviewQuestion(question) {
   const issues = []; let correction = question.trim();
@@ -77,7 +53,7 @@ function reviewQuestion(question) {
 
 function localEvaluation() {
   const questions = getQuestions();
-  if (!topicFr.value.trim() && !topicZh.value.trim()) { alert('请先输入题目。'); return; }
+  if (!topicFr.value.trim()) { alert('请先输入题目。'); return; }
   if (!questions.length) { alert('请至少输入一个要练习的问题。'); return; }
   const reviews = questions.map(reviewQuestion);
   const normalized = reviews.map(r=>normalizePractice(r.question));
@@ -99,16 +75,16 @@ function localEvaluation() {
 }
 
 function practiceTitle() {
-  return (topicZh.value.trim() || topicFr.value.trim() || '未命名真题').split(/\n/)[0].slice(0,70);
+  return (topicFr.value.trim() || '未命名真题').split(/\n/)[0].slice(0,70);
 }
 
 function persistPracticeLibrary() { localStorage.setItem(practiceLibraryKey, JSON.stringify(practiceLibrary)); }
 
 function saveToPracticeLibrary(automatic = false) {
-  if (!topicZh.value.trim() && !topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
-  const signature = normalizePractice(`${topicZh.value}|${topicFr.value}`);
+  if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
+  const signature = normalizePractice(topicFr.value);
   const existing = practiceLibrary.find(item => item.signature === signature);
-  const data = { id: existing?.id || `practice-${Date.now()}`, signature, title: practiceTitle(), zh: topicZh.value, fr: topicFr.value, questions: questionsEditor.value, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
+  const data = { id: existing?.id || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions: questionsEditor.value, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
   if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
   persistPracticeLibrary(); renderPracticeLibrary();
   if (!automatic) alert('真题已保存到练习库。');
@@ -130,7 +106,6 @@ function renderPracticeLibrary() {
 }
 
 function loadSavedPractice(item) {
-  topicZh.value = item.zh;
   topicFr.value = item.fr;
   questionsEditor.value = item.questions;
   lastPracticeScore = item.score;
@@ -153,14 +128,14 @@ function renderSavedPracticeNav(items = practiceLibrary) {
 }
 
 function buildGptPrompt() {
-  return `你是TCF Canada口语Tâche 2法语考官。请根据题目审核考生准备的完整对话，而不只是判断问句。检查：1.问题是否切题；2.每句话语法是否正确；3.开场、解释、回应、过渡和追问是否自然；4.对话是否像真人交流而不是连续审问；5.逐句提供更地道的法语改写；6.给出可继续追问的方向。最后给出100分总分、问题覆盖度、互动自然度和缺失角度。\n\n中文题意：${topicZh.value}\n法语原题：${topicFr.value}\n考生完整对话：\n${getConversationLines().map((line,i)=>`${i+1}. ${line}`).join('\n')}`;
+  return `你是TCF Canada口语Tâche 2法语考官。请根据题目审核考生准备的完整对话，而不只是判断问句。检查：1.问题是否切题；2.每句话语法是否正确；3.开场、解释、回应、过渡和追问是否自然；4.对话是否像真人交流而不是连续审问；5.逐句提供更地道的法语改写；6.给出可继续追问的方向。最后给出100分总分、问题覆盖度、互动自然度和缺失角度。\n\n法语原题：${topicFr.value}\n考生完整对话：\n${getConversationLines().map((line,i)=>`${i+1}. ${line}`).join('\n')}`;
 }
 
 async function gptEvaluation() {
   const endpoint = gptEndpoint.value.trim();
   if (!endpoint) { alert('尚未配置安全代理地址。可以先点击“复制给 ChatGPT”，或在代理设置中填写服务端地址。'); return; }
   const button = document.getElementById('gptEvaluateBtn'); button.disabled=true; button.textContent='GPT 正在评分…';
-  try { const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topicZh:topicZh.value,topicFr:topicFr.value,questions:getQuestions(),conversation:getConversationLines()})}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const data=await response.json(); referenceHints.innerHTML=`<div class="question-review is-good"><b>GPT 深度评分</b><p>${escapePracticeHtml(data.result||data.output||JSON.stringify(data)).replace(/\n/g,'<br>')}</p></div>`; document.getElementById('gptStatus').textContent='GPT 已连接'; saveToPracticeLibrary(true); }
+  try { const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topicFr:topicFr.value,questions:getQuestions(),conversation:getConversationLines()})}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const data=await response.json(); referenceHints.innerHTML=`<div class="question-review is-good"><b>GPT 深度评分</b><p>${escapePracticeHtml(data.result||data.output||JSON.stringify(data)).replace(/\n/g,'<br>')}</p></div>`; document.getElementById('gptStatus').textContent='GPT 已连接'; saveToPracticeLibrary(true); }
   catch(error){ alert(`GPT 连接失败：${error.message}。已保留本地评分和复制提示功能。`); }
   finally { button.disabled=false; button.textContent='✦ GPT 深度评分'; }
 }
@@ -170,6 +145,5 @@ document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation
 document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
-document.getElementById('translationToggle').addEventListener('click',toggleTranslation);
-[topicZh,topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
-try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicZh.value=saved.zh||'';topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} updateQuestionCount(); renderPracticeLibrary();
+[topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
+try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} updateQuestionCount(); renderPracticeLibrary();
