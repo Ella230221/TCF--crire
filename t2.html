@@ -418,6 +418,7 @@
               <button id="localEvaluateBtn" class="evaluate-primary" type="button">✓ 立即基础评分</button>
               <button id="gptEvaluateBtn" class="evaluate-gpt" type="button">✦ GPT 深度评分</button>
               <button id="copyGptPromptBtn" type="button">复制给 ChatGPT</button>
+              <button id="savePracticeBtn" type="button">▣ 保存真题</button>
             </div>
             <details class="gpt-settings"><summary>GPT 安全代理设置</summary><label for="gptEndpoint">代理地址</label><input id="gptEndpoint" type="url" placeholder="https://你的服务/api/evaluate-t2"><p>不要在此页面输入 API Key。密钥应保存在服务端的 <code>OPENAI_API_KEY</code> 环境变量中。</p></details>
           </div>
@@ -426,6 +427,10 @@
             <div class="reference-empty" id="referenceHints">提交评分后，这里会显示：<br>• 总分与切题度<br>• 每个问题的语法检查<br>• 更地道的法语改写<br>• 尚未覆盖的追问角度</div>
           </aside>
         </div>
+        <section class="practice-library">
+          <div class="library-heading"><div><h3>我的真题练习库</h3><p>评分后自动保存，可随时载入继续练习。</p></div><label>排列方式<select id="practiceSort"><option value="newest">最新练习</option><option value="oldest">最早练习</option><option value="title">题目名称</option><option value="score">分数从高到低</option><option value="favorite">收藏优先</option></select></label></div>
+          <div class="saved-practice-list" id="savedPracticeList"></div>
+        </section>
       </section>
 
       <section id="expression-library" class="expression-library-heading">

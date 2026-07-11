@@ -4,6 +4,9 @@ const questionsEditor = document.getElementById('practiceQuestions');
 const referenceHints = document.getElementById('referenceHints');
 const gptEndpoint = document.getElementById('gptEndpoint');
 const practiceStorageKey = 'tcf-t2-practice-v1';
+const practiceLibraryKey = 'tcf-t2-practice-library-v1';
+let lastPracticeScore = null;
+let practiceLibrary = [];
 
 const expressionToggle = document.getElementById('expressionNavToggle');
 const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
@@ -52,7 +55,39 @@ function localEvaluation() {
   const average = Math.round(reviews.reduce((sum,r)=>sum+r.score,0)/reviews.length);
   const variety = new Set(reviews.map(r=>normalizePractice(r.question).split(' ')[0])).size;
   const overall = Math.round(average*.8+Math.min(100,variety*15)*.2);
+  lastPracticeScore = overall;
   referenceHints.innerHTML = `<div class="score-summary"><div class="score-circle">${overall}</div><div class="score-details"><strong>基础检查 ${overall}/100</strong><span>${questions.length} 个问题 · ${variety} 种疑问角度</span></div></div>${reviews.map((r,i)=>`<div class="question-review ${r.issues.length?'needs-work':'is-good'}"><b>${i+1}. ${escapePracticeHtml(r.question)}</b><p>${r.issues.length?escapePracticeHtml(r.issues.join('；')):'结构基本正确，可继续练习语音和追问。'}</p>${r.correction!==r.question?`<p class="correction">建议：${escapePracticeHtml(r.correction)}</p>`:''}</div>`).join('')}<p class="reference-empty">基础评分只检查明显结构。点击“GPT 深度评分”可进一步判断切题度和地道程度。</p>`;
+  saveToPracticeLibrary(true);
+}
+
+function practiceTitle() {
+  return (topicZh.value.trim() || topicFr.value.trim() || '未命名真题').split(/\n/)[0].slice(0,70);
+}
+
+function persistPracticeLibrary() { localStorage.setItem(practiceLibraryKey, JSON.stringify(practiceLibrary)); }
+
+function saveToPracticeLibrary(automatic = false) {
+  if (!topicZh.value.trim() && !topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
+  const signature = normalizePractice(`${topicZh.value}|${topicFr.value}`);
+  const existing = practiceLibrary.find(item => item.signature === signature);
+  const data = { id: existing?.id || `practice-${Date.now()}`, signature, title: practiceTitle(), zh: topicZh.value, fr: topicFr.value, questions: questionsEditor.value, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
+  if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
+  persistPracticeLibrary(); renderPracticeLibrary();
+  if (!automatic) alert('真题已保存到练习库。');
+}
+
+function renderPracticeLibrary() {
+  const container = document.getElementById('savedPracticeList');
+  const mode = document.getElementById('practiceSort').value;
+  const items = [...practiceLibrary].sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'zh') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
+  if (!items.length) { container.innerHTML = '<div class="library-empty">还没有保存的真题。完成第一次评分后会自动出现在这里。</div>'; return; }
+  container.innerHTML = items.map(item => `<article class="saved-practice-card ${item.favorite?'is-favorite':''}" data-id="${item.id}"><div class="saved-card-top"><h4>${escapePracticeHtml(item.title)}</h4><button class="favorite-button" type="button" title="收藏">★</button></div><p>${new Date(item.updatedAt).toLocaleString('zh-CN')} · ${item.questions.split(/\n+/).filter(Boolean).length} 个问题</p>${item.score==null?'':`<span class="saved-score">${item.score} 分</span>`}<div class="saved-card-actions"><button class="load-practice" type="button">载入练习</button><button class="delete-practice" type="button">删除</button></div></article>`).join('');
+  container.querySelectorAll('.saved-practice-card').forEach(card => {
+    const item = practiceLibrary.find(entry => entry.id === card.dataset.id);
+    card.querySelector('.load-practice').addEventListener('click', () => { topicZh.value=item.zh; topicFr.value=item.fr; questionsEditor.value=item.questions; lastPracticeScore=item.score; updateQuestionCount(); document.getElementById('t2-real-practice').scrollIntoView({behavior:'smooth'}); });
+    card.querySelector('.favorite-button').addEventListener('click', () => { item.favorite=!item.favorite; persistPracticeLibrary(); renderPracticeLibrary(); });
+    card.querySelector('.delete-practice').addEventListener('click', () => { if(confirm('确定删除这条真题练习吗？')) { practiceLibrary=practiceLibrary.filter(entry=>entry.id!==item.id); persistPracticeLibrary(); renderPracticeLibrary(); } });
+  });
 }
 
 function buildGptPrompt() {
@@ -63,7 +98,7 @@ async function gptEvaluation() {
   const endpoint = gptEndpoint.value.trim();
   if (!endpoint) { alert('尚未配置安全代理地址。可以先点击“复制给 ChatGPT”，或在代理设置中填写服务端地址。'); return; }
   const button = document.getElementById('gptEvaluateBtn'); button.disabled=true; button.textContent='GPT 正在评分…';
-  try { const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topicZh:topicZh.value,topicFr:topicFr.value,questions:getQuestions()})}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const data=await response.json(); referenceHints.innerHTML=`<div class="question-review is-good"><b>GPT 深度评分</b><p>${escapePracticeHtml(data.result||data.output||JSON.stringify(data)).replace(/\n/g,'<br>')}</p></div>`; document.getElementById('gptStatus').textContent='GPT 已连接'; }
+  try { const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topicZh:topicZh.value,topicFr:topicFr.value,questions:getQuestions()})}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const data=await response.json(); referenceHints.innerHTML=`<div class="question-review is-good"><b>GPT 深度评分</b><p>${escapePracticeHtml(data.result||data.output||JSON.stringify(data)).replace(/\n/g,'<br>')}</p></div>`; document.getElementById('gptStatus').textContent='GPT 已连接'; saveToPracticeLibrary(true); }
   catch(error){ alert(`GPT 连接失败：${error.message}。已保留本地评分和复制提示功能。`); }
   finally { button.disabled=false; button.textContent='✦ GPT 深度评分'; }
 }
@@ -71,5 +106,7 @@ async function gptEvaluation() {
 document.getElementById('localEvaluateBtn').addEventListener('click',localEvaluation);
 document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation);
 document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
+document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
+document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
 [topicZh,topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
-try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicZh.value=saved.zh||'';topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} updateQuestionCount();
+try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicZh.value=saved.zh||'';topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} updateQuestionCount(); renderPracticeLibrary();
