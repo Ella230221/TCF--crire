@@ -7,3 +7,12 @@
 .study-textarea-marked { outline: 3px solid rgba(37,99,235,.18) !important; outline-offset: 2px; }
 @media(max-width:600px){.study-tools{right:8px;bottom:8px}}
 @media print{.study-tools{display:none!important}}
+
+/* T2/T3 use the same floating annotation UI as the writing page. */
+body:has(.study-tools) .annotation-controls,
+body:has(.study-tools) .comments-panel,
+body:has(.study-tools) #highlight-yellow,
+body:has(.study-tools) #highlight-green,
+body:has(.study-tools) #annotate,
+body:has(.study-tools) #clear-highlights,
+body:has(.study-tools) #clear-notes { display:none!important; }
