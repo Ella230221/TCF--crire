@@ -378,6 +378,7 @@
     }
   </style>
   <link rel="stylesheet" href="site-nav.css">
+  <link rel="stylesheet" href="t2-practice.css">
 </head>
 <body>
   <nav class="site-switcher" aria-label="学习页面切换">
@@ -393,9 +394,43 @@
   <main>
     <aside class="side-nav" aria-label="左侧导航目录">
       <h2>导航目录</h2>
+      <a class="toc-link t2-main-link" href="#t2-real-practice">1. 真题练习</a>
+      <a class="toc-link t2-main-link" href="#expression-library">2. 表达积累</a>
+      <div class="toc-subheading">表达积累子模块</div>
       <a class="toc-link" href="#提问流程">1. 提问流程</a><a class="toc-link" href="#开场结束过渡句">2. 开场结束过渡句</a><a class="toc-link" href="#搞事情">3. 搞事情</a><a class="toc-link" href="#🧩 问句结构总结">4. 🧩 问句结构总结</a><a class="toc-link" href="#📖 Quoi ?">5. 📖 Quoi ?</a><a class="toc-link" href="#👤 Qui ?">6. 👤 Qui ?</a><a class="toc-link" href="#📍 Où ?">7. 📍 Où ?</a><a class="toc-link" href="#🕒 Quand ?">8. 🕒 Quand ?</a><a class="toc-link" href="#💰 Combien ?">9. 💰 Combien ?</a><a class="toc-link" href="#📄 Documents">10. 📄 Documents</a><a class="toc-link" href="#⚙️ Comment ?">11. ⚙️ Comment ?</a><a class="toc-link" href="#⭐ Pourquoi ?">12. ⭐ Pourquoi ?</a><a class="toc-link" href="#📋 Conditions">13. 📋 Conditions</a><a class="toc-link" href="#🛡️ Sécurité">14. 🛡️ Sécurité</a><a class="toc-link" href="#💡 Conseils">15. 💡 Conseils</a><a class="toc-link" href="#🌦️ Météo">16. 🌦️ Météo</a><a class="toc-link" href="#🏠 Hébergement / Logement">17. 🏠 Hébergement / Logement</a><a class="toc-link" href="#🏦 Banque">18. 🏦 Banque</a><a class="toc-link" href="#📱 Téléphone mobile">19. 📱 Téléphone mobile</a><a class="toc-link" href="#🌐 Internet">20. 🌐 Internet</a><a class="toc-link" href="#📮 Poste">21. 📮 Poste</a><a class="toc-link" href="#📦 Livraison">22. 📦 Livraison</a><a class="toc-link" href="#💻 Réparation d&#x27;ordinateur">23. 💻 Réparation d'ordinateur</a><a class="toc-link" href="#🔌 Réparation d&#x27;électroménager">24. 🔌 Réparation d'électroménager</a><a class="toc-link" href="#🔑 Serrurier">25. 🔑 Serrurier</a><a class="toc-link" href="#🚗 Assurance automobile">26. 🚗 Assurance automobile</a><a class="toc-link" href="#🏢 Entreprise / Entretien d&#x27;embauche">27. 🏢 Entreprise / Entretien d'embauche</a><a class="toc-link" href="#🐶 Animalerie / Pension / Clinique vétérinaire">28. 🐶 Animalerie / Pension / Clinique vétérinaire</a><a class="toc-link" href="#📚 Bibliothèque / Librairie">29. 📚 Bibliothèque / Librairie</a><a class="toc-link" href="#🎉 Organisation d&#x27;événement">30. 🎉 Organisation d'événement</a>
     </aside>
     <div class="content-area">
+      <section id="t2-real-practice" class="practice-workspace">
+        <div class="practice-heading">
+          <div><span class="module-kicker">MODULE 1 · ENTRAÎNEMENT</span><h2>真题练习与问题评分</h2><p>输入题目和你准备的全部问题，检查是否切题、语法是否正确、表达是否自然。</p></div>
+          <span class="gpt-status" id="gptStatus">GPT 安全代理未配置</span>
+        </div>
+        <div class="practice-grid">
+          <div class="practice-form">
+            <label for="practiceTopicZh">中文题意</label>
+            <textarea id="practiceTopicZh" rows="2" placeholder="例如：你想知道朋友在新职位第一天过得怎么样。"></textarea>
+            <label for="practiceTopicFr">法语原题</label>
+            <textarea id="practiceTopicFr" rows="3" lang="fr" placeholder="Je suis votre ami(e). Vous souhaitez connaître…"></textarea>
+            <label for="practiceQuestions">我准备的问题 <small>每行一个问题，可一次输入全部</small></label>
+            <textarea id="practiceQuestions" class="questions-editor" rows="12" lang="fr" spellcheck="true" placeholder="Comment s'est passée ta première journée ?&#10;L'ambiance au bureau est-elle agréable ?&#10;Tes collègues sont-ils sympathiques ?"></textarea>
+            <div class="practice-meta"><span id="practiceQuestionCount">0 个问题</span><span>建议准备 10–12 个不同角度的问题</span></div>
+            <div class="practice-actions">
+              <button id="localEvaluateBtn" class="evaluate-primary" type="button">✓ 立即基础评分</button>
+              <button id="gptEvaluateBtn" class="evaluate-gpt" type="button">✦ GPT 深度评分</button>
+              <button id="copyGptPromptBtn" type="button">复制给 ChatGPT</button>
+            </div>
+            <details class="gpt-settings"><summary>GPT 安全代理设置</summary><label for="gptEndpoint">代理地址</label><input id="gptEndpoint" type="url" placeholder="https://你的服务/api/evaluate-t2"><p>不要在此页面输入 API Key。密钥应保存在服务端的 <code>OPENAI_API_KEY</code> 环境变量中。</p></details>
+          </div>
+          <aside class="practice-reference">
+            <h3>参考提示</h3>
+            <div class="reference-empty" id="referenceHints">提交评分后，这里会显示：<br>• 总分与切题度<br>• 每个问题的语法检查<br>• 更地道的法语改写<br>• 尚未覆盖的追问角度</div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="expression-library" class="expression-library-heading">
+        <span class="module-kicker">MODULE 2 · RESSOURCES</span><h2>表达积累</h2><p>下面的现有内容均为表达积累的子模块，可通过左侧目录快速定位。</p>
+      </section>
       <div class="toolbar">
         <input id="search" type="search" placeholder="搜索关键词：例如 parking, remboursement, 退款, Clinique">
         <button id="highlight-yellow" type="button">黄色高亮</button>
@@ -7658,5 +7693,6 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     });
     document.querySelector("#top").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
   </script>
+  <script src="t2-practice.js"></script>
 </body>
 </html>
