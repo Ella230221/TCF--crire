@@ -16,6 +16,7 @@ let readingAll = false;
 let isPaused = false;
 const recordings = new Map();
 const practiced = new Set();
+let practiceMode = 'listen';
 
 function splitSentences(text) {
   return (text.replace(/\r/g, '').match(/[^.!?…\n]+(?:[.!?…]+|$)/g) || [])
@@ -63,14 +64,22 @@ function speakSentence(index, continueAfter = false) {
 
 function markActive(index) {
   document.querySelectorAll('.sentence-card').forEach((card, cardIndex) => card.classList.toggle('is-active', cardIndex === index));
-  document.querySelectorAll('.sentence-card')[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.querySelectorAll('.reader-sentence').forEach((span, spanIndex) => span.classList.toggle('is-reading', spanIndex === index));
+  const target = practiceMode === 'listen' ? document.querySelectorAll('.reader-sentence')[index] : document.querySelectorAll('.sentence-card')[index];
+  target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function render() {
   sentenceList.innerHTML = '';
+  const continuousText = document.getElementById('continuousText');
+  continuousText.innerHTML = '';
   emptyState.hidden = Boolean(sentences.length);
-  sentenceList.hidden = !sentences.length;
   sentences.forEach((sentence, index) => {
+    const readerSentence = document.createElement('span');
+    readerSentence.className = 'reader-sentence';
+    readerSentence.textContent = `${sentence} `;
+    readerSentence.addEventListener('click', () => speakSentence(index));
+    continuousText.appendChild(readerSentence);
     const card = template.content.firstElementChild.cloneNode(true);
     card.querySelector('.sentence-number').textContent = index + 1;
     card.querySelector('.sentence-text').textContent = sentence;
@@ -82,7 +91,22 @@ function render() {
     card.querySelector('.compare-button').addEventListener('click', () => recognizeSentence(index, card));
     sentenceList.appendChild(card);
   });
+  applyPracticeMode();
   updateStats();
+}
+
+function applyPracticeMode() {
+  const hasText = Boolean(sentences.length);
+  document.getElementById('continuousReader').hidden = !hasText || practiceMode !== 'listen';
+  sentenceList.hidden = !hasText || practiceMode !== 'repeat';
+  document.querySelectorAll('#practiceModeTabs button').forEach(button => button.classList.toggle('is-active', button.dataset.mode === practiceMode));
+}
+
+function switchPracticeMode(mode) {
+  practiceMode = mode;
+  readingAll = false;
+  speechSynthesis.cancel();
+  applyPracticeMode();
 }
 
 async function toggleRecording(index, button, card) {
@@ -110,6 +134,11 @@ function similarity(expected, actual) {
   return target.length ? Math.round(target.filter(word => heard.has(word)).length / target.length * 100) : 0;
 }
 
+function missingWords(expected, actual) {
+  const heard = new Set(normalize(actual).split(' ').filter(Boolean));
+  return [...new Set(normalize(expected).split(' ').filter(word => word.length > 1 && !heard.has(word)))];
+}
+
 function recognizeSentence(index, card) {
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!Recognition) { alert('当前浏览器不支持语音识别。建议使用最新版 Chrome 或 Edge。'); return; }
@@ -118,7 +147,11 @@ function recognizeSentence(index, card) {
   button.textContent = '● 正在聆听…'; button.classList.add('is-recording');
   recognition.onresult = event => {
     const heard = event.results[0][0].transcript; const score = similarity(sentences[index], heard);
-    resultBox.hidden = false; resultBox.innerHTML = `<strong>识别结果（${score}%）：</strong>${escapeHtml(heard)}`;
+    const missing = missingWords(sentences[index], heard);
+    const correction = missing.length
+      ? `<div><strong>请重点纠正或重读：</strong><div class="correction-words">${missing.map(word => `<span>${escapeHtml(word)}</span>`).join('')}</div></div>`
+      : '<div><strong>识别完整，没有发现明显漏读词。</strong></div>';
+    resultBox.hidden = false; resultBox.innerHTML = `<strong>识别结果（${score}%）：</strong>${escapeHtml(heard)}${correction}`;
     const scoreBox = card.querySelector('.sentence-score'); scoreBox.textContent = `${score}%`; scoreBox.className = `sentence-score ${score >= 80 ? 'good' : 'medium'}`;
     practiced.add(index); card.classList.add('is-complete'); updateProgress();
   };
@@ -154,9 +187,15 @@ introEditor.addEventListener('input', () => document.getElementById('dialogCount
 document.getElementById('fileInput').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; introEditor.value = await file.text(); document.getElementById('dialogCount').textContent = `${introEditor.value.length} 字符`; openEditor(); });
 document.getElementById('playAllBtn').addEventListener('click', () => {
   if (!sentences.length) { openEditor(); return; }
+  practiceMode = 'listen'; applyPracticeMode();
   readingAll = true; isPaused = false; speechSynthesis.cancel(); speakSentence(0, true);
   document.getElementById('pauseBtn').textContent = 'Ⅱ';
 });
+document.getElementById('continuousPlayBtn').addEventListener('click', () => {
+  if (!sentences.length) return;
+  practiceMode = 'listen'; applyPracticeMode(); readingAll = true; isPaused = false; speechSynthesis.cancel(); speakSentence(0, true);
+});
+document.querySelectorAll('#practiceModeTabs button').forEach(button => button.addEventListener('click', () => switchPracticeMode(button.dataset.mode)));
 document.getElementById('pauseBtn').addEventListener('click', event => {
   if (!speechSynthesis.speaking) return;
   if (isPaused) { speechSynthesis.resume(); isPaused = false; event.currentTarget.textContent = 'Ⅱ'; document.getElementById('playbackStatus').textContent = `继续朗读 ${currentIndex + 1}/${sentences.length}`; }

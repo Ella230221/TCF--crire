@@ -66,11 +66,21 @@
         <div class="document-stats"><span id="characterCount">0 字符</span><span id="sentenceCount">0 句</span><span id="estimatedTime">约 0 分钟</span></div>
       </section>
 
+      <div class="practice-mode-tabs" id="practiceModeTabs">
+        <button class="is-active" type="button" data-mode="listen">🎧 整体听 AI 朗读</button>
+        <button type="button" data-mode="repeat">🎙️ 逐句跟读与纠音</button>
+      </div>
+
       <section class="empty-state" id="emptyState">
         <div class="empty-icon">Aa</div>
         <h2>添加你的法语自我介绍</h2>
         <p>支持约 2000 字长文本。系统会自动分句并生成逐句朗读、录音和发音对比。</p>
         <button id="emptyAddBtn" type="button">开始添加文本</button>
+      </section>
+
+      <section class="continuous-reader" id="continuousReader" hidden>
+        <div class="continuous-guide"><span>AI 朗读时，当前句会自动高亮并跟随滚动</span><button id="continuousPlayBtn" type="button">▶ 从头朗读全文</button></div>
+        <div class="continuous-text" id="continuousText" lang="fr"></div>
       </section>
 
       <section class="sentence-list" id="sentenceList" hidden></section>
