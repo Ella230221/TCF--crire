@@ -12,6 +12,8 @@ let currentIndex = 0;
 let voices = [];
 let mediaRecorder = null;
 let activeStream = null;
+let readingAll = false;
+let isPaused = false;
 const recordings = new Map();
 const practiced = new Set();
 
@@ -39,15 +41,22 @@ function selectedVoice() { return voices[Number(voiceSelect.value)] || voices.fi
 
 function speakSentence(index, continueAfter = false) {
   if (!sentences[index]) return;
+  if (!continueAfter) readingAll = false;
   speechSynthesis.cancel();
   currentIndex = index;
   markActive(index);
+  document.getElementById('playbackStatus').textContent = `朗读中 ${index + 1}/${sentences.length}`;
   const utterance = new SpeechSynthesisUtterance(sentences[index]);
   utterance.lang = 'fr-FR';
   utterance.rate = Number(rateSelect.value);
   utterance.voice = selectedVoice() || null;
   utterance.onend = () => {
-    if (continueAfter && index < sentences.length - 1) speakSentence(index + 1, true);
+    if (continueAfter && readingAll && index < sentences.length - 1) {
+      speakSentence(index + 1, true);
+    } else if (continueAfter && index === sentences.length - 1) {
+      readingAll = false;
+      document.getElementById('playbackStatus').textContent = '全文朗读完成';
+    }
   };
   speechSynthesis.speak(utterance);
 }
@@ -143,8 +152,17 @@ document.getElementById('libraryBtn').addEventListener('click', openEditor);
 document.getElementById('saveTextBtn').addEventListener('click', saveIntroduction);
 introEditor.addEventListener('input', () => document.getElementById('dialogCount').textContent = `${introEditor.value.length} 字符`);
 document.getElementById('fileInput').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; introEditor.value = await file.text(); document.getElementById('dialogCount').textContent = `${introEditor.value.length} 字符`; openEditor(); });
-document.getElementById('playAllBtn').addEventListener('click', () => speakSentence(currentIndex, true));
-document.getElementById('stopBtn').addEventListener('click', () => speechSynthesis.cancel());
+document.getElementById('playAllBtn').addEventListener('click', () => {
+  if (!sentences.length) { openEditor(); return; }
+  readingAll = true; isPaused = false; speechSynthesis.cancel(); speakSentence(0, true);
+  document.getElementById('pauseBtn').textContent = 'Ⅱ';
+});
+document.getElementById('pauseBtn').addEventListener('click', event => {
+  if (!speechSynthesis.speaking) return;
+  if (isPaused) { speechSynthesis.resume(); isPaused = false; event.currentTarget.textContent = 'Ⅱ'; document.getElementById('playbackStatus').textContent = `继续朗读 ${currentIndex + 1}/${sentences.length}`; }
+  else { speechSynthesis.pause(); isPaused = true; event.currentTarget.textContent = '▶'; document.getElementById('playbackStatus').textContent = `已暂停 ${currentIndex + 1}/${sentences.length}`; }
+});
+document.getElementById('stopBtn').addEventListener('click', () => { readingAll = false; isPaused = false; speechSynthesis.cancel(); document.getElementById('playbackStatus').textContent = '已停止'; document.getElementById('pauseBtn').textContent = 'Ⅱ'; });
 document.getElementById('previousBtn').addEventListener('click', () => speakSentence(Math.max(0, currentIndex - 1)));
 document.getElementById('nextBtn').addEventListener('click', () => speakSentence(Math.min(sentences.length - 1, currentIndex + 1)));
 speechSynthesis.onvoiceschanged = loadVoices; loadVoices();
