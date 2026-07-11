@@ -32,10 +32,11 @@
     if (info.range) {
       const span = document.createElement('span');
       span.className = `study-highlight-${type}`; span.dataset.studyAnnotation = id;
+      if (type === 'note') { span.dataset.studyNote = note; span.title = note; }
       try { info.range.surroundContents(span); } catch (_) { alert('请选择同一段落内的连续文字。'); return; }
       info.selection.removeAllRanges();
     } else if (info.control) { info.control.classList.add('study-textarea-marked'); }
-    records.push({ id, type, quote: info.quote, note, time: Date.now() }); persist(); render();
+    records.push({ id, type, quote: info.quote, note, time: Date.now() }); persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
   }
   function render() {
     if (!records.length) { list.innerHTML = '<div class="study-tools__empty">选中文字后即可高亮或添加备注</div>'; return; }
@@ -48,13 +49,13 @@
   function removeRecord(id) {
     const mark = document.querySelector(`[data-study-annotation="${id}"]`);
     if (mark) { mark.replaceWith(...mark.childNodes); }
-    records = records.filter(record => record.id !== id); persist(); render();
+    records = records.filter(record => record.id !== id); persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
   }
   function clearAll() {
     if (!records.length || confirm('确定清除本页所有高亮和备注吗？')) {
       document.querySelectorAll('[data-study-annotation]').forEach(mark => mark.replaceWith(...mark.childNodes));
       document.querySelectorAll('.study-textarea-marked').forEach(control => control.classList.remove('study-textarea-marked'));
-      records = []; persist(); render();
+      records = []; persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
     }
   }
   function restoreMarks() {
@@ -83,6 +84,18 @@
   tools.querySelector('[data-action="green"]').addEventListener('click', () => annotate('green'));
   tools.querySelector('[data-action="note"]').addEventListener('click', () => annotate('note'));
   tools.querySelector('[data-action="clear"]').addEventListener('click', clearAll);
+  document.addEventListener('click', event => {
+    const mark = event.target.closest('.study-highlight-note');
+    if (!mark) return;
+    const id = mark.dataset.studyAnnotation;
+    const existing = records.find(record => record.id === id);
+    const current = mark.dataset.studyNote || existing?.note || '';
+    const edited = prompt('查看或编辑备注：', current);
+    if (edited === null) return;
+    mark.dataset.studyNote = edited; mark.title = edited;
+    if (existing) existing.note = edited; else records.push({ id, type:'note', quote:mark.textContent, note:edited, time:Date.now() });
+    persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
+  });
   try { records = JSON.parse(localStorage.getItem(key)) || []; } catch (_) { records = []; }
   restoreMarks(); render();
 })();

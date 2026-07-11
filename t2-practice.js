@@ -6,6 +6,8 @@ const practiceStorageKey = 'tcf-t2-practice-v1';
 const practiceLibraryKey = 'tcf-t2-practice-library-v1';
 let lastPracticeScore = null;
 let practiceLibrary = [];
+let activePracticeId = null;
+let autoUpdateTimer = null;
 
 const expressionToggle = document.getElementById('expressionNavToggle');
 const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
@@ -27,14 +29,15 @@ function positionExpressionToggle() {
   if (expressionToggle && expressionLink) expressionToggle.style.top = `${expressionLink.offsetTop + 7}px`;
 }
 
-function getConversationLines() { return questionsEditor.value.split(/\n+/).map(line => line.trim()).filter(Boolean); }
+function getDialogueText() { return questionsEditor.innerText.replace(/\u00a0/g,' ').trim(); }
+function getConversationLines() { return getDialogueText().split(/\n+/).map(line => line.trim()).filter(Boolean); }
 function getQuestions() { return getConversationLines().filter(line => /[?？]/.test(line)); }
 function getInteractionLines() { return getConversationLines().filter(line => !/[?？]/.test(line)); }
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zœæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
-function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; savePractice(); }
-function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:questionsEditor.value,endpoint:gptEndpoint.value})); }
+function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
+function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,endpoint:gptEndpoint.value,activePracticeId})); }
 
 function reviewQuestion(question) {
   const issues = []; let correction = question.trim();
@@ -61,7 +64,7 @@ function localEvaluation() {
   const average = Math.round(reviews.reduce((sum,r)=>sum+r.score,0)/reviews.length);
   const variety = new Set(reviews.map(r=>normalizePractice(r.question).split(' ')[0])).size;
   const interactionLines = getInteractionLines();
-  const fullDialogue = normalizePractice(questionsEditor.value);
+  const fullDialogue = normalizePractice(getDialogueText());
   const hasGreeting = /\b(bonjour|salut|bonsoir)\b/.test(fullDialogue);
   const hasPoliteness = /\b(merci|s'il vous plait|s'il te plait|je vous remercie)\b/.test(fullDialogue);
   const hasReaction = /\b(je vois|d'accord|ah bon|c'est interessant|je comprends|parfait|tres bien)\b/.test(fullDialogue);
@@ -83,9 +86,10 @@ function persistPracticeLibrary() { localStorage.setItem(practiceLibraryKey, JSO
 function saveToPracticeLibrary(automatic = false) {
   if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
   const signature = normalizePractice(topicFr.value);
-  const existing = practiceLibrary.find(item => item.signature === signature);
-  const data = { id: existing?.id || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions: questionsEditor.value, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
+  const existing = practiceLibrary.find(item => item.id === activePracticeId) || practiceLibrary.find(item => item.signature === signature);
+  const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
   if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
+  activePracticeId = data.id;
   persistPracticeLibrary(); renderPracticeLibrary();
   if (!automatic) alert('真题已保存到练习库。');
 }
@@ -101,13 +105,14 @@ function renderPracticeLibrary() {
     const item = practiceLibrary.find(entry => entry.id === card.dataset.id);
     card.querySelector('.load-practice').addEventListener('click', () => loadSavedPractice(item));
     card.querySelector('.favorite-button').addEventListener('click', () => { item.favorite=!item.favorite; persistPracticeLibrary(); renderPracticeLibrary(); });
-    card.querySelector('.delete-practice').addEventListener('click', () => { if(confirm('确定删除这条真题练习吗？')) { practiceLibrary=practiceLibrary.filter(entry=>entry.id!==item.id); persistPracticeLibrary(); renderPracticeLibrary(); } });
+    card.querySelector('.delete-practice').addEventListener('click', () => { if(confirm('确定删除这条真题练习吗？')) { practiceLibrary=practiceLibrary.filter(entry=>entry.id!==item.id); if(activePracticeId===item.id) activePracticeId=null; persistPracticeLibrary(); savePractice(); renderPracticeLibrary(); } });
   });
 }
 
 function loadSavedPractice(item) {
   topicFr.value = item.fr;
-  questionsEditor.value = item.questions;
+  questionsEditor.innerHTML = item.dialogueHtml || escapePracticeHtml(item.questions).replace(/\n/g,'<br>');
+  activePracticeId = item.id;
   lastPracticeScore = item.score;
   updateQuestionCount();
   document.getElementById('t2-real-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -146,4 +151,5 @@ document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ 
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
 [topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
-try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} updateQuestionCount(); renderPracticeLibrary();
+window.addEventListener('studyannotationchange',()=>{savePractice();if(activePracticeId)saveToPracticeLibrary(true);});
+try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null; updateQuestionCount(); renderPracticeLibrary();
