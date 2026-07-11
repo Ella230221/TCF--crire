@@ -407,10 +407,13 @@
         </div>
         <div class="practice-grid">
           <div class="practice-form">
-            <label for="practiceTopicZh">中文题意</label>
-            <textarea id="practiceTopicZh" rows="2" placeholder="例如：你想知道朋友在新职位第一天过得怎么样。"></textarea>
             <label for="practiceTopicFr">法语原题</label>
             <textarea id="practiceTopicFr" rows="3" lang="fr" placeholder="Je suis votre ami(e). Vous souhaitez connaître…"></textarea>
+            <button class="translation-toggle" id="translationToggle" type="button" aria-expanded="false">中 显示中文翻译</button>
+            <div class="translation-panel" id="translationPanel" hidden>
+              <label for="practiceTopicZh">中文题意 <small id="translationStatus">可编辑</small></label>
+              <textarea id="practiceTopicZh" rows="2" placeholder="点击按钮后显示翻译；连接 GPT 后可自动生成。"></textarea>
+            </div>
             <label for="practiceQuestions">我准备的问题 <small>每行一个问题，可一次输入全部</small></label>
             <textarea id="practiceQuestions" class="questions-editor" rows="12" lang="fr" spellcheck="true" placeholder="Comment s'est passée ta première journée ?&#10;L'ambiance au bureau est-elle agréable ?&#10;Tes collègues sont-ils sympathiques ?"></textarea>
             <div class="practice-meta"><span id="practiceQuestionCount">0 个问题</span><span>建议准备 10–12 个不同角度的问题</span></div>

@@ -8,6 +8,29 @@ const practiceLibraryKey = 'tcf-t2-practice-library-v1';
 let lastPracticeScore = null;
 let practiceLibrary = [];
 
+async function toggleTranslation() {
+  const panel = document.getElementById('translationPanel');
+  const button = document.getElementById('translationToggle');
+  const willShow = panel.hidden;
+  panel.hidden = !willShow;
+  button.setAttribute('aria-expanded', String(willShow));
+  button.textContent = willShow ? '中 隐藏中文翻译' : '中 显示中文翻译';
+  if (!willShow || topicZh.value.trim() || !topicFr.value.trim()) return;
+  const endpoint = gptEndpoint.value.trim();
+  const status = document.getElementById('translationStatus');
+  if (!endpoint) { status.textContent = '未连接 GPT，可手动填写'; return; }
+  status.textContent = 'GPT 翻译中…'; button.disabled = true;
+  try {
+    const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'translate', topicFr: topicFr.value }) });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    topicZh.value = data.result || data.translation || '';
+    status.textContent = 'GPT 自动翻译，可编辑';
+    savePractice();
+  } catch (error) { status.textContent = `自动翻译失败，可手动填写`; }
+  finally { button.disabled = false; }
+}
+
 const expressionToggle = document.getElementById('expressionNavToggle');
 const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
 const expressionGroup = document.createElement('div');
@@ -108,5 +131,6 @@ document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation
 document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
+document.getElementById('translationToggle').addEventListener('click',toggleTranslation);
 [topicZh,topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
 try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicZh.value=saved.zh||'';topicFr.value=saved.fr||'';questionsEditor.value=saved.questions||'';gptEndpoint.value=saved.endpoint||'';}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} updateQuestionCount(); renderPracticeLibrary();
