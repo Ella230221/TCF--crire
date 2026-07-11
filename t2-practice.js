@@ -5,6 +5,21 @@ const referenceHints = document.getElementById('referenceHints');
 const gptEndpoint = document.getElementById('gptEndpoint');
 const practiceStorageKey = 'tcf-t2-practice-v1';
 
+const expressionToggle = document.getElementById('expressionNavToggle');
+const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
+const expressionGroup = document.createElement('div');
+expressionGroup.className = 'expression-nav-items';
+if (expressionLinks.length) {
+  expressionLinks[0].before(expressionGroup);
+  expressionLinks.forEach(link => expressionGroup.appendChild(link));
+}
+expressionToggle?.addEventListener('click', () => {
+  const collapsed = expressionGroup.classList.toggle('is-collapsed');
+  expressionToggle.textContent = collapsed ? '›' : '⌄';
+  expressionToggle.setAttribute('aria-expanded', String(!collapsed));
+  expressionToggle.setAttribute('aria-label', collapsed ? '展开表达积累栏目' : '收起表达积累栏目');
+});
+
 function getQuestions() { return questionsEditor.value.split(/\n+/).map(q => q.trim()).filter(Boolean); }
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zœæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
