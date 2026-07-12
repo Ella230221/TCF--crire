@@ -12,6 +12,7 @@ let lastPracticeScore = null;
 let practiceLibrary = [];
 let activePracticeId = null;
 let autoUpdateTimer = null;
+let loadingSavedPractice = false;
 let openPracticeCategories=new Set();try{openPracticeCategories=new Set(JSON.parse(localStorage.getItem('tcf-t2-open-categories'))||[]);}catch(_){}
 const t2Categories = [
   ['formation','🎓 Formation / Éducation'],['logement','🏠 Logement'],['voyage','✈️ Voyage / Tourisme'],['restaurant','🍽️ Restaurant / Alimentation'],['sport','⚽ Sport / Loisirs'],['sante','❤️ Santé'],['travail','💼 Travail / Emploi'],['banque','🏦 Banque / Assurance'],['administration','🏛️ Services administratifs'],['commerce','🛒 Commerce / Achat'],['animaux','🐾 Animaux'],['evenement','🎉 Événement'],['famille','👨‍👩‍👧 Enfants / Famille'],['quartier','🏘️ Quartier / Vie quotidienne'],['culture','🎭 Culture']
@@ -47,7 +48,7 @@ function getInteractionLines() { return getConversationLines().filter(line => !/
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9œæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
-function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
+function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(activePracticeId&&!loadingSavedPractice){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
 function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,category:practiceCategory.value,activePracticeId})); }
 
 function reviewQuestion(question) {
@@ -120,12 +121,15 @@ function renderPracticeLibrary() {
 }
 
 function loadSavedPractice(item) {
+  loadingSavedPractice = true;
+  clearTimeout(autoUpdateTimer);
   topicFr.value = item.fr;
   practiceCategory.value = item.category||inferCategory(item.fr);
   questionsEditor.innerHTML = item.dialogueHtml || escapePracticeHtml(item.questions).replace(/\n/g,'<br>');
   activePracticeId = item.id;
   lastPracticeScore = item.score;
   updateQuestionCount();
+  loadingSavedPractice = false;
   document.getElementById('t2-real-practice').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
