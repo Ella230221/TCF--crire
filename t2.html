@@ -392,6 +392,10 @@
     <aside class="side-nav" aria-label="左侧导航目录">
       <h2>导航目录</h2>
       <a class="toc-link t2-main-link" href="#t2-real-practice">1. 真题练习</a>
+      <div class="saved-practice-filters" id="savedPracticeFilters">
+        <label for="practiceFilter">Rechercher un sujet</label><input id="practiceFilter" type="search" placeholder="Mot-clé du sujet…">
+        <label for="practiceSort">Trier les sujets</label><select id="practiceSort"><option value="newest">Les plus récents</option><option value="oldest">Les plus anciens</option><option value="title">Titre A–Z</option><option value="score">Meilleure note</option><option value="favorite">Favoris d’abord</option></select>
+      </div>
       <div class="saved-practice-nav" id="savedPracticeNav" hidden></div>
       <a class="toc-link t2-main-link" href="#expression-library">2. 表达积累</a>
       <button class="expression-nav-toggle" id="expressionNavToggle" type="button" aria-expanded="true" aria-label="收起表达积累栏目">⌄</button>
@@ -439,7 +443,7 @@
           </aside>
         </div>
         <section class="practice-library">
-          <div class="library-heading"><div><h3>我的真题练习库</h3><p>评分后自动保存，可随时载入继续练习。</p></div><label>排列方式<select id="practiceSort"><option value="newest">最新练习</option><option value="oldest">最早练习</option><option value="title">题目名称</option><option value="score">分数从高到低</option><option value="favorite">收藏优先</option></select></label></div>
+          <div class="library-heading"><div><h3>我的真题练习库</h3><p>评分后自动保存，可随时载入继续练习。</p></div></div>
           <div class="saved-practice-list" id="savedPracticeList"></div>
         </section>
       </section>

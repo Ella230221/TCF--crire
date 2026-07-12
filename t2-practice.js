@@ -101,7 +101,8 @@ function saveToPracticeLibrary(automatic = false) {
 function renderPracticeLibrary() {
   const container = document.getElementById('savedPracticeList');
   const mode = document.getElementById('practiceSort').value;
-  const items = [...practiceLibrary].sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'zh') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
+  const query = normalizePractice(document.getElementById('practiceFilter').value || '');
+  const items = practiceLibrary.filter(item=>!query||normalizePractice(`${item.title} ${item.fr}`).includes(query)).sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'fr') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
   renderSavedPracticeNav(items);
   if (!items.length) { container.innerHTML = '<div class="library-empty">还没有保存的真题。完成第一次评分后会自动出现在这里。</div>'; return; }
   container.innerHTML = items.map((item,index) => `<article class="saved-practice-card ${item.favorite?'is-favorite':''}" data-id="${item.id}"><div class="saved-card-top"><h4><span class="practice-index">${index+1}.</span> ${escapePracticeHtml(item.title)}</h4><button class="favorite-button" type="button" title="收藏">★</button></div><p>${new Date(item.updatedAt).toLocaleString('zh-CN')} · ${item.questions.split(/\n+/).filter(Boolean).length} 句对话</p>${item.score==null?'':`<span class="saved-score">${item.score} 分</span>`}<div class="saved-card-actions"><button class="load-practice" type="button">载入练习</button><button class="delete-practice" type="button">删除</button></div></article>`).join('');
@@ -154,6 +155,7 @@ document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation
 document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
+document.getElementById('practiceFilter').addEventListener('input',renderPracticeLibrary);
 topicFr.addEventListener('input',()=>{
   const active = practiceLibrary.find(item=>item.id===activePracticeId);
   if(active && normalizePractice(topicFr.value)!==active.signature) activePracticeId=null;
