@@ -5,6 +5,8 @@ const sentenceList = document.getElementById('sentenceList');
 const emptyState = document.getElementById('emptyState');
 const template = document.getElementById('sentenceTemplate');
 const voiceSelect = document.getElementById('voiceSelect');
+const voiceModeSelect = document.getElementById('voiceModeSelect');
+const ttsEndpoint = document.getElementById('ttsEndpoint');
 const rateSelect = document.getElementById('rateSelect');
 const storageKey = 'tcf-t1-introduction-v1';
 let sentences = [];
@@ -18,6 +20,15 @@ let isPaused = false;
 const recordings = new Map();
 const practiced = new Set();
 let practiceMode = 'listen';
+let activeAudio = null;
+let audioAbort = null;
+const audioCache = new Map();
+const ttsSettingsKey = 'tcf-t1-tts-settings-v1';
+const aiVoices = [
+  { id: 'marin', label: 'Marin · naturelle et claire' },
+  { id: 'cedar', label: 'Cedar · chaleureuse et posée' },
+  { id: 'coral', label: 'Coral · expressive' }
+];
 
 function parseParagraphs(text) {
   return text.replace(/\r/g,'').split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>(line.match(/[^.!?…]+(?:[.!?…]+|$)/g)||[]).map(sentence=>sentence.trim()).filter(Boolean)).filter(group=>group.length);
@@ -29,8 +40,15 @@ function splitSentences(text) {
 
 function loadVoices() {
   voices = speechSynthesis.getVoices();
+  if (voiceModeSelect.value === 'ai') {
+    voiceSelect.innerHTML = aiVoices.map(voice => `<option value="${voice.id}">${voice.label}</option>`).join('');
+    const saved = readTtsSettings();
+    if (aiVoices.some(voice => voice.id === saved.voice)) voiceSelect.value = saved.voice;
+    return;
+  }
   const french = voices.filter(voice => /^fr/i.test(voice.lang));
-  const available = french.length ? french : voices;
+  const quality = voice => (/premium|enhanced|natural|neural|audrey|amelie|thomas|denise|henri/i.test(voice.name) ? 20 : 0) + (!/compact/i.test(voice.name) ? 5 : 0) + (voice.localService ? 1 : 3);
+  const available = (french.length ? french : voices).slice().sort((a,b) => quality(b) - quality(a));
   voiceSelect.innerHTML = '';
   available.forEach(voice => {
     const option = document.createElement('option');
@@ -44,25 +62,56 @@ function loadVoices() {
 
 function selectedVoice() { return voices[Number(voiceSelect.value)] || voices.find(voice => /^fr/i.test(voice.lang)); }
 
-function speakSentence(index, continueAfter = false) {
+function readTtsSettings() { try { return JSON.parse(localStorage.getItem(ttsSettingsKey)) || {}; } catch (_) { return {}; } }
+function saveTtsSettings() { localStorage.setItem(ttsSettingsKey, JSON.stringify({ mode: voiceModeSelect.value, voice: voiceSelect.value, endpoint: ttsEndpoint.value.trim() })); }
+function stopPlayback() {
+  speechSynthesis.cancel();
+  audioAbort?.abort(); audioAbort = null;
+  if (activeAudio) { activeAudio.pause(); activeAudio.currentTime = 0; activeAudio = null; }
+}
+
+async function playAiSentence(index, continueAfter) {
+  const endpoint = ttsEndpoint.value.trim();
+  if (!endpoint) throw new Error('Ajoutez l’adresse du service de voix IA dans « Connexion voix IA ».');
+  const key = `${voiceSelect.value}|${rateSelect.value}|${sentences[index]}`;
+  let url = audioCache.get(key);
+  if (!url) {
+    audioAbort = new AbortController();
+    const response = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, signal:audioAbort.signal, body:JSON.stringify({ text:sentences[index], voice:voiceSelect.value, speed:Number(rateSelect.value) }) });
+    if (!response.ok) { const data = await response.json().catch(()=>({})); throw new Error(data.error || `Service vocal indisponible (${response.status})`); }
+    url = URL.createObjectURL(await response.blob()); audioCache.set(key,url);
+  }
+  activeAudio = new Audio(url);
+  activeAudio.onended = () => finishSentence(index, continueAfter);
+  activeAudio.onerror = () => { document.getElementById('playbackStatus').textContent = 'Erreur de lecture audio'; };
+  await activeAudio.play();
+}
+
+function finishSentence(index, continueAfter) {
+  if (continueAfter && readingAll && index < sentences.length - 1) speakSentence(index + 1, true);
+  else if (continueAfter && index === sentences.length - 1) { readingAll=false; document.getElementById('playbackStatus').textContent='Lecture terminée'; }
+}
+
+async function speakSentence(index, continueAfter = false) {
   if (!sentences[index]) return;
   if (!continueAfter) readingAll = false;
-  speechSynthesis.cancel();
+  stopPlayback();
   currentIndex = index;
   markActive(index);
-  document.getElementById('playbackStatus').textContent = `朗读中 ${index + 1}/${sentences.length}`;
+  document.getElementById('playbackStatus').textContent = `Lecture ${index + 1}/${sentences.length}`;
+  if (voiceModeSelect.value === 'ai') {
+    try { await playAiSentence(index, continueAfter); return; }
+    catch (error) {
+      if (error.name === 'AbortError') return;
+      document.getElementById('playbackStatus').textContent = `${error.message} · voix locale utilisée`;
+    }
+  }
   const utterance = new SpeechSynthesisUtterance(sentences[index]);
   utterance.lang = 'fr-FR';
   utterance.rate = Number(rateSelect.value);
   utterance.voice = selectedVoice() || null;
-  utterance.onend = () => {
-    if (continueAfter && readingAll && index < sentences.length - 1) {
-      speakSentence(index + 1, true);
-    } else if (continueAfter && index === sentences.length - 1) {
-      readingAll = false;
-      document.getElementById('playbackStatus').textContent = '全文朗读完成';
-    }
-  };
+  utterance.pitch = 1;
+  utterance.onend = () => finishSentence(index, continueAfter);
   speechSynthesis.speak(utterance);
 }
 
@@ -111,7 +160,7 @@ function applyPracticeMode() {
 function switchPracticeMode(mode) {
   practiceMode = mode;
   readingAll = false;
-  speechSynthesis.cancel();
+  stopPlayback();
   applyPracticeMode();
 }
 
@@ -194,21 +243,29 @@ document.getElementById('fileInput').addEventListener('change', async event => {
 document.getElementById('playAllBtn').addEventListener('click', () => {
   if (!sentences.length) { openEditor(); return; }
   practiceMode = 'listen'; applyPracticeMode();
-  readingAll = true; isPaused = false; speechSynthesis.cancel(); speakSentence(0, true);
+  readingAll = true; isPaused = false; stopPlayback(); speakSentence(0, true);
   document.getElementById('pauseBtn').textContent = 'Ⅱ';
 });
 document.getElementById('continuousPlayBtn').addEventListener('click', () => {
   if (!sentences.length) return;
-  practiceMode = 'listen'; applyPracticeMode(); readingAll = true; isPaused = false; speechSynthesis.cancel(); speakSentence(0, true);
+  practiceMode = 'listen'; applyPracticeMode(); readingAll = true; isPaused = false; stopPlayback(); speakSentence(0, true);
 });
 document.querySelectorAll('#practiceModeTabs button').forEach(button => button.addEventListener('click', () => switchPracticeMode(button.dataset.mode)));
 document.getElementById('pauseBtn').addEventListener('click', event => {
+  if (activeAudio) {
+    if (isPaused) { activeAudio.play(); isPaused=false; event.currentTarget.textContent='Ⅱ'; }
+    else { activeAudio.pause(); isPaused=true; event.currentTarget.textContent='▶'; }
+    document.getElementById('playbackStatus').textContent = `${isPaused?'Pause':'Lecture'} ${currentIndex+1}/${sentences.length}`; return;
+  }
   if (!speechSynthesis.speaking) return;
-  if (isPaused) { speechSynthesis.resume(); isPaused = false; event.currentTarget.textContent = 'Ⅱ'; document.getElementById('playbackStatus').textContent = `继续朗读 ${currentIndex + 1}/${sentences.length}`; }
-  else { speechSynthesis.pause(); isPaused = true; event.currentTarget.textContent = '▶'; document.getElementById('playbackStatus').textContent = `已暂停 ${currentIndex + 1}/${sentences.length}`; }
+  if (isPaused) { speechSynthesis.resume(); isPaused = false; event.currentTarget.textContent = 'Ⅱ'; document.getElementById('playbackStatus').textContent = `Lecture ${currentIndex + 1}/${sentences.length}`; }
+  else { speechSynthesis.pause(); isPaused = true; event.currentTarget.textContent = '▶'; document.getElementById('playbackStatus').textContent = `Pause ${currentIndex + 1}/${sentences.length}`; }
 });
-document.getElementById('stopBtn').addEventListener('click', () => { readingAll = false; isPaused = false; speechSynthesis.cancel(); document.getElementById('playbackStatus').textContent = '已停止'; document.getElementById('pauseBtn').textContent = 'Ⅱ'; });
+document.getElementById('stopBtn').addEventListener('click', () => { readingAll = false; isPaused = false; stopPlayback(); document.getElementById('playbackStatus').textContent = 'Arrêté'; document.getElementById('pauseBtn').textContent = 'Ⅱ'; });
 document.getElementById('previousBtn').addEventListener('click', () => speakSentence(Math.max(0, currentIndex - 1)));
 document.getElementById('nextBtn').addEventListener('click', () => speakSentence(Math.min(sentences.length - 1, currentIndex + 1)));
+voiceModeSelect.addEventListener('change',()=>{saveTtsSettings();loadVoices();});
+voiceSelect.addEventListener('change',saveTtsSettings);ttsEndpoint.addEventListener('change',saveTtsSettings);rateSelect.addEventListener('change',saveTtsSettings);
+const savedTts=readTtsSettings();voiceModeSelect.value=savedTts.mode||'ai';ttsEndpoint.value=savedTts.endpoint||(location.hostname.endsWith('github.io')?'':`${location.origin}/api/tts`);
 speechSynthesis.onvoiceschanged = loadVoices; loadVoices();
 try { const saved = JSON.parse(localStorage.getItem(storageKey)); if (saved) { introTitle.value = saved.title || ''; introEditor.value = saved.text || ''; sentences = splitSentences(introEditor.value); document.querySelector('.document-head h1').textContent = saved.title || '我的法语自我介绍'; render(); } } catch (_) {}

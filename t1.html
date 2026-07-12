@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TCF Tâche 1 自我介绍训练</title>
+  <title>TCF Tâche 1 · Présentation</title>
   <link rel="stylesheet" href="t1.css" />
   <link rel="stylesheet" href="site-nav.css" />
   <link rel="stylesheet" href="study-tools.css" />
 </head>
 <body>
-  <nav class="site-switcher" aria-label="学习页面切换">
+  <nav class="site-switcher" aria-label="Navigation entre les exercices">
     <a class="active" href="t1.html">T1 自我介绍</a>
     <a href="t2.html">T2 口语</a>
     <a href="index.html">T3 口语</a>
@@ -44,7 +44,11 @@
       <header class="player-bar">
         <div class="voice-control">
           <div class="voice-avatar">FR</div>
-          <label>法语声音<select id="voiceSelect"></select></label>
+          <div class="voice-settings">
+            <label>Type de voix<select id="voiceModeSelect"><option value="ai">Voix IA naturelle</option><option value="system">Voix de l’appareil</option></select></label>
+            <label>Voix française<select id="voiceSelect"></select></label>
+            <details class="voice-api-settings"><summary>Connexion voix IA</summary><label>Adresse du service<input id="ttsEndpoint" type="url" placeholder="https://votre-service.vercel.app/api/tts" /></label><small>La clé API reste uniquement sur le serveur.</small></details>
+          </div>
         </div>
         <div class="play-controls">
           <button id="previousBtn" type="button" aria-label="上一句">↶</button>
@@ -60,6 +64,7 @@
             <option value="0.85">0.85×</option><option value="1" selected>1.0×</option>
             <option value="1.1">1.1×</option><option value="1.25">1.25×</option>
           </select>
+          <small class="ai-disclosure">Voix générée par IA</small>
         </label>
       </header>
 
