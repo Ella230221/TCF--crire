@@ -4,6 +4,7 @@ const referenceHints = document.getElementById('referenceHints');
 const gptEndpoint = document.getElementById('gptEndpoint');
 const practiceStorageKey = 'tcf-t2-practice-v1';
 const practiceLibraryKey = 'tcf-t2-practice-library-v1';
+const maxPracticeLibrarySize = 500;
 let lastPracticeScore = null;
 let practiceLibrary = [];
 let activePracticeId = null;
@@ -86,9 +87,12 @@ function persistPracticeLibrary() { localStorage.setItem(practiceLibraryKey, JSO
 function saveToPracticeLibrary(automatic = false) {
   if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
   const signature = normalizePractice(topicFr.value);
-  const existing = practiceLibrary.find(item => item.id === activePracticeId) || practiceLibrary.find(item => item.signature === signature);
+  const existing = practiceLibrary.find(item => item.signature === signature);
   const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
   if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
+  if (practiceLibrary.length > maxPracticeLibrarySize) {
+    practiceLibrary = practiceLibrary.sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,maxPracticeLibrarySize);
+  }
   activePracticeId = data.id;
   persistPracticeLibrary(); renderPracticeLibrary();
   if (!automatic) alert('真题已保存到练习库。');
@@ -150,6 +154,11 @@ document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation
 document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
-[topicFr,questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
+topicFr.addEventListener('input',()=>{
+  const active = practiceLibrary.find(item=>item.id===activePracticeId);
+  if(active && normalizePractice(topicFr.value)!==active.signature) activePracticeId=null;
+  updateQuestionCount();
+});
+[questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
 window.addEventListener('studyannotationchange',()=>{savePractice();if(activePracticeId)saveToPracticeLibrary(true);});
 try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null; updateQuestionCount(); renderPracticeLibrary();

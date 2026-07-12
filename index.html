@@ -6,100 +6,107 @@
   <title>Modèle et questions - Webpage</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="site-nav.css" />
-  <link rel="stylesheet" href="study-tools.css" />
 </head>
 <body>
   <nav class="site-switcher" aria-label="学习页面切换">
-    <a href="t1.html">T1 自我介绍</a>
-    <a href="t2.html">T2 口语</a>
-    <a class="active" href="index.html">T3 口语</a>
-    <a href="writing.html">写作练习</a>
+    <a href="t1.html">T1 Présentation</a>
+    <a href="t2.html">T2 Expression orale</a>
+    <a class="active" href="index.html">T3 Expression orale</a>
+    <a href="writing.html">Expression écrite</a>
   </nav>
-  <header class="hero">
-    <div class="hero__inner">
-      <h1>Modèle de réponse et questions</h1>
-      <p>Une page web structurée avec un modèle de phrases et des réponses organisées par question.</p>
-    </div>
-  </header>
-
   <div class="layout">
     <nav class="sidebar" id="sidebarNav">
       <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="true" aria-label="收起导航">‹</button>
-      <h2>Navigation</h2>
+      <h2>Sommaire</h2>
       <div class="annotation-controls">
-        <button id="highlightYellowBtn" type="button">黄色高亮</button>
-        <button id="highlightGreenBtn" type="button">绿色高亮</button>
-        <button id="noteBtn" type="button">批注</button>
-        <button id="clearHighlightsBtn" type="button">清除高亮</button>
-        <button id="clearNotesBtn" type="button">清除批注</button>
-        <div class="current-section">当前章节：<span id="currentSectionName">模版</span></div>
+        <button id="highlightYellowBtn" type="button">Surligner en jaune</button>
+        <button id="highlightGreenBtn" type="button">Surligner en vert</button>
+        <button id="noteBtn" type="button">Annoter</button>
+        <button id="clearHighlightsBtn" type="button">Effacer les surlignages</button>
+        <button id="clearNotesBtn" type="button">Effacer les annotations</button>
+        <div class="current-section">Section : <span id="currentSectionName">Modèle</span></div>
       </div>
       <ul>
-        <li class="nav-module"><a href="#modele">模版</a></li>
-        <li class="nav-module"><a href="#exemples-universels">万能例子</a></li>
+        <li class="nav-module"><a href="#modele">Modèle</a></li>
+        <li class="nav-module"><a href="#exemples-universels">Exemples universels</a></li>
+        <li class="nav-module"><a href="#import-t3">Mes fichiers et questions</a></li>
         <li class="nav-module nav-module--t3"><a href="#t3-oral">T3—oral</a><button id="t3NavToggle" class="nav-subtoggle" type="button" aria-expanded="true" aria-label="收起 T3—oral 题目">⌄</button>
           <ul class="t3-question-list t3-category-list">
-            <li class="nav-category"><a href="#categorie-education">📚 Éducation（教育）</a><ul>
+            <li class="nav-category"><a href="#categorie-education">📚 Éducation</a><ul>
               <li><a href="#etudes">Faut-il avoir fait de longues études pour réussir sa vie ?</a></li>
               <li><a href="#trop-tard">Il n'est jamais trop tard pour apprendre.</a></li>
               <li><a href="#education-maison">L'éducation à la maison est-elle une bonne solution ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-travail">💼 Travail（工作与职业）</a><ul>
+            <li class="nav-category"><a href="#categorie-travail">💼 Travail et carrière</a><ul>
               <li><a href="#responsable">Tout le monde peut-il occuper des fonctions de responsable ?</a></li>
               <li><a href="#travailler-etudier">Travailler et étudier en même temps est difficile.</a></li>
               <li><a href="#salaire">Le salaire est-il la chose la plus importante dans un travail ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-famille">👨‍👩‍👧‍👦 Famille et relations humaines（家庭与人际关系）</a><ul>
+            <li class="nav-category"><a href="#categorie-famille">👨‍👩‍👧‍👦 Famille et relations humaines</a><ul>
               <li><a href="#aides-sociales">Les aides sociales réduisent-elles la solidarité familiale ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-sante">❤️ Santé et bien-être（健康与幸福）</a><ul>
+            <li class="nav-category"><a href="#categorie-sante">❤️ Santé et bien-être</a><ul>
               <li><a href="#medicaments">Est-il aujourd'hui impossible de vivre sans médicaments ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-technologie">💻 Technologie et numérique（科技与数字生活）</a><ul>
+            <li class="nav-category"><a href="#categorie-technologie">💻 Technologie et numérique</a><ul>
               <li><a href="#reseaux-sociaux">Les parents doivent laisser leurs enfants utiliser les réseaux sociaux ?</a></li>
               <li><a href="#telephone-ecole">L'utilisation du téléphone portable par les élèves à l'école.</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-societe">🌍 Société et environnement（社会与环境）</a><ul>
+            <li class="nav-category"><a href="#categorie-societe">🌍 Société et environnement</a><ul>
               <li><a href="#integration-jeune">Est-il plus facile de s'intégrer dans un nouveau pays quand on est jeune ?</a></li>
               <li><a href="#adaptation">Tout le monde est-il capable de s'adapter dans un pays étranger ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-argent">💰 Argent et consommation（金钱与消费）</a></li>
-            <li class="nav-category"><a href="#categorie-culture">🎭 Culture, loisirs et tourisme（文化、休闲与旅游）</a><ul>
+            <li class="nav-category"><a href="#categorie-argent">💰 Argent et consommation</a></li>
+            <li class="nav-category"><a href="#categorie-culture">🎭 Culture, loisirs et tourisme</a><ul>
               <li><a href="#livres">Les livres sont-ils devenus inutiles aujourd'hui ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-mode-vie">🏙️ Mode de vie（生活方式）</a><ul>
+            <li class="nav-category"><a href="#categorie-mode-vie">🏙️ Mode de vie</a><ul>
               <li><a href="#urbain-rural">Agréable pour les personnes âgées en milieu urbain ou rural ?</a></li>
             </ul></li>
-            <li class="nav-category"><a href="#categorie-valeurs">⚖️ Valeurs et citoyenneté（价值观与公民责任）</a></li>
+            <li class="nav-category"><a href="#categorie-valeurs">⚖️ Valeurs et citoyenneté</a></li>
           </ul>
         </li>
-        <li class="nav-module"><a href="#corpus-logique">语料链</a></li>
+        <li class="nav-module"><a href="#corpus-logique">Enchaînements logiques</a></li>
       </ul>
       <div class="comments-panel">
-        <h3>批注列表</h3>
+        <h3>Annotations</h3>
         <div id="commentsList"></div>
       </div>
     </nav>
 
     <main class="content">
+      <section id="import-t3" class="section t3-import-panel">
+        <details open>
+          <summary><h2>Mes fichiers et questions</h2></summary>
+          <p class="t3-import-help">Importez un fichier TXT, Markdown, HTML ou JSON. Le contenu reste modifiable et les passages du modèle sont automatiquement affichés en bleu.</p>
+          <div class="t3-import-actions">
+            <label class="t3-file-button">Importer un fichier<input id="t3FileInput" type="file" accept=".txt,.md,.html,.htm,.json,text/plain,text/html,application/json" multiple></label>
+            <button id="t3AddQuestion" type="button">Ajouter une question</button>
+            <button id="t3SaveImported" type="button">Enregistrer</button>
+            <button id="t3ClearImported" type="button">Tout supprimer</button>
+            <span id="t3ImportCount">0 / 500 questions</span>
+          </div>
+          <div id="t3ImportedQuestions" class="t3-imported-questions"></div>
+        </details>
+      </section>
       <section id="modele" class="section collapsible-section">
                 <details open>
-          <summary><h2>1. 模版</h2></summary>
+          <summary><h2>1. Modèle</h2></summary>
         <p>Voici un modèle général pour structurer une réponse autour d'une question d'opinion.</p>
 
         <div class="template-block">
           <p>Si je comprends bien, il s'agit de savoir si...</p>
 
-          <h3>二选一</h3>
+          <h3>Comparer deux options</h3>
           <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Pour ma part, je pense que <span class="fill-blue">[Sujet A]</span> et <span class="fill-blue">[Sujet B]</span> présentent tous deux des avantages. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
 
-          <h3>优缺点</h3>
+          <h3>Avantages et inconvénients</h3>
           <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que <span class="fill-blue">[Sujet]</span> présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés à <span class="fill-blue">[Sujet]</span>. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
 
-          <h3>多因素</h3>
+          <h3>Plusieurs facteurs</h3>
           <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que <span class="fill-blue">[Sujet]</span> présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
 
-          <h3>个人</h3>
+          <h3>Choix personnel</h3>
           <p>Il serait intéressant de réfléchir à cette question. Si je devais en retenir quelques-unes, je choisirais <span class="fill-blue">[Sujet]</span>. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
 
           <p>Pour commencer, <span class="fill-blue">[Sujet]</span> constitue un véritable atout, car cela permet de <span class="fill-blue">[ ]</span>. En effet, cela favorise également <span class="fill-blue">[communication / autonomie / intégration / développement personnel / bien-être...]</span>.</p>
@@ -119,16 +126,16 @@
 
           <p>En définitive, plutôt que d'opposer <span class="fill-blue">[Sujet A]</span> à <span class="fill-blue">[Sujet B]</span>, il me semble plus pertinent de reconnaître qu'ils peuvent se compléter. Tout l'enjeu consiste à trouver la manière la plus adaptée de les concilier selon les besoins de chacun.</p>
 
-          <h3>二选一</h3>
+          <h3>Comparer deux options</h3>
           <p>En définitive, plutôt que d'opposer <span class="fill-blue">[Sujet A]</span> à <span class="fill-blue">[Sujet B]</span>, il me semble plus pertinent de reconnaître qu'ils peuvent se compléter. Il s'agit avant tout de trouver la meilleure manière de les concilier selon les besoins de chacun.</p>
 
-          <h3>优缺点</h3>
+          <h3>Avantages et inconvénients</h3>
           <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
 
-          <h3>多因素</h3>
+          <h3>Plusieurs facteurs</h3>
           <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
 
-          <h3>个人</h3>
+          <h3>Choix personnel</h3>
           <p>En définitive, ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs. Il s'agit avant tout de poursuivre un projet qui me permette de continuer à apprendre et à progresser.</p>
         </div>
               </details>
@@ -136,7 +143,7 @@
 
       <section id="exemples-universels" class="section collapsible-section">
                 <details open>
-          <summary><h2>2. 万能例子</h2></summary>
+          <summary><h2>2. Exemples universels</h2></summary>
         <div class="example-block">
           <p>Moi</p>
           <p>Depuis mon arrivée au Canada, j'apprends le français tous les jours. Je vais régulièrement à la bibliothèque pour lire des livres en français et je participe à des activités de bénévolat. Cette expérience m'aide à progresser, à gagner en confiance et à mieux m'intégrer dans la société.</p>
@@ -390,7 +397,7 @@
 
       <section id="corpus-logique" class="section module-intro collapsible-section">
         <details open>
-          <summary><h2>4. 语料链</h2></summary>
+          <summary><h2>4. Enchaînements logiques</h2></summary>
         <details id="logique-1-logique-comment-utiliser-l-argent-economise" class="logic-details">
           <summary>1. Logique : Comment utiliser l&#x27;argent économisé ?</summary>
           <p class="logic-original-line logic-step-line">① Investir dans son développement personnel</p>
@@ -1049,7 +1056,7 @@
           <p class="logic-original-line logic-arrow-line">Les actions citoyennes</p>
         </details>
         <details id="logique-18-logique-de-l-opinion" class="logic-details">
-          <summary>18. Logique de l&#x27;opinion（万能观点）</summary>
+          <summary>18. Logique de l&#x27;opinion</summary>
           <p class="logic-original-line logic-step-line">① Donner son opinion</p>
           <p class="logic-original-line">Opinion nuancée（★★★★★）</p>
           <p class="logic-original-line">Cette question mérite d&#x27;être nuancée.</p>
@@ -1503,7 +1510,7 @@
     const noteBtn = document.getElementById('noteBtn');
     const clearHighlightsBtn = document.getElementById('clearHighlightsBtn');
     const clearNotesBtn = document.getElementById('clearNotesBtn');
-    const annotationStorageKey = 'tcf-t3-oral-annotations-v1';
+    const annotationStorageKey = 'tcf-t3-oral-annotations-v2';
     const mainContent = document.querySelector('main.content');
 
     function saveAnnotations() {
@@ -1957,6 +1964,6 @@
       });
     }
   </script>
-  <script src="study-tools.js"></script>
+  <script src="t3-editor.js"></script>
 </body>
 </html>

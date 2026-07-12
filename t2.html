@@ -379,7 +379,6 @@
   </style>
   <link rel="stylesheet" href="site-nav.css">
   <link rel="stylesheet" href="t2-practice.css">
-  <link rel="stylesheet" href="study-tools.css">
 </head>
 <body>
   <nav class="site-switcher" aria-label="学习页面切换">
@@ -388,10 +387,6 @@
     <a href="index.html">T3 口语</a>
     <a href="writing.html">写作练习</a>
   </nav>
-  <header>
-    <h1>TCF Tâche 2 场景通用问题思维导图</h1>
-    <p class="subtitle">仅使用你提供的附件原文生成；未新增、未补充内容。</p>
-  </header>
   <main>
     <aside class="side-nav" aria-label="左侧导航目录">
       <h2>导航目录</h2>
@@ -402,6 +397,16 @@
       <a class="toc-link" href="#提问流程">1. 提问流程</a><a class="toc-link" href="#开场结束过渡句">2. 开场结束过渡句</a><a class="toc-link" href="#搞事情">3. 搞事情</a><a class="toc-link" href="#🧩 问句结构总结">4. 🧩 问句结构总结</a><a class="toc-link" href="#📖 Quoi ?">5. 📖 Quoi ?</a><a class="toc-link" href="#👤 Qui ?">6. 👤 Qui ?</a><a class="toc-link" href="#📍 Où ?">7. 📍 Où ?</a><a class="toc-link" href="#🕒 Quand ?">8. 🕒 Quand ?</a><a class="toc-link" href="#💰 Combien ?">9. 💰 Combien ?</a><a class="toc-link" href="#📄 Documents">10. 📄 Documents</a><a class="toc-link" href="#⚙️ Comment ?">11. ⚙️ Comment ?</a><a class="toc-link" href="#⭐ Pourquoi ?">12. ⭐ Pourquoi ?</a><a class="toc-link" href="#📋 Conditions">13. 📋 Conditions</a><a class="toc-link" href="#🛡️ Sécurité">14. 🛡️ Sécurité</a><a class="toc-link" href="#💡 Conseils">15. 💡 Conseils</a><a class="toc-link" href="#🌦️ Météo">16. 🌦️ Météo</a><a class="toc-link" href="#🏠 Hébergement / Logement">17. 🏠 Hébergement / Logement</a><a class="toc-link" href="#🏦 Banque">18. 🏦 Banque</a><a class="toc-link" href="#📱 Téléphone mobile">19. 📱 Téléphone mobile</a><a class="toc-link" href="#🌐 Internet">20. 🌐 Internet</a><a class="toc-link" href="#📮 Poste">21. 📮 Poste</a><a class="toc-link" href="#📦 Livraison">22. 📦 Livraison</a><a class="toc-link" href="#💻 Réparation d&#x27;ordinateur">23. 💻 Réparation d'ordinateur</a><a class="toc-link" href="#🔌 Réparation d&#x27;électroménager">24. 🔌 Réparation d'électroménager</a><a class="toc-link" href="#🔑 Serrurier">25. 🔑 Serrurier</a><a class="toc-link" href="#🚗 Assurance automobile">26. 🚗 Assurance automobile</a><a class="toc-link" href="#🏢 Entreprise / Entretien d&#x27;embauche">27. 🏢 Entreprise / Entretien d'embauche</a><a class="toc-link" href="#🐶 Animalerie / Pension / Clinique vétérinaire">28. 🐶 Animalerie / Pension / Clinique vétérinaire</a><a class="toc-link" href="#📚 Bibliothèque / Librairie">29. 📚 Bibliothèque / Librairie</a><a class="toc-link" href="#🎉 Organisation d&#x27;événement">30. 🎉 Organisation d'événement</a>
     </aside>
     <div class="content-area">
+      <div class="toolbar toolbar--study">
+        <input id="search" type="search" placeholder="Rechercher un mot-clé">
+        <button id="highlight-yellow" type="button">Surligner en jaune</button>
+        <button id="highlight-green" type="button">Surligner en vert</button>
+        <button id="annotate" type="button">Ajouter une note</button>
+        <button id="clear-highlights" type="button">Effacer les surlignages</button>
+        <button id="clear-notes" type="button">Effacer les notes</button>
+        <button id="expand">Tout afficher</button>
+        <button id="top" type="button">Haut de page</button>
+      </div>
       <section id="t2-real-practice" class="practice-workspace">
         <div class="practice-grid">
           <div class="practice-form">
@@ -446,16 +451,6 @@
       <section id="expression-library" class="expression-library-heading">
         <span class="module-kicker">MODULE 2 · RESSOURCES</span><h2>表达积累</h2><p>下面的现有内容均为表达积累的子模块，可通过左侧目录快速定位。</p>
       </section>
-      <div class="toolbar">
-        <input id="search" type="search" placeholder="搜索关键词：例如 parking, remboursement, 退款, Clinique">
-        <button id="highlight-yellow" type="button">黄色高亮</button>
-        <button id="highlight-green" type="button">绿色高亮</button>
-        <button id="annotate" type="button">添加批注</button>
-        <button id="clear-highlights" type="button">清除高亮</button>
-        <button id="clear-notes" type="button">清除批注</button>
-        <button id="expand">全部显示</button>
-        <button id="top" type="button">回到顶部</button>
-      </div>
       <section class="overview" aria-label="思维导图总览">
         
         
@@ -7499,8 +7494,8 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
 
       const range = selection.getRangeAt(0);
       const content = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE
-        ? range.commonAncestorContainer.closest(".content")
-        : range.commonAncestorContainer.parentElement.closest(".content");
+        ? range.commonAncestorContainer.closest(".content, .questions-editor")
+        : range.commonAncestorContainer.parentElement.closest(".content, .questions-editor");
       if (!content) return;
 
       const mark = document.createElement("mark");
@@ -7515,8 +7510,8 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
       removeSearchMarks(content);
 
       const card = content.closest(".detail-card");
-      original.set(card, content.innerHTML);
-      saveHighlights();
+      if (card) { original.set(card, content.innerHTML); saveHighlights(); }
+      else content.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
     function annotateSelection() {
@@ -7525,8 +7520,8 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
 
       const range = selection.getRangeAt(0);
       const content = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE
-        ? range.commonAncestorContainer.closest(".content")
-        : range.commonAncestorContainer.parentElement.closest(".content");
+        ? range.commonAncestorContainer.closest(".content, .questions-editor")
+        : range.commonAncestorContainer.parentElement.closest(".content, .questions-editor");
       if (!content) return;
 
       const note = prompt("请输入批注内容：");
@@ -7547,12 +7542,14 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
       removeSearchMarks(content);
 
       const card = content.closest(".detail-card");
-      original.set(card, content.innerHTML);
-      saveHighlights();
+      if (card) { original.set(card, content.innerHTML); saveHighlights(); }
+      else content.dispatchEvent(new Event("input", { bubbles: true }));
       renderNotes();
     }
 
     function clearHighlights() {
+      document.querySelectorAll(".questions-editor mark.user-highlight, .questions-editor mark.user-highlight-yellow, .questions-editor mark.user-highlight-green").forEach(mark => mark.replaceWith(document.createTextNode(mark.textContent)));
+      document.querySelector(".questions-editor")?.dispatchEvent(new Event("input", { bubbles: true }));
       cards.forEach(card => {
         const content = card.querySelector(".content");
         content.querySelectorAll("mark.user-highlight, mark.user-highlight-yellow, mark.user-highlight-green").forEach(mark => {
@@ -7567,6 +7564,8 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     }
 
     function clearNotes() {
+      document.querySelectorAll(".questions-editor mark.user-note").forEach(mark => mark.replaceWith(document.createTextNode(mark.textContent)));
+      document.querySelector(".questions-editor")?.dispatchEvent(new Event("input", { bubbles: true }));
       cards.forEach(card => {
         const content = card.querySelector(".content");
         content.querySelectorAll("mark.user-note").forEach(mark => {
@@ -7696,6 +7695,5 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     document.querySelector("#top").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
   </script>
   <script src="t2-practice.js"></script>
-  <script src="study-tools.js"></script>
 </body>
 </html>
