@@ -51,6 +51,7 @@
             <li class="nav-category"><a href="#categorie-societe">🌍 Société et environnement</a><ul>
               <li><a href="#integration-jeune">Est-il plus facile de s'intégrer dans un nouveau pays quand on est jeune ?</a></li>
               <li><a href="#adaptation">Tout le monde est-il capable de s'adapter dans un pays étranger ?</a></li>
+              <li><a href="#adaptation-pays-compliquee">Est-il compliqué de s'adapter dans un pays étranger ?</a></li>
             </ul></li>
             <li class="nav-category"><a href="#categorie-argent">💰 Argent et consommation</a></li>
             <li class="nav-category"><a href="#categorie-culture">🎭 Culture, loisirs et tourisme</a><ul>
@@ -280,6 +281,21 @@
         <p>Toutefois, j'aimerais ajouter un dernier point concernant l'adaptation. Même si certaines personnes rencontrent davantage de difficultés, cela ne constitue pas le seul facteur à prendre en compte. En effet, la motivation et les efforts personnels peuvent également jouer un rôle important.</p>
         <p>Prenons l'exemple de mon fils. Depuis notre arrivée au Canada, je l'ai vu gagner en autonomie et en confiance. Même si apprendre une nouvelle langue n'a pas été facile, il s'est très bien adapté à son nouvel environnement. On voit donc que l'adaptation dépend davantage de la motivation et des efforts que de l'âge ou de la situation de départ.</p>
         <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="adaptation-pays-compliquee" class="section t3-question">
+        <details class="t3-details">
+          <summary>Pensez-vous qu’il est compliqué de s’adapter dans un pays étranger ? Pourquoi ?</summary>
+          <p>Si je comprends bien, il s'agit de savoir s'il est compliqué de s'adapter dans un pays étranger.</p>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que certaines personnes s'adaptent plus facilement que d'autres, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+          <p>Pour commencer, la maîtrise de la langue constitue un véritable atout, car cela permet de communiquer plus facilement avec les autres. En effet, cela favorise également la participation à la vie locale et l'intégration dans le pays d'accueil.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que la maîtrise de la langue facilitait l'intégration dans un nouveau pays. Cela montre que l'adaptation peut être plus compliquée lorsqu'une personne ne maîtrise pas encore la langue du pays d'accueil.</p>
+          <p>Ensuite, la compréhension de la culture locale joue également un rôle essentiel dans l'adaptation. Autrement dit, elle contribue à mieux comprendre les habitudes et les valeurs du pays d'accueil et à éviter certains malentendus.</p>
+          <p>Prenons mon propre exemple. Lorsque je suis arrivée au Canada, beaucoup de choses étaient nouvelles pour moi. Petit à petit, j'ai appris à comprendre les habitudes locales et je me sens aujourd'hui beaucoup plus à l'aise dans mon environnement. Cet exemple prouve que l'adaptation demande du temps et une bonne compréhension de la culture locale.</p>
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant l'adaptation. Même si les différences linguistiques et culturelles peuvent créer de réelles difficultés, elles ne constituent pas les seuls facteurs à prendre en compte. En effet, la motivation et les efforts personnels peuvent également jouer un rôle essentiel.</p>
+          <p>Prenons l'exemple de mon fils. Depuis notre arrivée au Canada, je l'ai vu gagner en autonomie et en confiance. Même si apprendre une nouvelle langue n'a pas été facile, il s'est très bien adapté à son nouvel environnement. On voit donc que l'adaptation peut être compliquée au début, mais qu'elle devient plus facile grâce à la motivation et aux efforts.</p>
+          <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
         </details>
       </section>
 
@@ -1532,6 +1548,7 @@
     const mainContent = document.querySelector('main.content');
     const latestExperienceQuestion = document.getElementById('experience-etranger-reussite')?.cloneNode(true);
     const latestTourismQuestion = document.getElementById('tourisme-developpement-pays')?.cloneNode(true);
+    const latestAdaptationQuestion = document.getElementById('adaptation-pays-compliquee')?.cloneNode(true);
 
     function saveAnnotations() {
       if (!mainContent) return;
@@ -1575,6 +1592,9 @@
     }
     if (latestTourismQuestion && !document.getElementById('tourisme-developpement-pays')) {
       document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestTourismQuestion);
+    }
+    if (latestAdaptationQuestion && !document.getElementById('adaptation-pays-compliquee')) {
+      document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestAdaptationQuestion);
     }
 
     const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
@@ -1624,7 +1644,7 @@
         ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales']],
         ['categorie-sante', '❤️ Santé et bien-être', ['medicaments']],
         ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
-        ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation']],
+        ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation', 'adaptation-pays-compliquee']],
         ['categorie-argent', '💰 Argent et consommation', []],
         ['categorie-culture', '🎭 Culture, loisirs et tourisme', ['livres', 'tourisme-developpement-pays']],
         ['categorie-mode-vie', '🏙️ Mode de vie', ['urbain-rural']],
