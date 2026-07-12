@@ -8,6 +8,7 @@ const voiceSelect = document.getElementById('voiceSelect');
 const rateSelect = document.getElementById('rateSelect');
 const storageKey = 'tcf-t1-introduction-v1';
 let sentences = [];
+let paragraphs = [];
 let currentIndex = 0;
 let voices = [];
 let mediaRecorder = null;
@@ -18,9 +19,12 @@ const recordings = new Map();
 const practiced = new Set();
 let practiceMode = 'listen';
 
+function parseParagraphs(text) {
+  return text.replace(/\r/g,'').split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>(line.match(/[^.!?…]+(?:[.!?…]+|$)/g)||[]).map(sentence=>sentence.trim()).filter(Boolean)).filter(group=>group.length);
+}
 function splitSentences(text) {
-  return (text.replace(/\r/g, '').match(/[^.!?…\n]+(?:[.!?…]+|$)/g) || [])
-    .map(sentence => sentence.trim()).filter(Boolean);
+  paragraphs=parseParagraphs(text);
+  return paragraphs.flat();
 }
 
 function loadVoices() {
@@ -74,22 +78,24 @@ function render() {
   const continuousText = document.getElementById('continuousText');
   continuousText.innerHTML = '';
   emptyState.hidden = Boolean(sentences.length);
-  sentences.forEach((sentence, index) => {
-    const readerSentence = document.createElement('span');
-    readerSentence.className = 'reader-sentence';
-    readerSentence.textContent = `${sentence} `;
-    readerSentence.addEventListener('click', () => speakSentence(index));
-    continuousText.appendChild(readerSentence);
-    const card = template.content.firstElementChild.cloneNode(true);
-    card.querySelector('.sentence-number').textContent = index + 1;
-    card.querySelector('.sentence-text').textContent = sentence;
-    card.querySelector('.speak-button').addEventListener('click', () => speakSentence(index));
-    card.querySelector('.record-button').addEventListener('click', event => toggleRecording(index, event.currentTarget, card));
-    card.querySelector('.replay-button').addEventListener('click', () => {
-      const url = recordings.get(index); if (url) new Audio(url).play();
+  let sentenceIndex=0;
+  paragraphs.forEach((paragraph,paragraphIndex)=>{
+    const readerParagraph=document.createElement('p');readerParagraph.className='reader-paragraph';
+    const sentenceGroup=document.createElement('section');sentenceGroup.className='sentence-paragraph-group';sentenceGroup.innerHTML=`<div class="paragraph-label">Paragraphe ${paragraphIndex+1}</div>`;
+    paragraph.forEach(sentence=>{
+      const index=sentenceIndex++;
+      const readerSentence = document.createElement('span');
+      readerSentence.className = 'reader-sentence';readerSentence.textContent = `${sentence} `;readerSentence.addEventListener('click', () => speakSentence(index));readerParagraph.appendChild(readerSentence);
+      const card = template.content.firstElementChild.cloneNode(true);
+      card.querySelector('.sentence-number').textContent = index + 1;
+      card.querySelector('.sentence-text').textContent = sentence;
+      card.querySelector('.speak-button').addEventListener('click', () => speakSentence(index));
+      card.querySelector('.record-button').addEventListener('click', event => toggleRecording(index, event.currentTarget, card));
+      card.querySelector('.replay-button').addEventListener('click', () => { const url = recordings.get(index); if (url) new Audio(url).play(); });
+      card.querySelector('.compare-button').addEventListener('click', () => recognizeSentence(index, card));
+      sentenceGroup.appendChild(card);
     });
-    card.querySelector('.compare-button').addEventListener('click', () => recognizeSentence(index, card));
-    sentenceList.appendChild(card);
+    continuousText.appendChild(readerParagraph);sentenceList.appendChild(sentenceGroup);
   });
   applyPracticeMode();
   updateStats();
