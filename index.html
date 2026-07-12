@@ -37,6 +37,7 @@
               <li><a href="#travailler-etudier">Travailler et étudier en même temps est difficile.</a></li>
               <li><a href="#salaire">Le salaire est-il la chose la plus importante dans un travail ?</a></li>
               <li><a href="#experience-etranger-reussite">La vie à l'étranger aide-t-elle à réussir professionnellement ?</a></li>
+              <li><a href="#emploi-etranger-simple">Est-il simple de trouver un emploi à l'étranger ?</a></li>
             </ul></li>
             <li class="nav-category"><a href="#categorie-famille">👨‍👩‍👧‍👦 Famille et relations humaines</a><ul>
               <li><a href="#aides-sociales">Les aides sociales réduisent-elles la solidarité familiale ?</a></li>
@@ -370,6 +371,21 @@
           <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours. Plus je progresse, plus il m'est facile de communiquer avec les autres. Cette expérience m'aide à développer mes compétences linguistiques et à mieux préparer mon avenir professionnel. Cet exemple prouve que la vie à l'étranger peut favoriser la réussite professionnelle.</p>
           <p>Toutefois, j'aimerais ajouter un dernier point concernant le fait de vivre à l'étranger. Même si le fait de vivre à l'étranger offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, le fait de vivre à l'étranger peut s'avérer particulièrement bénéfique pour développer sa capacité d'adaptation, mais les compétences, l'expérience et la motivation jouent également un rôle essentiel.</p>
           <p>Prenons le cas de mon ami Paul. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail et évolue progressivement dans sa carrière. Cet exemple montre que les compétences constituent un véritable atout pour réussir professionnellement.</p>
+          <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="emploi-etranger-simple" class="section t3-question">
+        <details class="t3-details">
+          <summary>Pensez-vous qu’il soit simple de trouver un emploi à l’étranger ? Êtes-vous d’accord ?</summary>
+          <p>Si je comprends bien, il s'agit de savoir s'il est simple de trouver un emploi à l'étranger.</p>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que certaines personnes trouvent plus facilement un emploi à l'étranger que d'autres, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+          <p>Pour commencer, la maîtrise de la langue du pays d'accueil constitue un véritable atout, car cela permet de communiquer avec les employeurs et de mieux comprendre les offres d'emploi. En effet, cela favorise également l'intégration dans un nouvel environnement professionnel.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que la maîtrise de la langue facilitait la recherche d'un emploi à l'étranger. Cela montre que les difficultés linguistiques peuvent rendre cette recherche plus compliquée.</p>
+          <p>Ensuite, les compétences et l'expérience professionnelle jouent également un rôle essentiel dans la recherche d'un emploi à l'étranger. Autrement dit, elles contribuent à mieux s'adapter aux nouvelles méthodes de travail et à répondre aux besoins des employeurs.</p>
+          <p>Prenons le cas de mon ami Paul. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail et évolue progressivement dans sa carrière. Cet exemple prouve que les compétences représentent un véritable atout pour trouver sa place dans un nouvel environnement professionnel.</p>
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant la recherche d'un emploi à l'étranger. Même si la maîtrise de la langue et les compétences offrent de réels avantages, elles ne constituent pas les seuls facteurs à prendre en compte. En effet, la motivation, les efforts personnels et la capacité d'adaptation peuvent également jouer un rôle essentiel.</p>
+          <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours et je participe à des activités organisées dans la communauté. Cette expérience m'aide à progresser, à mieux comprendre mon nouvel environnement et à préparer mon avenir professionnel. On voit donc que trouver un emploi à l'étranger demande du temps, des efforts et une préparation adaptée.</p>
           <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
         </details>
       </section>
@@ -1549,6 +1565,7 @@
     const latestExperienceQuestion = document.getElementById('experience-etranger-reussite')?.cloneNode(true);
     const latestTourismQuestion = document.getElementById('tourisme-developpement-pays')?.cloneNode(true);
     const latestAdaptationQuestion = document.getElementById('adaptation-pays-compliquee')?.cloneNode(true);
+    const latestForeignJobQuestion = document.getElementById('emploi-etranger-simple')?.cloneNode(true);
 
     function saveAnnotations() {
       if (!mainContent) return;
@@ -1596,6 +1613,9 @@
     if (latestAdaptationQuestion && !document.getElementById('adaptation-pays-compliquee')) {
       document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestAdaptationQuestion);
     }
+    if (latestForeignJobQuestion && !document.getElementById('emploi-etranger-simple')) {
+      document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestForeignJobQuestion);
+    }
 
     const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
       paragraph.textContent.includes("les diplômes ne garantissent pas à eux seuls la réussite professionnelle")
@@ -1640,7 +1660,7 @@
 
       const categories = [
         ['categorie-education', '📚 Éducation', ['etudes', 'trop-tard', 'education-maison']],
-        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite']],
+        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite', 'emploi-etranger-simple']],
         ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales']],
         ['categorie-sante', '❤️ Santé et bien-être', ['medicaments']],
         ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
