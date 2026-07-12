@@ -81,7 +81,7 @@
       }else{
         const legacyEdits=JSON.parse(localStorage.getItem(legacyKey))||{};
         const newQuestionIds='#experience-etranger-reussite,#tourisme-developpement-pays,#adaptation-pays-compliquee,#emploi-etranger-simple,#stress-meilleur-soi,#cuisine-pays,#television-apprentissage-enfants,#bien-etre-salaries,#integration-traditions,#connaitre-pays-livres,#economie-environnement,#argent-reussite-ecole,#interet-celebrites,#langue-enfance,#regles-strictes-enfants';
-        const legacyNodes=editableNodes.filter(node=>!node.closest(newQuestionIds));
+        const legacyNodes=editableNodes.filter(node=>!node.closest(newQuestionIds)&&!node.closest('.t3-batch-question'));
         legacyNodes.forEach((node,index)=>{const key=`edit-${index}`;if(Object.prototype.hasOwnProperty.call(legacyEdits,key))node.innerHTML=legacyEdits[key];});
         const migrated={};editableNodes.forEach(node=>migrated[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(migrated));
       }

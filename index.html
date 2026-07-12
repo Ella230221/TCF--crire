@@ -1520,6 +1520,7 @@
 
     </main>
   </div>
+  <script src="t3-batch-questions.js"></script>
   <script>
 
     function colorTemplateFragments() {
@@ -1752,6 +1753,7 @@
     }
 
     restoreAnnotations();
+    window.applyT3QuestionVariants?.();
     const latestExperienceQuestion = latestStaticQuestions.get('experience-etranger-reussite');
     const restoredExperienceQuestion = document.getElementById('experience-etranger-reussite');
     const abroadTemplateNeedsRefresh = localStorage.getItem('tcf-t3-experience-etranger-revision') !== 'template-100-v2';
@@ -1804,15 +1806,15 @@
 
       const categories = [
         ['categorie-education', '📚 Éducation', ['etudes', 'trop-tard', 'education-maison', 'langue-enfance']],
-        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite', 'emploi-etranger-simple', 'bien-etre-salaries']],
-        ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales', 'regles-strictes-enfants']],
+        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite', 'emploi-etranger-simple', 'bien-etre-salaries', 'metiers-difficiles-salaire', 'teletravail-equilibre']],
+        ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales', 'regles-strictes-enfants', 'langue-enfants-etranger']],
         ['categorie-sante', '❤️ Santé et bien-être', ['medicaments', 'stress-meilleur-soi']],
-        ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole', 'television-apprentissage-enfants']],
-        ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation', 'adaptation-pays-compliquee', 'integration-traditions', 'economie-environnement']],
-        ['categorie-argent', '💰 Argent et consommation', ['argent-reussite-ecole']],
+        ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole', 'television-apprentissage-enfants', 'internet-travail', 'media-information', 'risques-appareils-electroniques']],
+        ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation', 'adaptation-pays-compliquee', 'integration-traditions', 'economie-environnement', 'relations-habitants', 'immigres-pays-accueil', 'agriculture-biologique', 'actions-individuelles-environnement']],
+        ['categorie-argent', '💰 Argent et consommation', ['argent-reussite-ecole', 'argent-profiter-vie']],
         ['categorie-culture', '🎭 Culture, loisirs et tourisme', ['livres', 'tourisme-developpement-pays', 'connaitre-pays-livres', 'interet-celebrites']],
-        ['categorie-mode-vie', '🏙️ Mode de vie', ['urbain-rural', 'cuisine-pays']],
-        ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', []],
+        ['categorie-mode-vie', '🏙️ Mode de vie', ['urbain-rural', 'cuisine-pays', 'animal-domestique', 'vetements-vie']],
+        ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', ['cameras-surveillance']],
       ];
 
       categories.forEach(([id, title, questionIds]) => {
