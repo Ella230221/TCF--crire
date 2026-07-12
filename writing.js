@@ -4,9 +4,6 @@ const practicePanel = document.getElementById('practicePanel');
 const templatePanel = document.getElementById('templatePanel');
 const writingEditor = document.getElementById('writingEditor');
 const templateEditor = document.getElementById('templateEditor');
-const templateName = document.getElementById('templateName');
-const minWords = document.getElementById('minWords');
-const maxWords = document.getElementById('maxWords');
 const wordCount = document.getElementById('wordCount');
 const wordRequirement = document.getElementById('wordRequirement');
 const saveStatus = document.getElementById('saveStatus');
@@ -22,6 +19,12 @@ let history = [''];
 let historyIndex = 0;
 let historyTimer;
 let currentTask = '1';
+const taskRanges = { '1': [60, 120], '2': [120, 150], '3': [150, 180] };
+let taskDrafts = {
+  '1': { writing: '', template: '' },
+  '2': { writing: '', template: '' },
+  '3': { writing: '', template: '' }
+};
 
 function getWords(text) {
   return text.trim().match(/[A-Za-zÀ-ÖØ-öø-ÿŒœÆæ'-]+/g) || [];
@@ -62,20 +65,16 @@ function insertAtCursor(text) {
 
 function updateStatus() {
   const count = getWords(writingEditor.value).length;
-  const minimum = Number(minWords.value) || 0;
-  const maximum = Number(maxWords.value) || 0;
+  const [minimum, maximum] = taskRanges[currentTask];
   wordCount.textContent = `${count} 词`;
   wordRequirement.textContent = `（Tâche ${currentTask} 参考：${minimum}–${maximum} 词，不限输入）`;
   wordCount.style.color = count >= minimum && count <= maximum ? '#16a34a' : '#f04400';
 }
 
 function saveDraft(showConfirmation = false) {
+  taskDrafts[currentTask] = { writing: writingEditor.value, template: templateEditor.value };
   localStorage.setItem(storageKey, JSON.stringify({
-    writing: writingEditor.value,
-    template: templateEditor.value,
-    templateName: templateName.value,
-    minWords: minWords.value,
-    maxWords: maxWords.value,
+    tasks: taskDrafts,
     currentTask
   }));
   saveStatus.textContent = showConfirmation ? '已保存' : '草稿已自动保存';
@@ -86,12 +85,15 @@ function restoreDraft() {
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey));
     if (!saved) return;
-    writingEditor.value = saved.writing || '';
-    templateEditor.value = saved.template || '';
-    templateName.value = saved.templateName || '';
-    minWords.value = saved.minWords || 60;
-    maxWords.value = saved.maxWords || 120;
-    currentTask = saved.currentTask || '1';
+    const restoredTask = saved.currentTask || '1';
+    if (saved.tasks) {
+      taskDrafts = { ...taskDrafts, ...saved.tasks };
+    } else {
+      taskDrafts[restoredTask] = { writing: saved.writing || '', template: saved.template || '' };
+    }
+    currentTask = restoredTask;
+    writingEditor.value = taskDrafts[currentTask]?.writing || '';
+    templateEditor.value = taskDrafts[currentTask]?.template || '';
     document.querySelectorAll('.task-button').forEach(button => {
       button.classList.toggle('is-active', button.dataset.task === currentTask);
     });
@@ -179,9 +181,12 @@ document.getElementById('caseToggle').addEventListener('click', event => {
 
 document.querySelectorAll('.task-button').forEach(button => {
   button.addEventListener('click', () => {
+    saveDraft();
     currentTask = button.dataset.task;
-    minWords.value = button.dataset.min;
-    maxWords.value = button.dataset.max;
+    writingEditor.value = taskDrafts[currentTask]?.writing || '';
+    templateEditor.value = taskDrafts[currentTask]?.template || '';
+    history = [writingEditor.value];
+    historyIndex = 0;
     document.querySelectorAll('.task-button').forEach(item => item.classList.toggle('is-active', item === button));
     updateStatus();
     saveDraft();
@@ -198,7 +203,7 @@ writingEditor.addEventListener('input', () => {
     historyIndex = history.length - 1;
   }, 350);
 });
-[templateEditor, templateName, minWords, maxWords].forEach(element => element.addEventListener('input', () => { updateStatus(); saveDraft(); }));
+templateEditor.addEventListener('input', () => saveDraft());
 document.getElementById('saveBtn').addEventListener('click', () => saveDraft(true));
 document.getElementById('submitBtn').addEventListener('click', submitWriting);
 document.getElementById('undoBtn').addEventListener('click', () => {
