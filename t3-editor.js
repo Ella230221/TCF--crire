@@ -67,6 +67,9 @@
     const abroadTemplateRevision='template-100-v2';
     const abroadRevisionKey='tcf-t3-experience-etranger-revision';
     const refreshAbroadTemplate=localStorage.getItem(abroadRevisionKey)!==abroadTemplateRevision;
+    const generatedRevision='generated-template-100-v1';
+    const generatedRevisionKey='tcf-t3-generated-template-revision';
+    const refreshGeneratedTemplates=localStorage.getItem(generatedRevisionKey)!==generatedRevision;
     editableNodes.forEach(node=>{
       node.contentEditable='true';
       const section=node.closest('.section[id]');
@@ -76,8 +79,9 @@
     try{
       const stableEdits=JSON.parse(localStorage.getItem(moduleKey))||{};
       if(Object.keys(stableEdits).length){
-        editableNodes.forEach(node=>{if(refreshAbroadTemplate&&node.closest('#experience-etranger-reussite'))return;if(Object.prototype.hasOwnProperty.call(stableEdits,node.dataset.editKey))node.innerHTML=stableEdits[node.dataset.editKey];});
+        editableNodes.forEach(node=>{if((refreshAbroadTemplate&&node.closest('#experience-etranger-reussite'))||(refreshGeneratedTemplates&&node.closest('.t3-generated-question')))return;if(Object.prototype.hasOwnProperty.call(stableEdits,node.dataset.editKey))node.innerHTML=stableEdits[node.dataset.editKey];});
         if(refreshAbroadTemplate){editableNodes.filter(node=>node.closest('#experience-etranger-reussite')).forEach(node=>stableEdits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(stableEdits));}
+        if(refreshGeneratedTemplates){editableNodes.filter(node=>node.closest('.t3-generated-question')).forEach(node=>stableEdits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(stableEdits));}
       }else{
         const legacyEdits=JSON.parse(localStorage.getItem(legacyKey))||{};
         const newQuestionIds='#experience-etranger-reussite,#tourisme-developpement-pays,#adaptation-pays-compliquee,#emploi-etranger-simple,#stress-meilleur-soi,#cuisine-pays,#television-apprentissage-enfants,#bien-etre-salaries,#integration-traditions,#connaitre-pays-livres,#economie-environnement,#argent-reussite-ecole,#interet-celebrites,#langue-enfance,#regles-strictes-enfants';
@@ -86,6 +90,7 @@
         const migrated={};editableNodes.forEach(node=>migrated[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(migrated));
       }
       if(refreshAbroadTemplate)localStorage.setItem(abroadRevisionKey,abroadTemplateRevision);
+      if(refreshGeneratedTemplates)localStorage.setItem(generatedRevisionKey,generatedRevision);
     }catch(_){}
     document.querySelector('main').addEventListener('input',event=>{if(event.target.closest('.t3-user-question,.t3-question-composer'))return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{const edits={};editableNodes.forEach(node=>edits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(edits));},600);});
   }

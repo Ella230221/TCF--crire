@@ -31,7 +31,7 @@
       "Prenons mon propre exemple. Lorsque je cherche une information sur le Canada ou sur l'apprentissage du français, je peux lire plusieurs articles et regarder une vidéo explicative. Cet exemple prouve qu'Internet répond facilement à différents besoins.",
       "Toutefois, j'aimerais ajouter un dernier point concernant Internet. Même si ce sujet offre de réels avantages, il ne convient pas pour autant de négliger ses limites. En effet, Internet peut comporter certains risques liés aux informations fausses ou incomplètes.",
       "Prenons le cas de certaines personnes qui partagent une information sans vérifier sa source. On voit donc qu'il est essentiel de comparer plusieurs médias et de privilégier des sources fiables.",
-      "En définitive, ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs. Il s'agit avant tout de choisir un média rapide et varié tout en vérifiant la qualité des informations."
+      "En définitive, ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs. Il s'agit avant tout de poursuivre un projet qui me permette de continuer à apprendre et à progresser."
     ]},
     {id:'relations-habitants',category:'categorie-societe',title:"Pour bien vivre dans un pays étranger, il est indispensable de créer des relations avec les habitants du pays. Qu’en pensez-vous ?",p:[
       "Si je comprends bien, il s'agit de savoir s'il est indispensable de créer des relations avec les habitants pour bien vivre dans un pays étranger.",
@@ -51,7 +51,7 @@
       "Par exemple, depuis son arrivée au Canada, mon fils apprend le français à l'école et s'habitue rapidement à son nouvel environnement. Cela montre que la langue du pays d'accueil facilite l'intégration.",
       "Ensuite, la langue du pays d'origine joue également un rôle essentiel dans l'identité familiale. Autrement dit, elle contribue à transmettre la culture, les traditions et les liens avec la famille.",
       "Prenons l'exemple de mon fils. À la maison, nous pouvons continuer à utiliser notre langue d'origine afin qu'il communique avec notre famille et comprenne ses racines. Cet exemple prouve que cette langue reste importante.",
-      "Toutefois, j'aimerais ajouter un dernier point concernant les deux langues. Même si elles répondent à des besoins différents, cela ne signifie pas qu'elles soient incompatibles. En effet, elles peuvent également apporter de nombreux bénéfices.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant la langue du pays d'origine. Même si la langue du pays d'accueil offre de réels avantages, cela ne signifie pas que la langue du pays d'origine soit moins importante. En effet, la langue du pays d'origine peut également apporter de nombreux bénéfices.",
       "Prenons le cas des enfants bilingues qui utilisent une langue à l'école et une autre en famille. On voit donc qu'il est possible de favoriser l'intégration tout en conservant la langue d'origine.",
       "En définitive, plutôt que d'opposer la langue du pays d'accueil à la langue du pays d'origine, il me semble plus pertinent de reconnaître qu'elles peuvent se compléter. Il s'agit avant tout de trouver la meilleure manière de les concilier selon les besoins de chacun."
     ]},
@@ -68,12 +68,12 @@
     ]},
     {id:'metiers-difficiles-salaire',category:'categorie-travail',title:"Les métiers les plus difficiles devraient être les métiers les mieux payés. Qu’en pensez-vous ?",p:[
       "Si je comprends bien, il s'agit de savoir si les métiers les plus difficiles devraient être les mieux payés.",
-      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que la difficulté d'un métier soit importante, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que les métiers difficiles présentent de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.",
       "Pour commencer, un salaire élevé constitue un véritable atout, car cela permet de reconnaître les efforts, les responsabilités et les risques liés à certains métiers. En effet, cela favorise également la motivation et la stabilité financière.",
       "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les métiers comportant de grandes responsabilités méritaient une meilleure rémunération. Cela montre que le salaire peut reconnaître la difficulté du travail.",
       "Ensuite, les compétences jouent également un rôle essentiel dans la rémunération. Autrement dit, elles contribuent à résoudre des problèmes complexes et à assumer davantage de responsabilités.",
       "Prenons le cas de mon ami Paul. Grâce à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail et évolue dans sa carrière. Cet exemple prouve que les compétences doivent également être prises en compte.",
-      "Toutefois, j'aimerais ajouter un dernier point concernant la difficulté d'un métier. Même si elle offre une raison importante d'améliorer le salaire, elle ne constitue pas le seul facteur à prendre en compte. En effet, la formation, l'expérience, les responsabilités et les besoins du marché peuvent également jouer un rôle essentiel.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant les métiers difficiles. Même si les métiers difficiles offrent de réels avantages, ils ne constituent pas les seuls facteurs à prendre en compte. En effet, les métiers difficiles peuvent s'avérer particulièrement bénéfiques pour les personnes qui souhaitent assumer davantage de responsabilités.",
       "Prenons l'exemple de mon mari. Son travail dans un centre de réadaptation demande des compétences, de la patience et de grandes responsabilités envers les patients. On voit donc qu'une rémunération juste doit tenir compte de plusieurs aspects du métier.",
       "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
     ]},
@@ -101,7 +101,7 @@
     ]},
     {id:'agriculture-biologique',category:'categorie-societe',title:"Que pensez-vous du développement de l’agriculture biologique ?",p:[
       "Si je comprends bien, il s'agit de donner mon avis sur le développement de l'agriculture biologique.",
-      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que l'agriculture biologique présente de nombreux avantages, il est également essentiel de ne pas négliger les limites liées à l'agriculture biologique. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que l'agriculture biologique présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés à l'agriculture biologique. J'aimerais développer trois arguments qui expliquent mon point de vue.",
       "Pour commencer, l'agriculture biologique constitue un véritable atout, car cela permet de limiter certains produits chimiques. En effet, cela favorise également la protection des sols, de l'eau et de la biodiversité.",
       "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que des méthodes agricoles plus responsables protégeaient mieux l'environnement. Cela montre que l'agriculture biologique peut contribuer à un avenir durable.",
       "Ensuite, une alimentation de qualité joue également un rôle essentiel dans la santé. Autrement dit, elle contribue à adopter des habitudes alimentaires équilibrées et adaptées à ses besoins.",
