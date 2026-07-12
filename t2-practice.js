@@ -2,6 +2,8 @@ const topicFr = document.getElementById('practiceTopicFr');
 const questionsEditor = document.getElementById('practiceQuestions');
 const referenceHints = document.getElementById('referenceHints');
 const gptEndpoint = document.getElementById('gptEndpoint');
+const practiceCategory = document.getElementById('practiceCategory');
+const practiceCategoryFilter = document.getElementById('practiceCategoryFilter');
 const practiceStorageKey = 'tcf-t2-practice-v1';
 const practiceLibraryKey = 'tcf-t2-practice-library-v1';
 const practiceDbName = 'tcf-t2-practice-database';
@@ -11,6 +13,13 @@ let lastPracticeScore = null;
 let practiceLibrary = [];
 let activePracticeId = null;
 let autoUpdateTimer = null;
+let openPracticeCategories=new Set();try{openPracticeCategories=new Set(JSON.parse(localStorage.getItem('tcf-t2-open-categories'))||[]);}catch(_){}
+const t2Categories = [
+  ['formation','🎓 Formation / Éducation'],['logement','🏠 Logement'],['voyage','✈️ Voyage / Tourisme'],['restaurant','🍽️ Restaurant / Alimentation'],['sport','⚽ Sport / Loisirs'],['sante','❤️ Santé'],['travail','💼 Travail / Emploi'],['banque','🏦 Banque / Assurance'],['administration','🏛️ Services administratifs'],['commerce','🛒 Commerce / Achat'],['animaux','🐾 Animaux'],['evenement','🎉 Événement'],['famille','👨‍👩‍👧 Enfants / Famille'],['quartier','🏘️ Quartier / Vie quotidienne'],['culture','🎭 Culture']
+];
+const categoryLabel=id=>t2Categories.find(([key])=>key===id)?.[1]||t2Categories[0][1];
+function inferCategory(text){const value=normalizePractice(text);const rules=[['logement',/logement|appartement|maison|chalet|louer|location|colocation|demenag|immeuble/],['voyage',/voyage|tourisme|vacance|hotel|auberge|visite|vol |avion|train|sejour/],['restaurant',/restaurant|repas|aliment|cuisine|menu|manger|epicerie/],['sport',/sport|loisir|club|activite|gym|natation|tennis/],['sante',/sante|medecin|hopital|clinique|maladie|medicament|soin/],['travail',/travail|emploi|entreprise|poste|collegue|embauche|profession/],['banque',/banque|assurance|compte|credit|pret|carte bancaire/],['administration',/mairie|administration|document|passeport|permis|service public|inscription officielle/],['commerce',/acheter|achat|magasin|boutique|prix|produit|vente|vendre/],['animaux',/animal|chien|chat|veterinaire|pension|animalerie/],['evenement',/evenement|fete|mariage|anniversaire|festival|celebration/],['famille',/enfant|famille|fils|fille|ecole|garderie|parent/],['quartier',/quartier|voisin|vie quotidienne|bibliotheque|transport|parking|poste|livraison|reparation|serrurier/],['culture',/culture|musee|cinema|theatre|concert|livre|exposition|art/],['formation',/formation|education|cours|etude|universite|ecole|apprendre/]];return rules.find(([,rule])=>rule.test(value))?.[0]||'quartier';}
+t2Categories.forEach(([id,label])=>{practiceCategory.add(new Option(label,id));practiceCategoryFilter.add(new Option(label,id));});
 
 const expressionToggle = document.getElementById('expressionNavToggle');
 const expressionLinks = Array.from(document.querySelectorAll('.side-nav .toc-link:not(.t2-main-link)'));
@@ -92,7 +101,7 @@ function saveToPracticeLibrary(automatic = false) {
   if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
   const signature = normalizePractice(topicFr.value);
   const existing = practiceLibrary.find(item => item.signature === signature);
-  const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, completed:Boolean(getDialogueText()), score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
+  const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), category:practiceCategory.value||existing?.category||inferCategory(topicFr.value), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, completed:Boolean(getDialogueText()), score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
   if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
   if (practiceLibrary.length > maxPracticeLibrarySize) {
     practiceLibrary = practiceLibrary.sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,maxPracticeLibrarySize);
@@ -105,12 +114,15 @@ function saveToPracticeLibrary(automatic = false) {
 function renderPracticeLibrary() {
   const mode = document.getElementById('practiceSort').value;
   const query = normalizePractice(document.getElementById('practiceFilter').value || '');
-  const items = practiceLibrary.filter(item=>!query||normalizePractice(`${item.title} ${item.fr}`).includes(query)).sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'fr') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
+  const categoryFilter=practiceCategoryFilter.value;
+  practiceLibrary.forEach(item=>{if(!item.category)item.category=inferCategory(item.fr||item.title||'');});
+  const items = practiceLibrary.filter(item=>(categoryFilter==='all'||item.category===categoryFilter)&&(!query||normalizePractice(`${item.title} ${item.fr}`).includes(query))).sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'fr') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
   renderSavedPracticeNav(items);
 }
 
 function loadSavedPractice(item) {
   topicFr.value = item.fr;
+  practiceCategory.value = item.category||inferCategory(item.fr);
   questionsEditor.innerHTML = item.dialogueHtml || escapePracticeHtml(item.questions).replace(/\n/g,'<br>');
   activePracticeId = item.id;
   lastPracticeScore = item.score;
@@ -122,11 +134,13 @@ function renderSavedPracticeNav(items = practiceLibrary) {
   const nav = document.getElementById('savedPracticeNav');
   nav.hidden = !items.length;
   if (!items.length) { nav.innerHTML = ''; positionExpressionToggle(); return; }
-  nav.innerHTML = `<div class="saved-practice-nav-title">已保存真题</div>${items.map((item,index) => `<div class="saved-practice-nav-item ${item.completed||item.questions?.trim()?'is-completed':''}"><button type="button" data-id="${item.id}" class="open-saved-practice ${item.favorite?'is-favorite':''}" title="${escapePracticeHtml(item.title)}"><b>${index+1}.</b> <span>${escapePracticeHtml(item.title)}</span>${item.completed||item.questions?.trim()?'<i>✓</i>':''}${item.score==null?'':` <small>${item.score}</small>`}</button><button type="button" class="delete-saved-practice" data-delete-id="${item.id}" title="Supprimer">×</button></div>`).join('')}`;
+  const queryActive=Boolean(normalizePractice(document.getElementById('practiceFilter').value||''))||practiceCategoryFilter.value!=='all';
+  nav.innerHTML = `<div class="saved-practice-nav-title">Sujets enregistrés</div>${t2Categories.map(([categoryId,label])=>{const group=items.filter(item=>item.category===categoryId);if(queryActive&&!group.length)return'';return`<details class="saved-practice-category" data-category="${categoryId}" ${queryActive||openPracticeCategories.has(categoryId)?'open':''}><summary><span>${label}</span><small>${group.length}</small></summary><div>${group.length?group.map((item,index)=>`<div class="saved-practice-nav-item ${item.completed||item.questions?.trim()?'is-completed':''}"><button type="button" data-id="${item.id}" class="open-saved-practice ${item.favorite?'is-favorite':''}" title="${escapePracticeHtml(item.title)}"><b>${index+1}.</b> <span>${escapePracticeHtml(item.title)}</span>${item.completed||item.questions?.trim()?'<i>✓</i>':''}${item.score==null?'':` <small>${item.score}</small>`}</button><button type="button" class="delete-saved-practice" data-delete-id="${item.id}" title="Supprimer">×</button></div>`).join(''):'<p class="saved-category-empty">Aucun sujet</p>'}</div></details>`;}).join('')}`;
   nav.querySelectorAll('.open-saved-practice').forEach(button => {
     button.addEventListener('click', () => { const item = practiceLibrary.find(entry => entry.id === button.dataset.id); if (item) loadSavedPractice(item); });
   });
   nav.querySelectorAll('.delete-saved-practice').forEach(button=>button.addEventListener('click',()=>{if(!confirm('Supprimer ce sujet enregistré ?'))return;practiceLibrary=practiceLibrary.filter(item=>item.id!==button.dataset.deleteId);if(activePracticeId===button.dataset.deleteId)activePracticeId=null;persistPracticeLibrary();savePractice();renderPracticeLibrary();}));
+  nav.querySelectorAll('.saved-practice-category').forEach(details=>details.addEventListener('toggle',()=>{details.open?openPracticeCategories.add(details.dataset.category):openPracticeCategories.delete(details.dataset.category);localStorage.setItem('tcf-t2-open-categories',JSON.stringify([...openPracticeCategories]));}));
   positionExpressionToggle();
 }
 
@@ -149,11 +163,13 @@ document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ 
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
 document.getElementById('practiceFilter').addEventListener('input',renderPracticeLibrary);
+practiceCategoryFilter.addEventListener('change',renderPracticeLibrary);
 topicFr.addEventListener('input',()=>{
   const active = practiceLibrary.find(item=>item.id===activePracticeId);
   if(active && normalizePractice(topicFr.value)!==active.signature) activePracticeId=null;
   updateQuestionCount();
 });
+topicFr.addEventListener('blur',()=>{if(!activePracticeId)practiceCategory.value=inferCategory(topicFr.value);});
 [questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
 window.addEventListener('studyannotationchange',()=>{savePractice();if(activePracticeId)saveToPracticeLibrary(true);});
 try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} updateQuestionCount(); loadPracticeLibrary();
