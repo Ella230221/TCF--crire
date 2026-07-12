@@ -35,7 +35,7 @@ function getConversationLines() { return getDialogueText().split(/\n+/).map(line
 function getQuestions() { return getConversationLines().filter(line => /[?？]/.test(line)); }
 function getInteractionLines() { return getConversationLines().filter(line => !/[?？]/.test(line)); }
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zœæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
+function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9œæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
 function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
 function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,endpoint:gptEndpoint.value,activePracticeId})); }

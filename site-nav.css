@@ -31,7 +31,7 @@ body { color: var(--studio-ink); background: var(--studio-paper); }
 
 .site-switcher::before {
   content: "TCF Studio";
-  margin-right: auto;
+  margin-right: 14px;
   padding: 0 12px;
   color: var(--studio-blue);
   font-size: 1.03rem;
@@ -42,7 +42,7 @@ body { color: var(--studio-ink); background: var(--studio-paper); }
 
 .site-switcher::after {
   content: "FR";
-  margin-left: auto;
+  margin-left: 6px;
   display: grid;
   place-items: center;
   width: 34px;
@@ -53,6 +53,39 @@ body { color: var(--studio-ink); background: var(--studio-paper); }
   font-size: 0.72rem;
   font-weight: 900;
 }
+
+.top-study-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding-left: 12px;
+  border-left: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+.top-study-actions button {
+  min-height: 38px;
+  padding: 7px 10px;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  font-size: .78rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(15,23,42,.04);
+  transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.top-study-actions button:hover {
+  color: #1d4ed8;
+  background: #fff;
+  border-color: #93c5fd;
+  box-shadow: 0 5px 12px rgba(37,99,235,.12);
+  transform: translateY(-1px);
+}
+.top-study-actions button:nth-child(1) { background:#fffceb; border-color:#fde68a; }
+.top-study-actions button:nth-child(2) { background:#f0fdf4; border-color:#bbf7d0; }
+.top-study-actions button:nth-child(3) { background:#fff7ed; border-color:#fed7aa; }
 
 .site-switcher a {
   display: inline-flex !important;
@@ -105,6 +138,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .site-switcher::before { content: "TCF"; margin-right: 2px; padding: 0 7px; }
   .site-switcher::after { display: none; }
   .site-switcher a { flex: none; min-height: 39px; padding: 8px 12px !important; font-size: 0.84rem; }
+  .top-study-actions { flex:none; margin-left:8px; padding-left:8px; }
+  .top-study-actions button { min-height:36px; padding:7px 9px; }
+  .top-study-actions button span { display:none; }
 }
 
 @media print { .site-switcher { display: none !important; } }

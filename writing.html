@@ -26,6 +26,7 @@
           <button class="icon-button" id="undoBtn" type="button" title="撤销" aria-label="撤销">↶</button>
           <button class="icon-button" id="redoBtn" type="button" title="重做" aria-label="重做">↷</button>
           <span class="divider"></span>
+          <button class="secondary-button" id="newWritingBtn" type="button">＋ 新建文章</button>
           <button class="secondary-button" id="saveBtn" type="button">▣ 保存</button>
           <button class="submit-button" id="submitBtn" type="button">➤ 提交批改</button>
         </div>
@@ -48,8 +49,12 @@
       </div>
 
       <div class="panel is-active" id="practicePanel" role="tabpanel">
+        <div class="writing-document-tools">
+          <input id="writingTitle" type="text" placeholder="文章标题（例如：Tâche 2 — Invitation）" />
+          <div class="text-color-tools" aria-label="字体颜色"><span>字体颜色</span><button type="button" data-color="#dc2626" title="红色" style="--color:#dc2626"></button><button type="button" data-color="#2563eb" title="蓝色" style="--color:#2563eb"></button><button type="button" data-color="#16a34a" title="绿色" style="--color:#16a34a"></button><button type="button" data-color="#ea580c" title="橙色" style="--color:#ea580c"></button><button type="button" data-color="#9333ea" title="紫色" style="--color:#9333ea"></button><button type="button" data-color="#263246" title="黑色" style="--color:#263246"></button></div>
+        </div>
         <label class="sr-only" for="writingEditor">法语写作内容</label>
-        <textarea id="writingEditor" spellcheck="true" lang="fr" data-gramm="true" data-gramm_editor="true" placeholder="开始你的写作练习…"></textarea>
+        <div id="writingEditor" class="writing-rich-editor" contenteditable="true" spellcheck="true" lang="fr" data-gramm="true" data-gramm_editor="true" data-placeholder="开始你的写作练习…"></div>
       </div>
 
       <div class="panel template-panel" id="templatePanel" role="tabpanel" hidden>
@@ -68,6 +73,11 @@
         <span><strong>Grammarly 兼容：</strong>安装并启用浏览器扩展后，会直接在写作框中显示检查建议；提交后仍可查看本页的法语语法建议。</span>
         <a href="https://support.grammarly.com/hc/en-us/articles/115000091552-How-to-install-the-Grammarly-browser-extension" target="_blank" rel="noopener noreferrer">安装说明 ↗</a>
       </div>
+    </section>
+
+    <section class="writing-library" id="writingLibrarySection">
+      <div class="writing-library-heading"><div><p class="eyebrow">MES TEXTES</p><h2>我的写作练习库</h2><p>保存后可随时载入，继续修改、高亮和批注。</p></div><label>排列方式<select id="writingSort"><option value="newest">最新练习</option><option value="oldest">最早练习</option><option value="task">按 Tâche</option><option value="title">按标题</option></select></label></div>
+      <div id="savedWritingList" class="saved-writing-list"></div>
     </section>
 
     <section class="results" id="resultsPanel" hidden>

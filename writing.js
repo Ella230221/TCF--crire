@@ -3,6 +3,7 @@ const templateTab = document.getElementById('templateTab');
 const practicePanel = document.getElementById('practicePanel');
 const templatePanel = document.getElementById('templatePanel');
 const writingEditor = document.getElementById('writingEditor');
+const writingTitle = document.getElementById('writingTitle');
 const templateEditor = document.getElementById('templateEditor');
 const wordCount = document.getElementById('wordCount');
 const wordRequirement = document.getElementById('wordRequirement');
@@ -12,6 +13,10 @@ const templateResult = document.getElementById('templateResult');
 const grammarResult = document.getElementById('grammarResult');
 const overallScore = document.getElementById('overallScore');
 const storageKey = 'tcf-writing-practice-v1';
+const writingLibraryKey = 'tcf-writing-library-v1';
+const maxWritingLibrarySize = 500;
+let writingLibrary = [];
+let activeWritingIds = { '1': null, '2': null, '3': null };
 
 const lowerCharacters = ['à', 'â', 'ä', 'æ', 'ç', 'é', 'è', 'ê', 'ë', 'î', 'ï', 'ô', 'œ', 'ù', 'û', 'ü', 'ÿ'];
 let uppercase = false;
@@ -21,10 +26,13 @@ let historyTimer;
 let currentTask = '1';
 const taskRanges = { '1': [60, 120], '2': [120, 150], '3': [150, 180] };
 let taskDrafts = {
-  '1': { writing: '', template: '' },
-  '2': { writing: '', template: '' },
-  '3': { writing: '', template: '' }
+  '1': { title:'', writing: '', writingHtml:'', template: '' },
+  '2': { title:'', writing: '', writingHtml:'', template: '' },
+  '3': { title:'', writing: '', writingHtml:'', template: '' }
 };
+
+function writingText(){ return writingEditor.innerText.replace(/\u00a0/g,' ').trim(); }
+function setWritingContent(draft={}){ writingTitle.value=draft.title||''; writingEditor.innerHTML=draft.writingHtml||escapeHtml(draft.writing||'').replace(/\n/g,'<br>'); }
 
 function getWords(text) {
   return text.trim().match(/[A-Za-zÀ-ÖØ-öø-ÿŒœÆæ'-]+/g) || [];
@@ -57,14 +65,12 @@ function renderCharacters() {
 
 function insertAtCursor(text) {
   writingEditor.focus();
-  const start = writingEditor.selectionStart;
-  const end = writingEditor.selectionEnd;
-  writingEditor.setRangeText(text, start, end, 'end');
+  document.execCommand('insertText', false, text);
   writingEditor.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 function updateStatus() {
-  const count = getWords(writingEditor.value).length;
+  const count = getWords(writingText()).length;
   const [minimum, maximum] = taskRanges[currentTask];
   wordCount.textContent = `${count} 词`;
   wordRequirement.textContent = `（Tâche ${currentTask} 参考：${minimum}–${maximum} 词，不限输入）`;
@@ -72,10 +78,11 @@ function updateStatus() {
 }
 
 function saveDraft(showConfirmation = false) {
-  taskDrafts[currentTask] = { writing: writingEditor.value, template: templateEditor.value };
+  taskDrafts[currentTask] = { title:writingTitle.value, writing:writingText(), writingHtml:writingEditor.innerHTML, template: templateEditor.value };
   localStorage.setItem(storageKey, JSON.stringify({
     tasks: taskDrafts,
-    currentTask
+    currentTask,
+    activeWritingIds
   }));
   saveStatus.textContent = showConfirmation ? '已保存' : '草稿已自动保存';
   if (showConfirmation) setTimeout(() => { saveStatus.textContent = '草稿已自动保存'; }, 1300);
@@ -89,15 +96,16 @@ function restoreDraft() {
     if (saved.tasks) {
       taskDrafts = { ...taskDrafts, ...saved.tasks };
     } else {
-      taskDrafts[restoredTask] = { writing: saved.writing || '', template: saved.template || '' };
+      taskDrafts[restoredTask] = { title:'', writing: saved.writing || '', writingHtml:'', template: saved.template || '' };
     }
     currentTask = restoredTask;
-    writingEditor.value = taskDrafts[currentTask]?.writing || '';
+    setWritingContent(taskDrafts[currentTask]);
     templateEditor.value = taskDrafts[currentTask]?.template || '';
     document.querySelectorAll('.task-button').forEach(button => {
       button.classList.toggle('is-active', button.dataset.task === currentTask);
     });
-    history = [writingEditor.value];
+    activeWritingIds={...activeWritingIds,...(saved.activeWritingIds||{})};
+    history = [writingEditor.innerHTML];
   } catch (_) {}
 }
 
@@ -114,7 +122,7 @@ function compareTemplate() {
   if (!templateSentences.length) {
     return { score: 0, html: '<p>请先在“范文模板”中录入需要对照的模板。</p>' };
   }
-  const writing = normalizeSentence(writingEditor.value);
+  const writing = normalizeSentence(writingText());
   const checks = templateSentences.map(sentence => {
     const normalized = normalizeSentence(sentence);
     const keyWords = getWords(normalized).filter(word => word.length > 3);
@@ -158,7 +166,7 @@ function escapeHtml(value) {
 
 function submitWriting() {
   const comparison = compareTemplate();
-  const suggestions = checkGrammar(writingEditor.value);
+  const suggestions = checkGrammar(writingText());
   const grammarScore = Math.max(0, 100 - suggestions.length * 10);
   const finalScore = Math.round(comparison.score * .45 + grammarScore * .55);
   templateResult.innerHTML = comparison.html;
@@ -169,6 +177,35 @@ function submitWriting() {
   resultsPanel.hidden = false;
   resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   saveDraft();
+}
+
+function saveWritingToLibrary(showConfirmation=true){
+  const text=writingText();
+  if(!text){if(showConfirmation)alert('请先输入写作内容。');return;}
+  const activeId=activeWritingIds[currentTask];
+  const existing=writingLibrary.find(item=>item.id===activeId);
+  const title=writingTitle.value.trim()||`Tâche ${currentTask} — ${text.slice(0,36)}`;
+  const data={id:existing?.id||`writing-${Date.now()}-${Math.random().toString(16).slice(2)}`,task:currentTask,title,text,html:writingEditor.innerHTML,template:templateEditor.value,wordCount:getWords(text).length,createdAt:existing?.createdAt||Date.now(),updatedAt:Date.now()};
+  if(existing)writingLibrary[writingLibrary.indexOf(existing)]=data;else writingLibrary.push(data);
+  writingLibrary=writingLibrary.sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,maxWritingLibrarySize);
+  activeWritingIds[currentTask]=data.id;writingTitle.value=title;
+  localStorage.setItem(writingLibraryKey,JSON.stringify(writingLibrary));saveDraft();renderWritingLibrary();
+  if(showConfirmation)alert('已保存到写作练习库。');
+}
+
+function loadWriting(item){
+  saveDraft();currentTask=String(item.task);activeWritingIds[currentTask]=item.id;
+  writingTitle.value=item.title;writingEditor.innerHTML=item.html||escapeHtml(item.text).replace(/\n/g,'<br>');templateEditor.value=item.template||'';
+  document.querySelectorAll('.task-button').forEach(button=>button.classList.toggle('is-active',button.dataset.task===currentTask));
+  history=[writingEditor.innerHTML];historyIndex=0;updateStatus();saveDraft();document.querySelector('.editor-card').scrollIntoView({behavior:'smooth'});
+}
+
+function renderWritingLibrary(){
+  const list=document.getElementById('savedWritingList');const mode=document.getElementById('writingSort').value;
+  const items=[...writingLibrary].sort((a,b)=>mode==='oldest'?a.createdAt-b.createdAt:mode==='task'?Number(a.task)-Number(b.task)||b.updatedAt-a.updatedAt:mode==='title'?a.title.localeCompare(b.title,'zh'):b.updatedAt-a.updatedAt);
+  if(!items.length){list.innerHTML='<div class="writing-library-empty">还没有保存的写作练习。</div>';return;}
+  list.innerHTML=items.map((item,index)=>`<article class="saved-writing-card" data-id="${item.id}"><h3>${index+1}. ${escapeHtml(item.title)}</h3><p>Tâche ${item.task} · ${item.wordCount} 词 · ${new Date(item.updatedAt).toLocaleString('zh-CN')}</p><div class="saved-writing-preview">${escapeHtml(item.text)}</div><div class="saved-writing-actions"><button class="load-writing" type="button">载入继续编辑</button><button class="delete-writing" type="button">删除</button></div></article>`).join('');
+  list.querySelectorAll('.saved-writing-card').forEach(card=>{const item=writingLibrary.find(entry=>entry.id===card.dataset.id);card.querySelector('.load-writing').onclick=()=>loadWriting(item);card.querySelector('.delete-writing').onclick=()=>{if(confirm('确定删除这篇写作吗？')){writingLibrary=writingLibrary.filter(entry=>entry.id!==item.id);if(activeWritingIds[item.task]===item.id)activeWritingIds[item.task]=null;localStorage.setItem(writingLibraryKey,JSON.stringify(writingLibrary));saveDraft();renderWritingLibrary();}};});
 }
 
 practiceTab.addEventListener('click', () => switchTab('practice'));
@@ -183,9 +220,9 @@ document.querySelectorAll('.task-button').forEach(button => {
   button.addEventListener('click', () => {
     saveDraft();
     currentTask = button.dataset.task;
-    writingEditor.value = taskDrafts[currentTask]?.writing || '';
+    setWritingContent(taskDrafts[currentTask]);
     templateEditor.value = taskDrafts[currentTask]?.template || '';
-    history = [writingEditor.value];
+    history = [writingEditor.innerHTML];
     historyIndex = 0;
     document.querySelectorAll('.task-button').forEach(item => item.classList.toggle('is-active', item === button));
     updateStatus();
@@ -199,24 +236,32 @@ writingEditor.addEventListener('input', () => {
   clearTimeout(historyTimer);
   historyTimer = setTimeout(() => {
     history = history.slice(0, historyIndex + 1);
-    if (history[history.length - 1] !== writingEditor.value) history.push(writingEditor.value);
+    if (history[history.length - 1] !== writingEditor.innerHTML) history.push(writingEditor.innerHTML);
     historyIndex = history.length - 1;
   }, 350);
 });
 templateEditor.addEventListener('input', () => saveDraft());
-document.getElementById('saveBtn').addEventListener('click', () => saveDraft(true));
+writingTitle.addEventListener('input',()=>saveDraft());
+document.querySelectorAll('[data-color]').forEach(button=>button.addEventListener('mousedown',event=>event.preventDefault()));
+document.querySelectorAll('[data-color]').forEach(button=>button.addEventListener('click',()=>{writingEditor.focus();document.execCommand('foreColor',false,button.dataset.color);writingEditor.dispatchEvent(new Event('input',{bubbles:true}));}));
+document.getElementById('newWritingBtn').addEventListener('click',()=>{if(writingText()&&!confirm('新建文章会清空当前编辑区，已保存的文章不会删除。继续吗？'))return;activeWritingIds[currentTask]=null;writingTitle.value='';writingEditor.innerHTML='';taskDrafts[currentTask]={...taskDrafts[currentTask],title:'',writing:'',writingHtml:''};history=[''];historyIndex=0;updateStatus();saveDraft();writingEditor.focus();});
+document.getElementById('saveBtn').addEventListener('click', () => saveWritingToLibrary(true));
+document.getElementById('writingSort').addEventListener('change',renderWritingLibrary);
+window.addEventListener('studyannotationchange',()=>{saveDraft();if(activeWritingIds[currentTask])saveWritingToLibrary(false);});
 document.getElementById('submitBtn').addEventListener('click', submitWriting);
 document.getElementById('undoBtn').addEventListener('click', () => {
   if (historyIndex <= 0) return;
-  writingEditor.value = history[--historyIndex];
+  writingEditor.innerHTML = history[--historyIndex];
   updateStatus();
 });
 document.getElementById('redoBtn').addEventListener('click', () => {
   if (historyIndex >= history.length - 1) return;
-  writingEditor.value = history[++historyIndex];
+  writingEditor.innerHTML = history[++historyIndex];
   updateStatus();
 });
 
 restoreDraft();
+try{writingLibrary=JSON.parse(localStorage.getItem(writingLibraryKey))||[];}catch(_){writingLibrary=[];}
 renderCharacters();
 updateStatus();
+renderWritingLibrary();

@@ -7,10 +7,11 @@
     control.addEventListener('select', () => { activeTextControl = control; });
   });
 
-  const tools = document.createElement('aside');
-  tools.className = 'study-tools';
-  tools.innerHTML = `<div class="study-tools__header"><strong>高亮与备注</strong><button class="study-tools__toggle" type="button" aria-label="收起">⌄</button></div><div class="study-tools__body"><div class="study-tools__actions"><button class="yellow" data-action="yellow" type="button">黄色高亮</button><button class="green" data-action="green" type="button">绿色高亮</button><button data-action="note" type="button">＋ 插入备注</button><button data-action="clear" type="button">清除全部</button></div><div class="study-tools__list"></div></div>`;
-  document.body.appendChild(tools);
+  const tools = document.createElement('div');
+  tools.className = 'top-study-actions';
+  tools.setAttribute('aria-label','高亮与批注工具');
+  tools.innerHTML = `<button class="yellow" data-action="yellow" type="button" title="黄色高亮">🟨 <span>高亮</span></button><button class="green" data-action="green" type="button" title="绿色高亮">🟩 <span>高亮</span></button><button data-action="note" type="button" title="插入批注">✎ <span>批注</span></button><button data-action="clear-highlights" type="button" title="清除高亮">⌫ <span>高亮</span></button><button data-action="clear-notes" type="button" title="清除批注">⌫ <span>批注</span></button><div class="study-tools__list" hidden></div>`;
+  document.querySelector('.site-switcher')?.appendChild(tools);
   const list = tools.querySelector('.study-tools__list');
 
   function persist() { localStorage.setItem(key, JSON.stringify(records)); }
@@ -58,6 +59,12 @@
       records = []; persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
     }
   }
+  function clearType(type) {
+    const ids=records.filter(record=>type==='note'?record.type==='note':record.type!=='note').map(record=>record.id);
+    ids.forEach(id=>{const mark=document.querySelector(`[data-study-annotation="${id}"]`);if(mark)mark.replaceWith(...mark.childNodes);});
+    records=records.filter(record=>type==='note'?record.type!=='note':record.type==='note');
+    persist();render();window.dispatchEvent(new CustomEvent('studyannotationchange'));
+  }
   function restoreMarks() {
     records.forEach(record => {
       if (document.querySelector(`[data-study-annotation="${record.id}"]`)) return;
@@ -78,12 +85,12 @@
     });
   }
   function escapeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  tools.querySelector('.study-tools__toggle').addEventListener('click', event => { const collapsed=tools.classList.toggle('is-collapsed'); event.currentTarget.textContent=collapsed?'›':'⌄'; });
   tools.querySelectorAll('[data-action]').forEach(button => button.addEventListener('mousedown', event => event.preventDefault()));
   tools.querySelector('[data-action="yellow"]').addEventListener('click', () => annotate('yellow'));
   tools.querySelector('[data-action="green"]').addEventListener('click', () => annotate('green'));
   tools.querySelector('[data-action="note"]').addEventListener('click', () => annotate('note'));
-  tools.querySelector('[data-action="clear"]').addEventListener('click', clearAll);
+  tools.querySelector('[data-action="clear-highlights"]').addEventListener('click', () => clearType('highlight'));
+  tools.querySelector('[data-action="clear-notes"]').addEventListener('click', () => clearType('note'));
   document.addEventListener('click', event => {
     const mark = event.target.closest('.study-highlight-note');
     if (!mark) return;
