@@ -153,6 +153,61 @@
       "Toutefois, j'aimerais ajouter un dernier point concernant les actions individuelles. Même si elles offrent de réels avantages, elles ne constituent pas le seul facteur à prendre en compte. En effet, les pouvoirs publics et les entreprises peuvent également jouer un rôle essentiel.",
       "Prenons le cas d'une famille qui trie ses déchets alors que les entreprises continuent à utiliser trop d'emballages jetables. On voit donc que les efforts de chacun sont utiles, mais qu'ils doivent être accompagnés par des actions collectives.",
       "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
+    ]},
+    {id:'bonheur-travail',category:'categorie-travail',title:"L’essentiel dans la vie est-il de trouver du bonheur au travail ? Qu’en pensez-vous ?",p:[
+      "Si je comprends bien, il s'agit de savoir si l'essentiel dans la vie est de trouver du bonheur au travail.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le bonheur au travail présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Pour commencer, le bonheur au travail constitue un véritable atout, car cela permet de rester motivé et de s'épanouir professionnellement. En effet, cela favorise également la concentration, la confiance en soi et la qualité du travail.",
+      "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'un bon environnement professionnel améliorait leur motivation. Cela montre que le bonheur au travail joue un rôle important.",
+      "Ensuite, l'équilibre entre la vie professionnelle et la vie personnelle joue également un rôle essentiel dans le bien-être. Autrement dit, il contribue à limiter le stress et à préserver du temps pour la famille.",
+      "Prenons l'exemple de mon mari. Malgré son travail, il accorde toujours du temps à notre famille et m'encourage dans mes études de français. Cet exemple prouve que l'épanouissement dépend aussi d'un bon équilibre quotidien.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant le bonheur au travail. Même si le bonheur au travail offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, le bonheur au travail peut s'avérer particulièrement bénéfique pour les personnes qui maintiennent aussi de bonnes relations et prennent soin de leur santé.",
+      "Prenons mon propre exemple. Le soutien de ma famille, mon apprentissage du français et mes activités personnelles contribuent également à mon bien-être. On voit donc que le bonheur dans la vie ne dépend pas uniquement du travail.",
+      "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
+    ]},
+    {id:'epanoui-vivre-seul',category:'categorie-famille',title:"Pensez-vous que l’on puisse être épanoui en vivant seul ? Pourquoi ?",p:[
+      "Si je comprends bien, il s'agit de savoir s'il est possible d'être épanoui en vivant seul.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le fait de vivre seul présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés au fait de vivre seul. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Pour commencer, le fait de vivre seul constitue un véritable atout, car cela permet de devenir plus autonome et d'organiser librement sa vie quotidienne. En effet, cela favorise également la confiance en soi et le développement personnel.",
+      "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que vivre seul leur avait appris à devenir plus autonomes. Cela montre que cette expérience peut favoriser l'épanouissement.",
+      "Ensuite, les relations humaines jouent également un rôle essentiel dans le bien-être. Autrement dit, elles contribuent à recevoir du soutien, à créer des liens solides et à avancer avec davantage de sérénité.",
+      "Prenons mon propre exemple. Lorsque je prépare le TCF Canada, mon mari m'encourage lorsque je manque de motivation. Cet exemple prouve que le soutien des autres reste précieux dans les moments difficiles.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant le fait de vivre seul. Même si ce sujet offre de réels avantages, il ne convient pas pour autant de négliger ses limites. En effet, le fait de vivre seul peut comporter certains risques pour les relations sociales et le bien-être émotionnel.",
+      "Prenons le cas de certaines personnes qui restent souvent seules et participent rarement à la vie locale. Elles peuvent parfois souffrir d'isolement. On voit donc qu'il est possible d'être épanoui en vivant seul à condition de conserver des relations avec les autres.",
+      "En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients."
+    ]},
+    {id:'sante-alimentation',category:'categorie-sante',title:"Le plus important pour conserver la santé est-il de bien se nourrir ? Qu’en pensez-vous ?",p:[
+      "Si je comprends bien, il s'agit de savoir si le plus important pour conserver la santé est de bien se nourrir.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien qu'une bonne alimentation présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Pour commencer, une alimentation équilibrée constitue un véritable atout, car cela permet d'apporter au corps les éléments dont il a besoin. En effet, cela favorise également l'énergie quotidienne et le renforcement du système immunitaire.",
+      "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'une alimentation équilibrée contribuait à préserver leur santé. Cela montre que la nourriture joue un rôle essentiel.",
+      "Ensuite, l'activité physique joue également un rôle essentiel dans la santé. Autrement dit, elle contribue à préserver la mobilité, à réduire le stress et à améliorer le bien-être.",
+      "Prenons l'exemple de mon fils. Il joue au tennis avec moi le week-end. Cette activité nous permet de bouger et de passer un bon moment ensemble. Cet exemple prouve que l'exercice complète une bonne alimentation.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant l'alimentation. Même si une bonne alimentation offre de réels avantages, elle ne constitue pas le seul facteur à prendre en compte. En effet, une bonne alimentation peut s'avérer particulièrement bénéfique pour les personnes qui prennent également soin de leur santé physique et mentale.",
+      "Prenons l'exemple de mon père. Lorsqu'il est malade, il consulte son médecin et suit le traitement prescrit. On voit donc que conserver la santé dépend aussi du suivi médical, du repos et de bonnes habitudes de vie.",
+      "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
+    ]},
+    {id:'jeune-trouver-emploi',category:'categorie-travail',title:"Selon vous, que doit faire un jeune pour trouver un emploi ?",p:[
+      "Si je comprends bien, il s'agit de savoir ce qu'un jeune doit faire pour trouver un emploi.",
+      "Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que la formation présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Pour commencer, la formation constitue un véritable atout, car cela permet d'acquérir des connaissances et des compétences utiles. En effet, cela favorise également une meilleure préparation à la vie professionnelle.",
+      "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que la formation facilitait l'accès à un emploi qualifié. Cela montre qu'un jeune doit commencer par développer ses compétences.",
+      "Ensuite, l'expérience professionnelle joue également un rôle essentiel dans la recherche d'un emploi. Autrement dit, elle contribue à mettre ses connaissances en pratique et à mieux comprendre les besoins des employeurs.",
+      "Prenons mon propre exemple. Lorsque je travaillais dans les ressources humaines, j'ai constaté que les employeurs recherchaient des personnes capables d'apprendre et de s'adapter. Cet exemple prouve qu'un stage, un emploi temporaire ou une activité de bénévolat peut être utile.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant la formation. Même si la formation offre de réels avantages, elle ne constitue pas le seul facteur à prendre en compte. En effet, la formation peut s'avérer particulièrement bénéfique pour les jeunes qui font preuve de motivation et développent leur capacité d'adaptation.",
+      "Prenons le cas de mon ami Paul. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'adapte rapidement aux nouvelles méthodes de travail. On voit donc qu'un jeune doit continuer à apprendre, acquérir de l'expérience et rester motivé.",
+      "En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion."
+    ]},
+    {id:'probleme-mondial',category:'categorie-societe',title:"Quel problème mondial est le plus important aujourd’hui ? Pourquoi ?",p:[
+      "Si je comprends bien, il s'agit de choisir le problème mondial qui me paraît le plus important aujourd'hui.",
+      "Il serait intéressant de réfléchir à cette question. Si je devais en retenir quelques-unes, je choisirais la protection de l'environnement. J'aimerais développer trois arguments qui expliquent mon point de vue.",
+      "Pour commencer, la protection de l'environnement constitue un véritable atout, car cela permet de préserver les ressources naturelles. En effet, cela favorise également un avenir plus durable pour les générations futures.",
+      "Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que la protection de l'environnement était une priorité. Cela montre que ce problème concerne toute la société.",
+      "Ensuite, les comportements responsables jouent également un rôle essentiel dans la protection de l'environnement. Autrement dit, ils contribuent à réduire le gaspillage, la pollution et la consommation d'énergie.",
+      "Prenons l'exemple de mon fils. À l'école, il apprend à recycler et à économiser l'énergie. Cet exemple prouve que chacun peut agir dès le plus jeune âge.",
+      "Toutefois, j'aimerais ajouter un dernier point concernant les actions collectives. Même si les gestes individuels offrent de réels avantages, cela ne signifie pas que les actions des pouvoirs publics et des entreprises soient moins importantes. En effet, les actions collectives peuvent également apporter de nombreux bénéfices.",
+      "Prenons le cas d'une famille qui trie ses déchets alors que les entreprises utilisent encore trop d'emballages. On voit donc que la protection de l'environnement exige la participation de tous.",
+      "En définitive, ce choix correspond pleinement à mes centres d'intérêt, à mon expérience et à mes objectifs. Il s'agit avant tout de poursuivre un projet qui me permette de continuer à apprendre et à progresser."
     ]}
   ];
 
@@ -172,7 +227,8 @@
     'education-maison':"Certains parents favorisent l'éducation à la maison. Qu'en pensez-vous ?",
     'telephone-ecole':"Que pensez-vous de l'utilisation du téléphone portable par les élèves dans les écoles ?",
     'travailler-etudier':"Pensez-vous qu'il est possible de travailler et de fréquenter les cours en même temps ?",
-    'urbain-rural':"Est-ce agréable pour les personnes âgées de vivre en milieu urbain ou en milieu rural ? Quelle est votre opinion ?"
+    'urbain-rural':"Est-ce agréable pour les personnes âgées de vivre en milieu urbain ou en milieu rural ? Quelle est votre opinion ?",
+    'livres':"Selon vous, lire est-il une activité inutile ? Pourquoi ?"
   };
   window.applyT3QuestionVariants=()=>Object.entries(variants).forEach(([id,text])=>{const details=document.querySelector(`#${id} > .t3-details`);if(!details||details.querySelector('.question-variant'))return;const note=document.createElement('p');note.className='question-variant';note.innerHTML=`<strong>Autre formulation :</strong> ${text}`;details.querySelector('summary')?.after(note);});
   window.applyT3QuestionVariants();
