@@ -36,6 +36,7 @@
               <li><a href="#responsable">Tout le monde peut-il occuper des fonctions de responsable ?</a></li>
               <li><a href="#travailler-etudier">Travailler et étudier en même temps est difficile.</a></li>
               <li><a href="#salaire">Le salaire est-il la chose la plus importante dans un travail ?</a></li>
+              <li><a href="#experience-etranger-reussite">La vie à l'étranger aide-t-elle à réussir professionnellement ?</a></li>
             </ul></li>
             <li class="nav-category"><a href="#categorie-famille">👨‍👩‍👧‍👦 Famille et relations humaines</a><ul>
               <li><a href="#aides-sociales">Les aides sociales réduisent-elles la solidarité familiale ?</a></li>
@@ -323,6 +324,21 @@
         <p>Toutefois, j'aimerais ajouter un dernier point concernant le salaire. Même si le salaire offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, un bon équilibre entre la vie professionnelle et la vie personnelle peut s'avérer particulièrement bénéfique pour le bien-être.</p>
         <p>Prenons l'exemple de mon mari. Il travaille dans un centre de réadaptation physique et de gestion de la santé. Malgré son travail, il accorde toujours du temps à notre famille et m'encourage dans mes études de français. On voit donc que la satisfaction au travail dépend aussi de l'équilibre entre la vie professionnelle et la vie personnelle.</p>
         <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
+        </details>
+      </section>
+
+      <section id="experience-etranger-reussite" class="section t3-question">
+        <details class="t3-details">
+          <summary>Pensez-vous que l’expérience de la vie à l’étranger aide à réussir professionnellement ?</summary>
+          <p>Si je comprends bien, il s'agit de savoir si l'expérience de la vie à l'étranger aide à réussir professionnellement.</p>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que l'expérience de la vie à l'étranger présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+          <p>Pour commencer, l'expérience de la vie à l'étranger constitue un véritable atout, car cela permet de développer une grande capacité d'adaptation. En effet, cela favorise également l'autonomie, l'ouverture d'esprit et la confiance en soi.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'une expérience internationale permettait de mieux s'adapter aux changements dans le monde du travail. Cela montre que la capacité d'adaptation acquise à l'étranger peut faciliter la réussite professionnelle.</p>
+          <p>Ensuite, la vie à l'étranger joue également un rôle essentiel dans le développement des compétences linguistiques et interculturelles. Autrement dit, elle permet de mieux communiquer avec des personnes d'origines différentes et de comprendre de nouvelles méthodes de travail.</p>
+          <p>Prenons mon propre exemple. Depuis mon arrivée au Canada, j'apprends le français tous les jours et je participe à des activités de bénévolat. Cette expérience m'aide à mieux comprendre la société canadienne, à communiquer avec des personnes de cultures différentes et à gagner en confiance. Cet exemple prouve que la vie à l'étranger peut permettre d'acquérir des compétences utiles pour construire un projet professionnel.</p>
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant l'expérience internationale. Même si la vie à l'étranger offre de réels avantages, elle ne constitue pas le seul facteur à prendre en compte. En effet, les compétences techniques, la motivation et les efforts personnels peuvent également jouer un rôle essentiel.</p>
+          <p>Prenons le cas de mon ami Paul. Après avoir vécu quelque temps à l'étranger, il a découvert de nouvelles méthodes de travail. Grâce à son excellente capacité d'apprentissage et à ses solides compétences techniques, il s'est rapidement adapté et a progressivement évolué dans sa carrière. On voit donc que l'expérience internationale devient particulièrement utile lorsqu'elle est accompagnée de compétences et d'efforts personnels.</p>
+          <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
         </details>
       </section>
 
@@ -1498,6 +1514,7 @@
     const clearNotesBtn = document.getElementById('clearNotesBtn');
     const annotationStorageKey = 'tcf-t3-oral-annotations-v2';
     const mainContent = document.querySelector('main.content');
+    const latestExperienceQuestion = document.getElementById('experience-etranger-reussite')?.cloneNode(true);
 
     function saveAnnotations() {
       if (!mainContent) return;
@@ -1532,6 +1549,9 @@
     }
 
     restoreAnnotations();
+    if (latestExperienceQuestion && !document.getElementById('experience-etranger-reussite')) {
+      document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestExperienceQuestion);
+    }
 
     const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
       paragraph.textContent.includes("les diplômes ne garantissent pas à eux seuls la réussite professionnelle")
@@ -1576,7 +1596,7 @@
 
       const categories = [
         ['categorie-education', '📚 Éducation', ['etudes', 'trop-tard', 'education-maison']],
-        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire']],
+        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite']],
         ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales']],
         ['categorie-sante', '❤️ Santé et bien-être', ['medicaments']],
         ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
