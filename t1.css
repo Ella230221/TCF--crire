@@ -7,8 +7,8 @@ button { cursor: pointer; }
 .site-switcher a { padding: 9px 16px; color: #cbd5e1; border-radius: 9px; font-weight: 750; text-decoration: none; }
 .site-switcher a:hover { color: #fff; background: #334155; }
 .site-switcher a.active { color: #fff; background: #2563eb; }
-.reader-app { min-height: calc(100vh - 57px); display: grid; grid-template-columns: 278px 1fr; }
-.reader-sidebar { position: sticky; top: 62px; height: calc(100vh - 62px); padding: 26px 20px; background: #fff; border-right: 1px solid #e2e8f0; overflow-y: auto; }
+.reader-app { min-height: calc(100vh - 57px); display: grid; grid-template-columns: 238px 1fr; }
+.reader-sidebar { position: sticky; top: 62px; height: calc(100vh - 62px); padding: 17px 14px; background: #fff; border-right: 1px solid #e2e8f0; overflow-y: auto; }
 .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 28px; color: #1769ff; }
 .brand > span { display: grid; place-items: center; width: 42px; height: 42px; color: #fff; background: linear-gradient(135deg,#1769ff,#8b5cf6); border-radius: 13px; font: 900 1.5rem Georgia; }
 .brand strong, .brand small { display: block; }.brand strong { font-size: 1.1rem; }.brand small { margin-top: 2px; color: #7c8799; }
