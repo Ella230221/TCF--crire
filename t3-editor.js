@@ -64,6 +64,9 @@
     const editableNodes=[...document.querySelectorAll('main .section p, main .section li, main .section h3')].filter(node=>!node.closest('.t3-user-question'));
     const moduleKey='tcf-t3-editable-nodes-v3';
     const legacyKey='tcf-t3-editable-nodes-v2';
+    const abroadTemplateRevision='template-100-v1';
+    const abroadRevisionKey='tcf-t3-experience-etranger-revision';
+    const refreshAbroadTemplate=localStorage.getItem(abroadRevisionKey)!==abroadTemplateRevision;
     editableNodes.forEach(node=>{
       node.contentEditable='true';
       const section=node.closest('.section[id]');
@@ -73,13 +76,15 @@
     try{
       const stableEdits=JSON.parse(localStorage.getItem(moduleKey))||{};
       if(Object.keys(stableEdits).length){
-        editableNodes.forEach(node=>{if(Object.prototype.hasOwnProperty.call(stableEdits,node.dataset.editKey))node.innerHTML=stableEdits[node.dataset.editKey];});
+        editableNodes.forEach(node=>{if(refreshAbroadTemplate&&node.closest('#experience-etranger-reussite'))return;if(Object.prototype.hasOwnProperty.call(stableEdits,node.dataset.editKey))node.innerHTML=stableEdits[node.dataset.editKey];});
+        if(refreshAbroadTemplate){editableNodes.filter(node=>node.closest('#experience-etranger-reussite')).forEach(node=>stableEdits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(stableEdits));}
       }else{
         const legacyEdits=JSON.parse(localStorage.getItem(legacyKey))||{};
         const legacyNodes=editableNodes.filter(node=>!node.closest('#experience-etranger-reussite'));
         legacyNodes.forEach((node,index)=>{const key=`edit-${index}`;if(Object.prototype.hasOwnProperty.call(legacyEdits,key))node.innerHTML=legacyEdits[key];});
         const migrated={};editableNodes.forEach(node=>migrated[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(migrated));
       }
+      if(refreshAbroadTemplate)localStorage.setItem(abroadRevisionKey,abroadTemplateRevision);
     }catch(_){}
     document.querySelector('main').addEventListener('input',event=>{if(event.target.closest('.t3-user-question,.t3-question-composer'))return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{const edits={};editableNodes.forEach(node=>edits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(edits));},600);});
   }
