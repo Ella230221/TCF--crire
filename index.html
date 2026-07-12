@@ -1550,7 +1550,8 @@
 
     restoreAnnotations();
     const restoredExperienceQuestion = document.getElementById('experience-etranger-reussite');
-    if (latestExperienceQuestion && restoredExperienceQuestion?.textContent.includes('les aides sociales réduisent la solidarité familiale')) {
+    const abroadTemplateNeedsRefresh = localStorage.getItem('tcf-t3-experience-etranger-revision') !== 'template-100-v2';
+    if (latestExperienceQuestion && restoredExperienceQuestion && (abroadTemplateNeedsRefresh || restoredExperienceQuestion.textContent.includes('les aides sociales réduisent la solidarité familiale'))) {
       restoredExperienceQuestion.replaceWith(latestExperienceQuestion);
     } else if (latestExperienceQuestion && !restoredExperienceQuestion) {
       document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestExperienceQuestion);

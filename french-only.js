@@ -20,12 +20,12 @@
   }
   function process(root=document.body){
     const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-    nodes.forEach(node=>{const parent=node.parentElement;if(!parent||parent.closest('script,style,textarea,input,[contenteditable="true"]'))return;node.nodeValue=clean(node.nodeValue);});
-    root.querySelectorAll?.('[placeholder],[title],[aria-label]').forEach(el=>['placeholder','title','aria-label'].forEach(attr=>{if(el.hasAttribute(attr)){const next=clean(el.getAttribute(attr));if(next)el.setAttribute(attr,next);else if(attr==='placeholder')el.setAttribute(attr,'Saisissez votre texte…');}}));
+    nodes.forEach(node=>{const parent=node.parentElement;if(!parent||parent.closest('script,style,textarea,input,[contenteditable="true"],[data-preserve-language],.study-note-item,.comment-item,.floating-comment'))return;node.nodeValue=clean(node.nodeValue);});
+    root.querySelectorAll?.('[placeholder],[title],[aria-label]').forEach(el=>{if(el.closest('[data-preserve-language],.study-highlight-note,.study-note-item,.comment-item,.floating-comment'))return;['placeholder','title','aria-label'].forEach(attr=>{if(el.hasAttribute(attr)){const next=clean(el.getAttribute(attr));if(next)el.setAttribute(attr,next);else if(attr==='placeholder')el.setAttribute(attr,'Saisissez votre texte…');}});});
   }
   const nativeAlert=window.alert.bind(window),nativeConfirm=window.confirm.bind(window),nativePrompt=window.prompt.bind(window);
   window.alert=message=>nativeAlert(clean(String(message))||'Opération terminée.');
   window.confirm=message=>nativeConfirm(clean(String(message))||'Confirmer cette action ?');
   window.prompt=(message,value)=>nativePrompt(clean(String(message))||'Saisissez votre annotation :',value);
-  process();let timer;new MutationObserver(mutations=>{clearTimeout(timer);timer=setTimeout(()=>mutations.forEach(m=>m.addedNodes.forEach(node=>{if(node.nodeType===1)process(node);else if(node.nodeType===3&&!node.parentElement?.closest('textarea,input,[contenteditable="true"]'))node.nodeValue=clean(node.nodeValue); })),30);}).observe(document.body,{childList:true,subtree:true});
+  process();let timer;new MutationObserver(mutations=>{clearTimeout(timer);timer=setTimeout(()=>mutations.forEach(m=>m.addedNodes.forEach(node=>{if(node.nodeType===1)process(node);else if(node.nodeType===3&&!node.parentElement?.closest('textarea,input,[contenteditable="true"],[data-preserve-language],.study-note-item,.comment-item,.floating-comment'))node.nodeValue=clean(node.nodeValue); })),30);}).observe(document.body,{childList:true,subtree:true});
 })();

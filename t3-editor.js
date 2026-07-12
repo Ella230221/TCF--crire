@@ -64,7 +64,7 @@
     const editableNodes=[...document.querySelectorAll('main .section p, main .section li, main .section h3')].filter(node=>!node.closest('.t3-user-question'));
     const moduleKey='tcf-t3-editable-nodes-v3';
     const legacyKey='tcf-t3-editable-nodes-v2';
-    const abroadTemplateRevision='template-100-v1';
+    const abroadTemplateRevision='template-100-v2';
     const abroadRevisionKey='tcf-t3-experience-etranger-revision';
     const refreshAbroadTemplate=localStorage.getItem(abroadRevisionKey)!==abroadTemplateRevision;
     editableNodes.forEach(node=>{

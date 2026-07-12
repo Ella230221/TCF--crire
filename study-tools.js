@@ -13,6 +13,7 @@
   tools.innerHTML = `<button class="yellow" data-action="yellow" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button class="green" data-action="green" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button data-action="note" type="button" title="Annoter">✎ <span>Annoter</span></button><button data-action="delete-one" type="button" title="Supprimer un seul marquage">⌫ <span>Supprimer</span></button><div class="study-tools__list" hidden></div>`;
   document.querySelector('.site-switcher')?.appendChild(tools);
   const list = tools.querySelector('.study-tools__list');
+  list.dataset.preserveLanguage = 'true';
 
   function persist() { localStorage.setItem(key, JSON.stringify(records)); }
   function selectionInfo() {
@@ -33,11 +34,13 @@
     if (info.range) {
       const span = document.createElement('span');
       span.className = `study-highlight-${type}`; span.dataset.studyAnnotation = id;
-      if (type === 'note') { span.dataset.studyNote = note; span.title = note; }
+      if (type === 'note') { span.dataset.studyNote = note; span.title = note; span.tabIndex = 0; }
       try { info.range.surroundContents(span); } catch (_) { alert('请选择同一段落内的连续文字。'); return; }
       info.selection.removeAllRanges();
     } else if (info.control) { info.control.classList.add('study-textarea-marked'); }
-    records.push({ id, type, quote: info.quote, note, time: Date.now() }); persist(); render(); window.dispatchEvent(new CustomEvent('studyannotationchange'));
+    records.push({ id, type, quote: info.quote, note, time: Date.now() }); persist(); render();
+    if (type === 'note') list.hidden = false;
+    window.dispatchEvent(new CustomEvent('studyannotationchange'));
   }
   function render() {
     if (!records.length) { list.innerHTML = '<div class="study-tools__empty">选中文字后即可高亮或添加备注</div>'; return; }
@@ -81,6 +84,7 @@
       const start = node.nodeValue.indexOf(record.quote);
       const range = document.createRange(); range.setStart(node,start); range.setEnd(node,start+record.quote.length);
       const span = document.createElement('span'); span.className=`study-highlight-${record.type}`; span.dataset.studyAnnotation=record.id;
+      if(record.type==='note'){span.dataset.studyNote=record.note||'';span.title=record.note||'';span.tabIndex=0;}
       try { range.surroundContents(span); } catch (_) {}
     });
   }
@@ -88,7 +92,11 @@
   tools.querySelectorAll('[data-action]').forEach(button => button.addEventListener('mousedown', event => event.preventDefault()));
   tools.querySelector('[data-action="yellow"]').addEventListener('click', () => annotate('yellow'));
   tools.querySelector('[data-action="green"]').addEventListener('click', () => annotate('green'));
-  tools.querySelector('[data-action="note"]').addEventListener('click', () => annotate('note'));
+  tools.querySelector('[data-action="note"]').addEventListener('click', () => {
+    const info=selectionInfo();
+    if(!info?.quote&&records.some(record=>record.type==='note')){list.hidden=!list.hidden;return;}
+    annotate('note');
+  });
   let deleteMode=false;const deleteButton=tools.querySelector('[data-action="delete-one"]');
   deleteButton.addEventListener('click',()=>{deleteMode=!deleteMode;deleteButton.classList.toggle('is-active',deleteMode);deleteButton.innerHTML=deleteMode?'✕ <span>Cliquez sur le marquage</span>':'⌫ <span>Supprimer</span>';});
   document.addEventListener('click',event=>{if(!deleteMode)return;const mark=event.target.closest('[data-study-annotation]');if(!mark)return;event.preventDefault();event.stopImmediatePropagation();removeRecord(mark.dataset.studyAnnotation);deleteMode=false;deleteButton.classList.remove('is-active');deleteButton.innerHTML='⌫ <span>Supprimer</span>';},true);
