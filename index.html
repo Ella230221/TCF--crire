@@ -44,6 +44,7 @@
             </ul></li>
             <li class="nav-category"><a href="#categorie-sante">❤️ Santé et bien-être</a><ul>
               <li><a href="#medicaments">Est-il aujourd'hui impossible de vivre sans médicaments ?</a></li>
+              <li><a href="#stress-meilleur-soi">Le stress peut-il encourager à donner le meilleur de soi-même ?</a></li>
             </ul></li>
             <li class="nav-category"><a href="#categorie-technologie">💻 Technologie et numérique</a><ul>
               <li><a href="#reseaux-sociaux">Les parents doivent laisser leurs enfants utiliser les réseaux sociaux ?</a></li>
@@ -207,6 +208,21 @@
         <p>Toutefois, j'aimerais ajouter un dernier point concernant les médicaments. Même si les médicaments offrent de réels avantages, il ne convient pas pour autant de négliger leurs limites. En effet, une mauvaise utilisation peut avoir des conséquences négatives sur la santé.</p>
         <p>Prenons le cas de certaines personnes qui prennent trop de médicaments sans suivre les conseils de leur médecin. Elles risquent d'avoir davantage de problèmes de santé. On voit donc qu'il est important d'utiliser les médicaments de manière raisonnable.</p>
         <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="stress-meilleur-soi" class="section t3-question">
+        <details class="t3-details">
+          <summary>Le stress peut-il encourager une personne à donner le meilleur d’elle-même ? Expliquez.</summary>
+          <p>Si je comprends bien, il s'agit de savoir si le stress peut encourager une personne à donner le meilleur d'elle-même.</p>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le stress présente de nombreux avantages, il est également essentiel de ne pas négliger les risques liés au stress. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+          <p>Pour commencer, un niveau modéré de stress constitue un véritable atout, car cela permet de mieux se préparer face à une situation importante. En effet, cela favorise également la motivation, la concentration et les efforts personnels.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient qu'un niveau modéré de stress les encourageait à se préparer plus sérieusement. Cela montre que le stress peut aider certaines personnes à donner le meilleur d'elles-mêmes.</p>
+          <p>Ensuite, le stress joue également un rôle essentiel dans la réalisation d'un objectif. Autrement dit, il contribue à prendre conscience de l'importance d'une situation et à poursuivre ses efforts.</p>
+          <p>Prenons mon propre exemple. Lorsque je prépare le TCF Canada, je ressens parfois du stress, car je souhaite obtenir un bon résultat. Cette pression m'encourage à apprendre le français tous les jours et à travailler régulièrement. Cet exemple prouve qu'un niveau raisonnable de stress peut renforcer la motivation et aider à progresser.</p>
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant le stress. Même si ce sujet offre de réels avantages, il ne convient pas pour autant de négliger ses limites. En effet, le stress peut comporter certains risques pour la santé mentale, la confiance en soi et le bien-être.</p>
+          <p>Prenons l'exemple de mon mari. Après une journée de travail particulièrement chargée, il est parfois très fatigué et a besoin de temps pour se reposer. Si cette pression devient trop importante, il lui est plus difficile de rester concentré et efficace. On voit donc qu'un stress excessif peut empêcher une personne de donner le meilleur d'elle-même.</p>
+          <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
         </details>
       </section>
 
@@ -1566,6 +1582,7 @@
     const latestTourismQuestion = document.getElementById('tourisme-developpement-pays')?.cloneNode(true);
     const latestAdaptationQuestion = document.getElementById('adaptation-pays-compliquee')?.cloneNode(true);
     const latestForeignJobQuestion = document.getElementById('emploi-etranger-simple')?.cloneNode(true);
+    const latestStressQuestion = document.getElementById('stress-meilleur-soi')?.cloneNode(true);
 
     function saveAnnotations() {
       if (!mainContent) return;
@@ -1616,6 +1633,9 @@
     if (latestForeignJobQuestion && !document.getElementById('emploi-etranger-simple')) {
       document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestForeignJobQuestion);
     }
+    if (latestStressQuestion && !document.getElementById('stress-meilleur-soi')) {
+      document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestStressQuestion);
+    }
 
     const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
       paragraph.textContent.includes("les diplômes ne garantissent pas à eux seuls la réussite professionnelle")
@@ -1662,7 +1682,7 @@
         ['categorie-education', '📚 Éducation', ['etudes', 'trop-tard', 'education-maison']],
         ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire', 'experience-etranger-reussite', 'emploi-etranger-simple']],
         ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales']],
-        ['categorie-sante', '❤️ Santé et bien-être', ['medicaments']],
+        ['categorie-sante', '❤️ Santé et bien-être', ['medicaments', 'stress-meilleur-soi']],
         ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
         ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation', 'adaptation-pays-compliquee']],
         ['categorie-argent', '💰 Argent et consommation', []],

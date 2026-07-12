@@ -80,7 +80,7 @@
         if(refreshAbroadTemplate){editableNodes.filter(node=>node.closest('#experience-etranger-reussite')).forEach(node=>stableEdits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(stableEdits));}
       }else{
         const legacyEdits=JSON.parse(localStorage.getItem(legacyKey))||{};
-        const legacyNodes=editableNodes.filter(node=>!node.closest('#experience-etranger-reussite,#tourisme-developpement-pays,#adaptation-pays-compliquee,#emploi-etranger-simple'));
+        const legacyNodes=editableNodes.filter(node=>!node.closest('#experience-etranger-reussite,#tourisme-developpement-pays,#adaptation-pays-compliquee,#emploi-etranger-simple,#stress-meilleur-soi'));
         legacyNodes.forEach((node,index)=>{const key=`edit-${index}`;if(Object.prototype.hasOwnProperty.call(legacyEdits,key))node.innerHTML=legacyEdits[key];});
         const migrated={};editableNodes.forEach(node=>migrated[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(migrated));
       }
