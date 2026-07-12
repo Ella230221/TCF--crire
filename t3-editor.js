@@ -62,8 +62,25 @@
 
   async function init(){await restore();addCategoryControls();customQuestions.forEach(makeCard);updateSidebar();
     const editableNodes=[...document.querySelectorAll('main .section p, main .section li, main .section h3')].filter(node=>!node.closest('.t3-user-question'));
-    const moduleKey='tcf-t3-editable-nodes-v2';editableNodes.forEach((node,index)=>{node.contentEditable='true';node.dataset.editKey=`edit-${index}`;});
-    try{const edits=JSON.parse(localStorage.getItem(moduleKey))||{};editableNodes.forEach(node=>{if(Object.prototype.hasOwnProperty.call(edits,node.dataset.editKey))node.innerHTML=edits[node.dataset.editKey];});}catch(_){}
+    const moduleKey='tcf-t3-editable-nodes-v3';
+    const legacyKey='tcf-t3-editable-nodes-v2';
+    editableNodes.forEach(node=>{
+      node.contentEditable='true';
+      const section=node.closest('.section[id]');
+      const sectionNodes=section?[...section.querySelectorAll('p, li, h3')].filter(item=>!item.closest('.t3-user-question')):editableNodes;
+      node.dataset.editKey=`${section?.id||'main'}:${node.tagName.toLowerCase()}:${sectionNodes.indexOf(node)}`;
+    });
+    try{
+      const stableEdits=JSON.parse(localStorage.getItem(moduleKey))||{};
+      if(Object.keys(stableEdits).length){
+        editableNodes.forEach(node=>{if(Object.prototype.hasOwnProperty.call(stableEdits,node.dataset.editKey))node.innerHTML=stableEdits[node.dataset.editKey];});
+      }else{
+        const legacyEdits=JSON.parse(localStorage.getItem(legacyKey))||{};
+        const legacyNodes=editableNodes.filter(node=>!node.closest('#experience-etranger-reussite'));
+        legacyNodes.forEach((node,index)=>{const key=`edit-${index}`;if(Object.prototype.hasOwnProperty.call(legacyEdits,key))node.innerHTML=legacyEdits[key];});
+        const migrated={};editableNodes.forEach(node=>migrated[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(migrated));
+      }
+    }catch(_){}
     document.querySelector('main').addEventListener('input',event=>{if(event.target.closest('.t3-user-question,.t3-question-composer'))return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{const edits={};editableNodes.forEach(node=>edits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(edits));},600);});
   }
   init();
