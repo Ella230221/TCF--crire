@@ -1,7 +1,6 @@
 const topicFr = document.getElementById('practiceTopicFr');
 const questionsEditor = document.getElementById('practiceQuestions');
 const referenceHints = document.getElementById('referenceHints');
-const gptEndpoint = document.getElementById('gptEndpoint');
 const practiceCategory = document.getElementById('practiceCategory');
 const practiceCategoryFilter = document.getElementById('practiceCategoryFilter');
 const practiceStorageKey = 'tcf-t2-practice-v1';
@@ -49,7 +48,7 @@ function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&am
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9œæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
 function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
-function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,endpoint:gptEndpoint.value,activePracticeId})); }
+function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,category:practiceCategory.value,activePracticeId})); }
 
 function reviewQuestion(question) {
   const issues = []; let correction = question.trim();
@@ -85,7 +84,7 @@ function localEvaluation() {
   const overall = Math.round(average*.62+Math.min(100,variety*15)*.13+conversationScore*.25);
   lastPracticeScore = overall;
   const flowSuggestions = [!hasGreeting&&'建议加入自然开场',!hasPoliteness&&'可以加入感谢或礼貌表达',!hasReaction&&'回答后加入 Je vois / D’accord 等真实回应',!hasTransition&&'使用 Alors / Ensuite / Et concernant…衔接追问',interactionLines.length<2&&'不要连续只问问题，可穿插解释和回应'].filter(Boolean);
-  referenceHints.innerHTML = `<div class="score-summary"><div class="score-circle">${overall}</div><div class="score-details"><strong>综合对话 ${overall}/100</strong><span>问题 ${average} · 自然互动 ${conversationScore}</span></div></div><div class="question-review ${flowSuggestions.length?'needs-work':'is-good'}"><b>对话自然度</b><p>${flowSuggestions.length?escapePracticeHtml(flowSuggestions.join('；')):'已有开场、礼貌表达、回应和过渡，整体交流比较自然。'}</p></div>${reviews.map((r,i)=>`<div class="question-review ${r.issues.length?'needs-work':'is-good'}"><b>${i+1}. ${escapePracticeHtml(r.question)}</b><p>${r.issues.length?escapePracticeHtml(r.issues.join('；')):'结构基本正确，可继续练习语音和追问。'}</p>${r.correction!==r.question?`<p class="correction">建议：${escapePracticeHtml(r.correction)}</p>`:''}</div>`).join('')}<p class="reference-empty">基础评分同时检查问题和对话结构。GPT 深度评分会进一步分析每句回应与上下文是否自然。</p>`;
+  referenceHints.innerHTML = `<div class="score-summary"><div class="score-circle">${overall}</div><div class="score-details"><strong>综合对话 ${overall}/100</strong><span>问题 ${average} · 自然互动 ${conversationScore}</span></div></div><div class="question-review ${flowSuggestions.length?'needs-work':'is-good'}"><b>对话自然度</b><p>${flowSuggestions.length?escapePracticeHtml(flowSuggestions.join('；')):'已有开场、礼貌表达、回应和过渡，整体交流比较自然。'}</p></div>${reviews.map((r,i)=>`<div class="question-review ${r.issues.length?'needs-work':'is-good'}"><b>${i+1}. ${escapePracticeHtml(r.question)}</b><p>${r.issues.length?escapePracticeHtml(r.issues.join('；')):'结构基本正确，可继续练习语音和追问。'}</p>${r.correction!==r.question?`<p class="correction">建议：${escapePracticeHtml(r.correction)}</p>`:''}</div>`).join('')}<p class="reference-empty">基础评分同时检查问题、语法和对话结构。</p>`;
   saveToPracticeLibrary(true);
 }
 
@@ -144,22 +143,7 @@ function renderSavedPracticeNav(items = practiceLibrary) {
   positionExpressionToggle();
 }
 
-function buildGptPrompt() {
-  return `你是TCF Canada口语Tâche 2法语考官。请根据题目审核考生准备的完整对话，而不只是判断问句。检查：1.问题是否切题；2.每句话语法是否正确；3.开场、解释、回应、过渡和追问是否自然；4.对话是否像真人交流而不是连续审问；5.逐句提供更地道的法语改写；6.给出可继续追问的方向。最后给出100分总分、问题覆盖度、互动自然度和缺失角度。\n\n法语原题：${topicFr.value}\n考生完整对话：\n${getConversationLines().map((line,i)=>`${i+1}. ${line}`).join('\n')}`;
-}
-
-async function gptEvaluation() {
-  const endpoint = gptEndpoint.value.trim();
-  if (!endpoint) { alert('尚未配置安全代理地址。可以先点击“复制给 ChatGPT”，或在代理设置中填写服务端地址。'); return; }
-  const button = document.getElementById('gptEvaluateBtn'); button.disabled=true; button.textContent='GPT 正在评分…';
-  try { const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topicFr:topicFr.value,questions:getQuestions(),conversation:getConversationLines()})}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const data=await response.json(); referenceHints.innerHTML=`<div class="question-review is-good"><b>GPT 深度评分</b><p>${escapePracticeHtml(data.result||data.output||JSON.stringify(data)).replace(/\n/g,'<br>')}</p></div>`; document.getElementById('gptStatus').textContent='GPT 已连接'; saveToPracticeLibrary(true); }
-  catch(error){ alert(`GPT 连接失败：${error.message}。已保留本地评分和复制提示功能。`); }
-  finally { button.disabled=false; button.textContent='✦ GPT 深度评分'; }
-}
-
 document.getElementById('localEvaluateBtn').addEventListener('click',localEvaluation);
-document.getElementById('gptEvaluateBtn').addEventListener('click',gptEvaluation);
-document.getElementById('copyGptPromptBtn').addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(buildGptPrompt()); alert('完整评分提示已复制，可以直接粘贴到 ChatGPT。');}catch(_){prompt('请复制以下内容：',buildGptPrompt());} });
 document.getElementById('savePracticeBtn').addEventListener('click',()=>saveToPracticeLibrary(false));
 document.getElementById('practiceSort').addEventListener('change',renderPracticeLibrary);
 document.getElementById('practiceFilter').addEventListener('input',renderPracticeLibrary);
@@ -170,6 +154,7 @@ topicFr.addEventListener('input',()=>{
   updateQuestionCount();
 });
 topicFr.addEventListener('blur',()=>{if(!activePracticeId)practiceCategory.value=inferCategory(topicFr.value);});
-[questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
+[questionsEditor].forEach(element=>element.addEventListener('input',updateQuestionCount));
+practiceCategory.addEventListener('change',savePractice);
 window.addEventListener('studyannotationchange',()=>{savePractice();if(activePracticeId)saveToPracticeLibrary(true);});
-try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} updateQuestionCount(); loadPracticeLibrary();
+try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');practiceCategory.value=saved.category||inferCategory(saved.fr||'');activePracticeId=saved.activePracticeId||null;}}catch(_){} updateQuestionCount(); loadPracticeLibrary();
