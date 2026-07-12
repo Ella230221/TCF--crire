@@ -2,92 +2,68 @@
   const MAX_QUESTIONS = 500;
   const DB_NAME = 'tcf-t3-editor';
   const STORE_NAME = 'documents';
-  const container = document.getElementById('t3ImportedQuestions');
-  const input = document.getElementById('t3FileInput');
-  const counter = document.getElementById('t3ImportCount');
-  const moduleStorageKey = 'tcf-t3-editable-nodes-v2';
-  if (!container || !input) return;
-  const readyControls=[input,document.getElementById('t3AddQuestion'),document.getElementById('t3SaveImported'),document.getElementById('t3ClearImported')].filter(Boolean);
-  readyControls.forEach(control=>control.disabled=true);
+  const categoryIds = ['categorie-education','categorie-travail','categorie-famille','categorie-sante','categorie-technologie','categorie-societe','categorie-argent','categorie-culture','categorie-mode-vie','categorie-valeurs'];
+  let customQuestions = [];
+  let saveTimer;
 
-  const templatePatterns = [
-    /Si je comprends bien, il s'agit de savoir si/gi,
-    /Il serait intéressant de s'interroger sur les différents aspects de cette question/gi,
-    /Pour ma part, je pense que/gi,
-    /J'aimerais développer trois arguments qui expliquent mon point de vue/gi,
-    /Pour commencer,/gi, /constitue un véritable atout, car/gi, /En effet,/gi,
-    /Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien/gi,
-    /Cela montre que/gi, /Ensuite,/gi, /joue également un rôle essentiel/gi,
-    /Autrement dit,/gi, /Prenons l'exemple de/gi, /Cet exemple prouve que/gi,
-    /Toutefois, j'aimerais ajouter un dernier point concernant/gi,
-    /Même si/gi, /En définitive,/gi,
-    /Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion/gi
-  ];
+  function escapeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function openDb(){return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error('IndexedDB timeout')),1500);const request=indexedDB.open(DB_NAME,2);request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains(STORE_NAME))db.createObjectStore(STORE_NAME);};request.onsuccess=()=>{clearTimeout(timeout);resolve(request.result);};request.onerror=()=>{clearTimeout(timeout);reject(request.error);};request.onblocked=()=>{clearTimeout(timeout);reject(new Error('IndexedDB blocked'));};});}
+  async function persist(){customQuestions=customQuestions.slice(0,MAX_QUESTIONS);try{const db=await openDb();db.transaction(STORE_NAME,'readwrite').objectStore(STORE_NAME).put(customQuestions,'categoryQuestions');}catch(_){localStorage.setItem('tcf-t3-category-questions-v1',JSON.stringify(customQuestions));}}
+  async function restore(){try{const db=await openDb();customQuestions=await new Promise(resolve=>{const request=db.transaction(STORE_NAME).objectStore(STORE_NAME).get('categoryQuestions');request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>resolve([]);});}catch(_){try{customQuestions=JSON.parse(localStorage.getItem('tcf-t3-category-questions-v1'))||[];}catch(_){customQuestions=[];}}}
+  function answerHtml(text){return text.split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>`<p>${escapeHtml(line)}</p>`).join('')||'<p><br></p>';}
+  function recolorTemplates(card){
+    card.querySelectorAll('.template-fragment').forEach(fragment=>fragment.replaceWith(...fragment.childNodes));
+    card.querySelectorAll('.t3-user-answer p').forEach(p=>p.normalize());
+    if(typeof window.colorTemplateFragments==='function')window.colorTemplateFragments();
+  }
+  function updateCategoryCount(categoryId){const bar=document.getElementById(categoryId)?.querySelector('.t3-category-addbar span');if(bar)bar.textContent=`${customQuestions.filter(item=>item.category===categoryId).length} ajoutée(s)`;}
+  function renumberCategory(categoryId){
+    const category=document.getElementById(categoryId);if(!category)return;
+    category.querySelectorAll('.t3-category__questions > .t3-question').forEach((card,index)=>{const number=card.querySelector('.t3-user-number');if(number)number.textContent=`${index+1}. `;else{const summary=card.querySelector(':scope > details > summary');if(summary)summary.textContent=`${index+1}. ${summary.textContent.replace(/^\d+\.\s*/,'')}`;}});updateCategoryCount(categoryId);
+  }
+  function updateSidebar(){
+    categoryIds.forEach(categoryId=>{
+      const navList=document.querySelector(`.nav-category > a[href="#${categoryId}"]`)?.parentElement.querySelector(':scope > ul');if(!navList)return;
+      navList.querySelectorAll('.t3-user-nav').forEach(item=>item.remove());
+      customQuestions.filter(item=>item.category===categoryId).forEach(item=>{const li=document.createElement('li');li.className='t3-user-nav';li.innerHTML=`<a href="#${item.id}">${escapeHtml(item.title)}</a>`;navList.appendChild(li);});
+    });
+  }
+  function saveCard(card){
+    const item=customQuestions.find(entry=>entry.id===card.id);if(!item)return;
+    item.title=card.querySelector('.t3-user-title').innerText.trim()||'Question sans titre';
+    recolorTemplates(card);
+    item.html=card.querySelector('.t3-user-answer').innerHTML;
+    item.text=card.querySelector('.t3-user-answer').innerText.trim();item.updatedAt=Date.now();
+    persist();updateSidebar();renumberCategory(item.category);
+    card.querySelector('.t3-user-save').textContent='Enregistré ✓';setTimeout(()=>{const button=card.querySelector('.t3-user-save');if(button)button.textContent='Enregistrer';},1000);
+  }
+  function makeCard(item){
+    const category=document.getElementById(item.category);const container=category?.querySelector('.t3-category__questions');if(!container)return;
+    container.querySelector('.t3-category__empty')?.remove();
+    const card=document.createElement('section');card.id=item.id;card.className='section t3-question t3-user-question';
+    card.innerHTML=`<details class="t3-details" open><summary><span class="t3-user-number"></span><span class="t3-user-title" contenteditable="true">${escapeHtml(item.title)}</span></summary><div class="t3-user-answer" contenteditable="true" spellcheck="true" lang="fr">${item.html||answerHtml(item.text||'')}</div><div class="t3-user-card-actions"><button class="t3-user-save" type="button">Enregistrer</button><button class="t3-user-delete" type="button">Supprimer</button></div></details>`;
+    card.querySelector('.t3-user-save').addEventListener('click',()=>saveCard(card));
+    card.querySelector('.t3-user-title').addEventListener('click',event=>event.stopPropagation());
+    card.querySelector('.t3-user-delete').addEventListener('click',()=>{if(!confirm('Supprimer cette question ?'))return;customQuestions=customQuestions.filter(entry=>entry.id!==item.id);card.remove();persist();updateSidebar();renumberCategory(item.category);if(!container.querySelector('.t3-question'))container.innerHTML='<p class="t3-category__empty">Aucune question pour le moment</p>';});
+    card.addEventListener('input',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveCard(card),700);});
+    container.appendChild(card);recolorTemplates(card);renumberCategory(item.category);
+  }
+  function openComposer(categoryId){
+    document.querySelectorAll('.t3-question-composer').forEach(form=>form.remove());
+    const category=document.getElementById(categoryId),container=category?.querySelector('.t3-category__questions');if(!container)return;
+    const form=document.createElement('div');form.className='t3-question-composer';
+    form.innerHTML=`<label>Question<input class="t3-compose-title" type="text" lang="fr" placeholder="Saisissez la question…"></label><label>Réponse<textarea class="t3-compose-answer" lang="fr" rows="10" placeholder="Collez ou saisissez la réponse complète…"></textarea></label><div><button class="t3-compose-save" type="button">Ajouter et enregistrer</button><button class="t3-compose-cancel" type="button">Annuler</button></div>`;
+    container.prepend(form);form.querySelector('.t3-compose-title').focus();
+    form.querySelector('.t3-compose-cancel').onclick=()=>form.remove();
+    form.querySelector('.t3-compose-save').onclick=()=>{const title=form.querySelector('.t3-compose-title').value.trim(),text=form.querySelector('.t3-compose-answer').value.trim();if(!title||!text)return alert('Veuillez saisir la question et la réponse.');if(customQuestions.length>=MAX_QUESTIONS)return alert('La limite est de 500 questions.');const item={id:`t3-user-${Date.now()}-${Math.random().toString(16).slice(2)}`,category:categoryId,title,text,html:answerHtml(text),createdAt:Date.now(),updatedAt:Date.now()};customQuestions.push(item);form.remove();makeCard(item);saveCard(document.getElementById(item.id));};
+  }
+  function addCategoryControls(){categoryIds.forEach(categoryId=>{const category=document.getElementById(categoryId);if(!category)return;const details=category.querySelector('.t3-category__details');const bar=document.createElement('div');bar.className='t3-category-addbar';bar.innerHTML=`<button type="button">+ Ajouter une question et une réponse</button><span>${customQuestions.filter(item=>item.category===categoryId).length} ajoutée(s)</span>`;bar.querySelector('button').onclick=()=>openComposer(categoryId);details.insertBefore(bar,category.querySelector('.t3-category__questions'));});}
 
-  function escapeHtml(text) { return text.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function markTemplates(text) {
-    let html = escapeHtml(text);
-    templatePatterns.forEach(pattern => { html = html.replace(pattern, match => `<span class="auto-template">${match}</span>`); });
-    return html.replace(/\n/g, '<br>');
+  async function init(){await restore();addCategoryControls();customQuestions.forEach(makeCard);updateSidebar();
+    const editableNodes=[...document.querySelectorAll('main .section p, main .section li, main .section h3')].filter(node=>!node.closest('.t3-user-question'));
+    const moduleKey='tcf-t3-editable-nodes-v2';editableNodes.forEach((node,index)=>{node.contentEditable='true';node.dataset.editKey=`edit-${index}`;});
+    try{const edits=JSON.parse(localStorage.getItem(moduleKey))||{};editableNodes.forEach(node=>{if(Object.prototype.hasOwnProperty.call(edits,node.dataset.editKey))node.innerHTML=edits[node.dataset.editKey];});}catch(_){}
+    document.querySelector('main').addEventListener('input',event=>{if(event.target.closest('.t3-user-question,.t3-question-composer'))return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{const edits={};editableNodes.forEach(node=>edits[node.dataset.editKey]=node.innerHTML);localStorage.setItem(moduleKey,JSON.stringify(edits));},600);});
   }
-  function plainText(html) { const box=document.createElement('div'); box.innerHTML=html; return box.innerText.trim(); }
-  function makeQuestion(data = {}) {
-    const article = document.createElement('article');
-    article.className = 't3-imported-card';
-    article.dataset.id = data.id || `t3-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-    article.innerHTML = `<div class="t3-card-head"><strong contenteditable="true" data-field="title">${escapeHtml(data.title || 'Nouvelle question')}</strong><button type="button" aria-label="Supprimer">×</button></div><div class="t3-card-editor" contenteditable="true" spellcheck="true" lang="fr">${data.html || markTemplates(data.text || '')}</div>`;
-    article.querySelector('button').addEventListener('click',()=>{ if(confirm('Supprimer cette question ?')) { article.remove(); updateCount(); save(); }});
-    article.addEventListener('input',()=>{ updateCount(); scheduleSave(); });
-    article.addEventListener('paste',()=>setTimeout(()=>{ recolorCard(article); scheduleSave(); },0));
-    container.appendChild(article);
-    return article;
-  }
-  function recolorCard(card) {
-    const editor = card.querySelector('.t3-card-editor');
-    const selection = getSelection();
-    const text = editor.innerText;
-    editor.innerHTML = markTemplates(text);
-    selection?.removeAllRanges();
-  }
-  function parseFile(text, type) {
-    if (type.includes('json')) {
-      try {
-        const json=JSON.parse(text); const rows=Array.isArray(json)?json:(json.questions||[]);
-        return rows.map((row,index)=>typeof row==='string'?{title:`Question ${index+1}`,text:row}:{title:row.title||row.question||`Question ${index+1}`,text:row.text||row.answer||row.content||''});
-      } catch (_) { alert('Le fichier JSON est invalide.'); return []; }
-    }
-    if (type.includes('html')) { const box=document.createElement('div'); box.innerHTML=text; text=box.innerText; }
-    const blocks=text.split(/\n\s*(?:={3,}|-{3,})\s*\n|\n{3,}/).map(v=>v.trim()).filter(Boolean);
-    return blocks.map((block,index)=>{ const lines=block.split('\n'); const first=lines[0].trim(); const title=/\?$/.test(first)||/^(?:question\s*)?\d+[.):-]/i.test(first)?first:`Question ${index+1}`; return {title,text:title===first?lines.slice(1).join('\n').trim():block}; });
-  }
-  function serialize() { return [...container.querySelectorAll('.t3-imported-card')].slice(0,MAX_QUESTIONS).map(card=>({id:card.dataset.id,title:card.querySelector('[data-field="title"]').innerText.trim(),html:card.querySelector('.t3-card-editor').innerHTML,text:card.querySelector('.t3-card-editor').innerText.trim()})); }
-  function updateCount() { counter.textContent=`${container.children.length} / ${MAX_QUESTIONS} questions`; }
-  let timer;
-  function scheduleSave(){ clearTimeout(timer); timer=setTimeout(save,500); }
-  function openDb(){ return new Promise((resolve,reject)=>{ const request=indexedDB.open(DB_NAME,1); request.onupgradeneeded=()=>request.result.createObjectStore(STORE_NAME); request.onsuccess=()=>resolve(request.result); request.onerror=()=>reject(request.error); }); }
-  async function save(){ const data=serialize(); try{const db=await openDb(); const tx=db.transaction(STORE_NAME,'readwrite'); tx.objectStore(STORE_NAME).put(data,'questions');}catch(_){localStorage.setItem('tcf-t3-imported-v1',JSON.stringify(data));} }
-  async function restore(){ let data=[]; try{const db=await openDb(); data=await new Promise(resolve=>{const request=db.transaction(STORE_NAME).objectStore(STORE_NAME).get('questions');request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>resolve([]);});}catch(_){try{data=JSON.parse(localStorage.getItem('tcf-t3-imported-v1'))||[];}catch(_){}} container.innerHTML=''; data.slice(0,MAX_QUESTIONS).forEach(makeQuestion); updateCount();readyControls.forEach(control=>control.disabled=false);window.dispatchEvent(new Event('t3editorready')); }
-
-  input.addEventListener('change',async event=>{ for(const file of [...event.target.files]) { const remaining=MAX_QUESTIONS-container.children.length; if(remaining<=0) break; const rows=parseFile(await file.text(),file.type||file.name.split('.').pop()); rows.slice(0,remaining).forEach(makeQuestion); } updateCount(); await save(); input.value=''; });
-  document.getElementById('t3AddQuestion').addEventListener('click',()=>{ if(container.children.length>=MAX_QUESTIONS)return alert('La limite est de 500 questions.'); makeQuestion(); updateCount(); save(); });
-  document.getElementById('t3SaveImported').addEventListener('click',async()=>{ container.querySelectorAll('.t3-imported-card').forEach(recolorCard); await save(); alert('Les modifications sont enregistrées.'); });
-  document.getElementById('t3ClearImported').addEventListener('click',()=>{ if(confirm('Supprimer toutes les questions importées ?')) { container.innerHTML=''; updateCount(); save(); }});
-
-  const editableNodes=[...document.querySelectorAll('main .section p, main .section li, main .section h3')].filter(node=>!node.closest('.t3-import-panel'));
-  editableNodes.forEach((node,index)=>{node.contentEditable='true';node.dataset.editKey=`edit-${index}`;});
-  try {
-    const edits=JSON.parse(localStorage.getItem(moduleStorageKey))||{};
-    editableNodes.forEach(node=>{if(Object.prototype.hasOwnProperty.call(edits,node.dataset.editKey))node.innerHTML=edits[node.dataset.editKey];});
-  } catch (_) {}
-  let moduleTimer;
-  document.querySelector('main').addEventListener('input',event=>{
-    if(event.target.closest('.t3-import-panel')) return;
-    clearTimeout(moduleTimer);
-    moduleTimer=setTimeout(()=>{
-      const edits={};
-      editableNodes.forEach(node=>{edits[node.dataset.editKey]=node.innerHTML;});
-      try{localStorage.setItem(moduleStorageKey,JSON.stringify(edits));}catch(_){alert("L'espace de stockage du navigateur est plein.");}
-    },600);
-  });
-  restore();
+  init();
 })();

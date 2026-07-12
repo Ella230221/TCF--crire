@@ -1051,3 +1051,16 @@ strong {
 .auto-template { color:#1261d8; font-weight:650; }
 [contenteditable="true"] { caret-color:#2563eb; }
 @media(max-width:700px){#t3ImportCount{width:100%;margin-left:0}.t3-import-actions>*{flex:1 1 auto}}
+
+/* Questions added directly inside each T3 category */
+.t3-category-addbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; background:#f8fbff; border-bottom:1px solid #dbeafe; }
+.t3-category-addbar button { padding:9px 13px; color:#1d4ed8; background:#eff6ff; border:1px solid #93c5fd; border-radius:9px; font-weight:850; }
+.t3-category-addbar span { color:#64748b; font-size:.78rem; font-weight:750; }
+.t3-question-composer { margin:14px; padding:16px; background:#f8fbff; border:1px solid #93c5fd; border-radius:12px; box-shadow:0 8px 20px rgba(37,99,235,.08); }
+.t3-question-composer label { display:grid; gap:7px; margin-bottom:12px; color:#334155; font-weight:800; }
+.t3-question-composer input,.t3-question-composer textarea { width:100%; padding:11px 12px; color:#1e293b; background:#fff; border:1px solid #cbd5e1; border-radius:9px; font:inherit; }
+.t3-question-composer>div { display:flex; gap:9px; }.t3-question-composer button { padding:9px 13px; border:1px solid #bfdbfe; border-radius:8px; color:#1d4ed8; background:#eff6ff; font-weight:800; }
+.t3-user-question { border-left:4px solid #60a5fa!important; }.t3-user-title { outline:none; }.t3-user-answer { padding:14px 16px; color:#111827; outline:none; }
+.t3-user-answer p { color:#111827; }.t3-user-answer .template-fragment { color:#1261d8!important; font-weight:650; }
+.t3-user-card-actions { display:flex; gap:9px; padding:0 16px 14px; }.t3-user-card-actions button { padding:8px 12px; border:1px solid #bfdbfe; border-radius:8px; color:#1d4ed8; background:#eff6ff; font-weight:800; }.t3-user-card-actions .t3-user-delete { color:#b91c1c; background:#fff1f2; border-color:#fecaca; }
+@media(max-width:700px){.t3-category-addbar{align-items:stretch;flex-direction:column}.t3-question-composer>div{flex-direction:column}}

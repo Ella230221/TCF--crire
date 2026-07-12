@@ -25,7 +25,6 @@
       <ul>
         <li class="nav-module"><a href="#modele">Modèle</a></li>
         <li class="nav-module"><a href="#exemples-universels">Exemples universels</a></li>
-        <li class="nav-module"><a href="#import-t3">Mes fichiers et questions</a></li>
         <li class="nav-module nav-module--t3"><a href="#t3-oral">T3—oral</a><button id="t3NavToggle" class="nav-subtoggle" type="button" aria-expanded="true" aria-label="收起 T3—oral 题目">⌄</button>
           <ul class="t3-question-list t3-category-list">
             <li class="nav-category"><a href="#categorie-education">📚 Éducation</a><ul>
@@ -71,20 +70,6 @@
     </nav>
 
     <main class="content">
-      <section id="import-t3" class="section t3-import-panel">
-        <details open>
-          <summary><h2>Mes fichiers et questions</h2></summary>
-          <p class="t3-import-help">Importez un fichier TXT, Markdown, HTML ou JSON. Le contenu reste modifiable et les passages du modèle sont automatiquement affichés en bleu.</p>
-          <div class="t3-import-actions">
-            <label class="t3-file-button">Importer un fichier<input id="t3FileInput" type="file" accept=".txt,.md,.html,.htm,.json,text/plain,text/html,application/json" multiple></label>
-            <button id="t3AddQuestion" type="button">Ajouter une question</button>
-            <button id="t3SaveImported" type="button">Enregistrer</button>
-            <button id="t3ClearImported" type="button">Tout supprimer</button>
-            <span id="t3ImportCount">0 / 500 questions</span>
-          </div>
-          <div id="t3ImportedQuestions" class="t3-imported-questions"></div>
-        </details>
-      </section>
       <section id="modele" class="section collapsible-section">
                 <details open>
           <summary><h2>1. Modèle</h2></summary>
@@ -1585,26 +1570,26 @@
       container.querySelectorAll('.t3-category').forEach(category => category.remove());
 
       const categories = [
-        ['categorie-education', '📚 Éducation', '教育', ['etudes', 'trop-tard', 'education-maison']],
-        ['categorie-travail', '💼 Travail', '工作与职业', ['responsable', 'travailler-etudier', 'salaire']],
-        ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', '家庭与人际关系', ['aides-sociales']],
-        ['categorie-sante', '❤️ Santé et bien-être', '健康与幸福', ['medicaments']],
-        ['categorie-technologie', '💻 Technologie et numérique', '科技与数字生活', ['reseaux-sociaux', 'telephone-ecole']],
-        ['categorie-societe', '🌍 Société et environnement', '社会与环境', ['integration-jeune', 'adaptation']],
-        ['categorie-argent', '💰 Argent et consommation', '金钱与消费', []],
-        ['categorie-culture', '🎭 Culture, loisirs et tourisme', '文化、休闲与旅游', ['livres']],
-        ['categorie-mode-vie', '🏙️ Mode de vie', '生活方式', ['urbain-rural']],
-        ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', '价值观与公民责任', []],
+        ['categorie-education', '📚 Éducation', ['etudes', 'trop-tard', 'education-maison']],
+        ['categorie-travail', '💼 Travail', ['responsable', 'travailler-etudier', 'salaire']],
+        ['categorie-famille', '👨‍👩‍👧‍👦 Famille et relations humaines', ['aides-sociales']],
+        ['categorie-sante', '❤️ Santé et bien-être', ['medicaments']],
+        ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
+        ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation']],
+        ['categorie-argent', '💰 Argent et consommation', []],
+        ['categorie-culture', '🎭 Culture, loisirs et tourisme', ['livres']],
+        ['categorie-mode-vie', '🏙️ Mode de vie', ['urbain-rural']],
+        ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', []],
       ];
 
-      categories.forEach(([id, title, chineseTitle, questionIds]) => {
+      categories.forEach(([id, title, questionIds]) => {
         const category = document.createElement('section');
         category.id = id;
         category.className = 't3-category';
         const categoryDetails = document.createElement('details');
         categoryDetails.className = 't3-category__details';
         categoryDetails.open = true;
-        categoryDetails.innerHTML = `<summary><h3>${title}<span>${chineseTitle}</span></h3></summary>`;
+        categoryDetails.innerHTML = `<summary><h3>${title}</h3></summary>`;
         const categoryQuestions = document.createElement('div');
         categoryQuestions.className = 't3-category__questions';
         questionIds.forEach((questionId, questionIndex) => {
