@@ -55,6 +55,7 @@
             <li class="nav-category"><a href="#categorie-argent">💰 Argent et consommation</a></li>
             <li class="nav-category"><a href="#categorie-culture">🎭 Culture, loisirs et tourisme</a><ul>
               <li><a href="#livres">Les livres sont-ils devenus inutiles aujourd'hui ?</a></li>
+              <li><a href="#tourisme-developpement-pays">Le tourisme favorise-t-il le développement dans tous les pays ?</a></li>
             </ul></li>
             <li class="nav-category"><a href="#categorie-mode-vie">🏙️ Mode de vie</a><ul>
               <li><a href="#urbain-rural">Agréable pour les personnes âgées en milieu urbain ou rural ?</a></li>
@@ -174,6 +175,21 @@
         <p>Toutefois, j'aimerais ajouter un dernier point concernant les livres. Même si les livres offrent de réels avantages, ils ne constituent pas le seul moyen d'apprendre. En effet, les ressources numériques peuvent également être utiles dans certaines situations.</p>
         <p>Prenons le cas de mon fils. Il lit souvent des livres pour l'école, mais il regarde aussi des vidéos pour mieux comprendre certains sujets. On voit donc que les livres et les ressources numériques peuvent se compléter.</p>
         <p>En définitive, il serait réducteur de ne retenir que les aspects positifs ou négatifs de cette question. Il s'agit avant tout d'en tirer le meilleur parti tout en limitant ses éventuels inconvénients.</p>
+        </details>
+      </section>
+
+      <section id="tourisme-developpement-pays" class="section t3-question">
+        <details class="t3-details">
+          <summary>Pensez-vous que le tourisme puisse favoriser le développement dans tous les pays ? Pourquoi ?</summary>
+          <p>Si je comprends bien, il s'agit de savoir si le tourisme peut favoriser le développement dans tous les pays.</p>
+          <p>Il serait intéressant de s'interroger sur les différents aspects de cette question. Bien que le tourisme présente de nombreux avantages, il convient également de prendre en considération d'autres facteurs. J'aimerais développer trois arguments qui expliquent mon point de vue.</p>
+          <p>Pour commencer, le tourisme constitue un véritable atout, car cela permet de créer des emplois et de soutenir les commerces locaux. En effet, cela favorise également le développement économique de certaines régions.</p>
+          <p>Par exemple, j'ai entendu parler d'un sujet abordé dans Quotidien, une émission très connue en France, où l'on indiquait qu'environ 80 % des personnes interrogées considéraient que les activités touristiques représentaient une source importante de revenus pour la population locale. Cela montre que le tourisme peut contribuer au développement économique d'un pays.</p>
+          <p>Ensuite, le tourisme joue également un rôle essentiel dans les échanges culturels. Autrement dit, il contribue à faire découvrir la culture locale, à élargir les horizons et à mieux comprendre les autres.</p>
+          <p>Prenons mon propre exemple. J'aime visiter des musées et participer à des activités organisées dans la communauté. Cela me permet de découvrir la culture locale et de rencontrer des personnes d'horizons variés. Cet exemple prouve que le tourisme peut également favoriser le développement culturel et l'ouverture d'esprit.</p>
+          <p>Toutefois, j'aimerais ajouter un dernier point concernant le tourisme. Même si le tourisme offre de réels avantages, il ne constitue pas le seul facteur à prendre en compte. En effet, le tourisme peut s'avérer particulièrement bénéfique pour les pays qui disposent d'infrastructures adaptées et qui protègent leur environnement.</p>
+          <p>Prenons le cas de certaines régions qui ne disposent pas de transports suffisants ou qui utilisent trop de ressources naturelles pour accueillir les visiteurs. Sans l'action des pouvoirs publics et des entreprises, les résultats peuvent rester limités et l'environnement peut être fragilisé. On voit donc que le tourisme ne favorise pas automatiquement le développement dans tous les pays.</p>
+          <p>En définitive, cette question ne peut être abordée sous un seul angle. Il s'agit avant tout de prendre en considération l'ensemble des facteurs avant de se faire une opinion.</p>
         </details>
       </section>
 
@@ -1515,6 +1531,7 @@
     const annotationStorageKey = 'tcf-t3-oral-annotations-v2';
     const mainContent = document.querySelector('main.content');
     const latestExperienceQuestion = document.getElementById('experience-etranger-reussite')?.cloneNode(true);
+    const latestTourismQuestion = document.getElementById('tourisme-developpement-pays')?.cloneNode(true);
 
     function saveAnnotations() {
       if (!mainContent) return;
@@ -1555,6 +1572,9 @@
       restoredExperienceQuestion.replaceWith(latestExperienceQuestion);
     } else if (latestExperienceQuestion && !restoredExperienceQuestion) {
       document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestExperienceQuestion);
+    }
+    if (latestTourismQuestion && !document.getElementById('tourisme-developpement-pays')) {
+      document.querySelector('#t3-oral .module-child-sections')?.appendChild(latestTourismQuestion);
     }
 
     const updatedPaulExample = Array.from(document.querySelectorAll('#etudes p')).find(paragraph =>
@@ -1606,7 +1626,7 @@
         ['categorie-technologie', '💻 Technologie et numérique', ['reseaux-sociaux', 'telephone-ecole']],
         ['categorie-societe', '🌍 Société et environnement', ['integration-jeune', 'adaptation']],
         ['categorie-argent', '💰 Argent et consommation', []],
-        ['categorie-culture', '🎭 Culture, loisirs et tourisme', ['livres']],
+        ['categorie-culture', '🎭 Culture, loisirs et tourisme', ['livres', 'tourisme-developpement-pays']],
         ['categorie-mode-vie', '🏙️ Mode de vie', ['urbain-rural']],
         ['categorie-valeurs', '⚖️ Valeurs et citoyenneté', []],
       ];
