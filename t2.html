@@ -386,7 +386,7 @@
     <a class="active" href="t2.html">T2 口语</a>
     <a href="index.html">T3 口语</a>
     <a href="writing.html">写作练习</a>
-    <div class="top-study-actions" aria-label="高亮与批注工具"><button id="highlight-yellow" type="button" title="黄色高亮">🟨 <span>高亮</span></button><button id="highlight-green" type="button" title="绿色高亮">🟩 <span>高亮</span></button><button id="annotate" type="button" title="添加批注">✎ <span>批注</span></button><button id="clear-highlights" type="button" title="清除高亮">⌫ <span>高亮</span></button><button id="clear-notes" type="button" title="清除批注">⌫ <span>批注</span></button></div>
+    <div class="top-study-actions" aria-label="Outils de surlignage et d’annotation"><button id="highlight-yellow" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button id="highlight-green" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button id="annotate" type="button" title="Annoter">✎ <span>Annoter</span></button><button data-delete-one type="button" title="Supprimer un seul marquage">⌫ <span>Supprimer</span></button></div><button id="clear-highlights" type="button" hidden></button><button id="clear-notes" type="button" hidden></button>
   </nav>
   <main>
     <aside class="side-nav" aria-label="左侧导航目录">
@@ -442,10 +442,6 @@
             <div class="reference-empty" id="referenceHints">提交评分后，这里会显示：<br>• 总分与切题度<br>• 每个问题的语法检查<br>• 更地道的法语改写<br>• 尚未覆盖的追问角度</div>
           </aside>
         </div>
-        <section class="practice-library">
-          <div class="library-heading"><div><h3>我的真题练习库</h3><p>评分后自动保存，可随时载入继续练习。</p></div></div>
-          <div class="saved-practice-list" id="savedPracticeList"></div>
-        </section>
       </section>
 
       <section id="expression-library" class="expression-library-heading">
@@ -7484,7 +7480,13 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
       });
       const active = document.querySelector(".toc-link.active");
       if (active && window.matchMedia("(min-width: 901px)").matches) {
-        active.scrollIntoView({ block: "nearest" });
+        const nav = document.querySelector(".side-nav");
+        if (nav) {
+          const top = active.offsetTop;
+          const bottom = top + active.offsetHeight;
+          if (top < nav.scrollTop) nav.scrollTop = top - 8;
+          else if (bottom > nav.scrollTop + nav.clientHeight) nav.scrollTop = bottom - nav.clientHeight + 8;
+        }
       }
     }
 
@@ -7683,6 +7685,8 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     }, { passive: true });
     updateActiveNav();
     search.addEventListener("input", filter);
+    window.saveT2Highlights = saveHighlights;
+    window.renderT2Notes = renderNotes;
     document.querySelector("#highlight-yellow").addEventListener("click", () => highlightSelection("yellow"));
     document.querySelector("#highlight-green").addEventListener("click", () => highlightSelection("green"));
     document.querySelector("#annotate").addEventListener("click", annotateSelection);
@@ -7697,5 +7701,6 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
   <script src="t2-practice.js"></script>
   <script src="french-only.js"></script>
   <script src="module-collapse.js"></script>
+  <script src="delete-one.js"></script>
 </body>
 </html>

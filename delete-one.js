@@ -1,0 +1,6 @@
+(() => {
+  const button=document.querySelector('[data-delete-one]');if(!button)return;let active=false;
+  const reset=()=>{active=false;button.classList.remove('is-active');button.innerHTML='⌫ <span>Supprimer</span>';document.body.classList.remove('delete-one-mode');};
+  button.addEventListener('click',()=>{active=!active;button.classList.toggle('is-active',active);button.innerHTML=active?'✕ <span>Cliquez sur le marquage</span>':'⌫ <span>Supprimer</span>';document.body.classList.toggle('delete-one-mode',active);});
+  document.addEventListener('click',event=>{if(!active)return;const mark=event.target.closest('mark.user-highlight,mark.user-highlight-yellow,mark.user-highlight-green,mark.user-note,.annotation.highlight,.annotation.highlight-yellow,.annotation.highlight-green,.annotation.note');if(!mark)return;event.preventDefault();event.stopImmediatePropagation();const noteId=mark.dataset.noteId||mark.dataset.commentId;if(noteId){document.querySelectorAll(`[data-note-id="${noteId}"],[data-comment-id="${noteId}"]`).forEach(node=>{if(node!==mark)node.remove();});}mark.replaceWith(...mark.childNodes);document.querySelector('.questions-editor')?.dispatchEvent(new Event('input',{bubbles:true}));window.saveT2Highlights?.();window.renderT2Notes?.();window.saveT3Annotations?.();window.rebuildT3Comments?.();reset();},true);
+})();

@@ -4,6 +4,8 @@ const referenceHints = document.getElementById('referenceHints');
 const gptEndpoint = document.getElementById('gptEndpoint');
 const practiceStorageKey = 'tcf-t2-practice-v1';
 const practiceLibraryKey = 'tcf-t2-practice-library-v1';
+const practiceDbName = 'tcf-t2-practice-database';
+const practiceDbStore = 'library';
 const maxPracticeLibrarySize = 500;
 let lastPracticeScore = null;
 let practiceLibrary = [];
@@ -37,7 +39,7 @@ function getInteractionLines() { return getConversationLines().filter(line => !/
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9œæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
-function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
+function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(activePracticeId){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
 function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,endpoint:gptEndpoint.value,activePracticeId})); }
 
 function reviewQuestion(question) {
@@ -82,13 +84,15 @@ function practiceTitle() {
   return (topicFr.value.trim() || '未命名真题').split(/\n/)[0].slice(0,70);
 }
 
-function persistPracticeLibrary() { localStorage.setItem(practiceLibraryKey, JSON.stringify(practiceLibrary)); }
+function openPracticeDb(){return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error('IndexedDB timeout')),1500);const request=indexedDB.open(practiceDbName,1);request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(practiceDbStore))request.result.createObjectStore(practiceDbStore);};request.onsuccess=()=>{clearTimeout(timeout);resolve(request.result);};request.onerror=()=>{clearTimeout(timeout);reject(request.error);};request.onblocked=()=>{clearTimeout(timeout);reject(new Error('IndexedDB blocked'));};});}
+async function persistPracticeLibrary() { try{const db=await openPracticeDb();db.transaction(practiceDbStore,'readwrite').objectStore(practiceDbStore).put(practiceLibrary,'practices');}catch(_){} try{localStorage.setItem(practiceLibraryKey, JSON.stringify(practiceLibrary));}catch(_){} }
+async function loadPracticeLibrary(){let local=[];try{local=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){}let stored=[];try{const db=await openPracticeDb();stored=await new Promise(resolve=>{const request=db.transaction(practiceDbStore).objectStore(practiceDbStore).get('practices');request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>resolve([]);});}catch(_){}practiceLibrary=stored.length?stored:local;if(!stored.length&&local.length)persistPracticeLibrary();if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null;renderPracticeLibrary();}
 
 function saveToPracticeLibrary(automatic = false) {
   if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
   const signature = normalizePractice(topicFr.value);
   const existing = practiceLibrary.find(item => item.signature === signature);
-  const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
+  const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, completed:Boolean(getDialogueText()), score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
   if (existing) practiceLibrary[practiceLibrary.indexOf(existing)] = data; else practiceLibrary.push(data);
   if (practiceLibrary.length > maxPracticeLibrarySize) {
     practiceLibrary = practiceLibrary.sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,maxPracticeLibrarySize);
@@ -99,19 +103,10 @@ function saveToPracticeLibrary(automatic = false) {
 }
 
 function renderPracticeLibrary() {
-  const container = document.getElementById('savedPracticeList');
   const mode = document.getElementById('practiceSort').value;
   const query = normalizePractice(document.getElementById('practiceFilter').value || '');
   const items = practiceLibrary.filter(item=>!query||normalizePractice(`${item.title} ${item.fr}`).includes(query)).sort((a,b) => mode === 'oldest' ? a.createdAt-b.createdAt : mode === 'title' ? a.title.localeCompare(b.title,'fr') : mode === 'score' ? (b.score??-1)-(a.score??-1) : mode === 'favorite' ? Number(b.favorite)-Number(a.favorite)||b.updatedAt-a.updatedAt : b.updatedAt-a.updatedAt);
   renderSavedPracticeNav(items);
-  if (!items.length) { container.innerHTML = '<div class="library-empty">还没有保存的真题。完成第一次评分后会自动出现在这里。</div>'; return; }
-  container.innerHTML = items.map((item,index) => `<article class="saved-practice-card ${item.favorite?'is-favorite':''}" data-id="${item.id}"><div class="saved-card-top"><h4><span class="practice-index">${index+1}.</span> ${escapePracticeHtml(item.title)}</h4><button class="favorite-button" type="button" title="收藏">★</button></div><p>${new Date(item.updatedAt).toLocaleString('zh-CN')} · ${item.questions.split(/\n+/).filter(Boolean).length} 句对话</p>${item.score==null?'':`<span class="saved-score">${item.score} 分</span>`}<div class="saved-card-actions"><button class="load-practice" type="button">载入练习</button><button class="delete-practice" type="button">删除</button></div></article>`).join('');
-  container.querySelectorAll('.saved-practice-card').forEach(card => {
-    const item = practiceLibrary.find(entry => entry.id === card.dataset.id);
-    card.querySelector('.load-practice').addEventListener('click', () => loadSavedPractice(item));
-    card.querySelector('.favorite-button').addEventListener('click', () => { item.favorite=!item.favorite; persistPracticeLibrary(); renderPracticeLibrary(); });
-    card.querySelector('.delete-practice').addEventListener('click', () => { if(confirm('确定删除这条真题练习吗？')) { practiceLibrary=practiceLibrary.filter(entry=>entry.id!==item.id); if(activePracticeId===item.id) activePracticeId=null; persistPracticeLibrary(); savePractice(); renderPracticeLibrary(); } });
-  });
 }
 
 function loadSavedPractice(item) {
@@ -127,13 +122,11 @@ function renderSavedPracticeNav(items = practiceLibrary) {
   const nav = document.getElementById('savedPracticeNav');
   nav.hidden = !items.length;
   if (!items.length) { nav.innerHTML = ''; positionExpressionToggle(); return; }
-  nav.innerHTML = `<div class="saved-practice-nav-title">已保存真题</div>${items.map((item,index) => `<button type="button" data-id="${item.id}" class="${item.favorite?'is-favorite':''}" title="${escapePracticeHtml(item.title)}"><b>${index+1}.</b> ${escapePracticeHtml(item.title)}${item.score==null?'':` <small>${item.score}</small>`}</button>`).join('')}`;
-  nav.querySelectorAll('button[data-id]').forEach(button => {
-    button.addEventListener('click', () => {
-      const item = practiceLibrary.find(entry => entry.id === button.dataset.id);
-      if (item) loadSavedPractice(item);
-    });
+  nav.innerHTML = `<div class="saved-practice-nav-title">已保存真题</div>${items.map((item,index) => `<div class="saved-practice-nav-item ${item.completed||item.questions?.trim()?'is-completed':''}"><button type="button" data-id="${item.id}" class="open-saved-practice ${item.favorite?'is-favorite':''}" title="${escapePracticeHtml(item.title)}"><b>${index+1}.</b> <span>${escapePracticeHtml(item.title)}</span>${item.completed||item.questions?.trim()?'<i>✓</i>':''}${item.score==null?'':` <small>${item.score}</small>`}</button><button type="button" class="delete-saved-practice" data-delete-id="${item.id}" title="Supprimer">×</button></div>`).join('')}`;
+  nav.querySelectorAll('.open-saved-practice').forEach(button => {
+    button.addEventListener('click', () => { const item = practiceLibrary.find(entry => entry.id === button.dataset.id); if (item) loadSavedPractice(item); });
   });
+  nav.querySelectorAll('.delete-saved-practice').forEach(button=>button.addEventListener('click',()=>{if(!confirm('Supprimer ce sujet enregistré ?'))return;practiceLibrary=practiceLibrary.filter(item=>item.id!==button.dataset.deleteId);if(activePracticeId===button.dataset.deleteId)activePracticeId=null;persistPracticeLibrary();savePractice();renderPracticeLibrary();}));
   positionExpressionToggle();
 }
 
@@ -163,4 +156,4 @@ topicFr.addEventListener('input',()=>{
 });
 [questionsEditor,gptEndpoint].forEach(element=>element.addEventListener('input',updateQuestionCount));
 window.addEventListener('studyannotationchange',()=>{savePractice();if(activePracticeId)saveToPracticeLibrary(true);});
-try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} try{practiceLibrary=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){practiceLibrary=[];} if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null; updateQuestionCount(); renderPracticeLibrary();
+try{const saved=JSON.parse(localStorage.getItem(practiceStorageKey));if(saved){topicFr.value=saved.fr||'';questionsEditor.innerHTML=saved.dialogueHtml||escapePracticeHtml(saved.questions||'').replace(/\n/g,'<br>');gptEndpoint.value=saved.endpoint||'';activePracticeId=saved.activePracticeId||null;}}catch(_){} updateQuestionCount(); loadPracticeLibrary();

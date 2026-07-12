@@ -13,7 +13,7 @@
     <a href="t2.html">T2 Expression orale</a>
     <a class="active" href="index.html">T3 Expression orale</a>
     <a href="writing.html">Expression écrite</a>
-    <div class="top-study-actions" aria-label="Outils de surlignage et d'annotation"><button id="highlightYellowBtn" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button id="highlightGreenBtn" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button id="noteBtn" type="button" title="Annoter">✎ <span>Annoter</span></button><button id="clearHighlightsBtn" type="button" title="Effacer les surlignages">⌫ <span>Surlignage</span></button><button id="clearNotesBtn" type="button" title="Effacer les annotations">⌫ <span>Annotation</span></button></div>
+    <div class="top-study-actions" aria-label="Outils de surlignage et d'annotation"><button id="highlightYellowBtn" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button id="highlightGreenBtn" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button id="noteBtn" type="button" title="Annoter">✎ <span>Annoter</span></button><button data-delete-one type="button" title="Supprimer un seul marquage">⌫ <span>Supprimer</span></button></div><button id="clearHighlightsBtn" type="button" hidden></button><button id="clearNotesBtn" type="button" hidden></button>
   </nav>
   <div class="layout">
     <nav class="sidebar" id="sidebarNav">
@@ -1878,6 +1878,8 @@
       window.addEventListener('scroll', updateConnector, { passive: true });
     }
 
+    window.saveT3Annotations = saveAnnotations;
+    window.rebuildT3Comments = rebuildCommentsList;
     if (highlightYellowBtn) {
       highlightYellowBtn.addEventListener('click', () => wrapSelection('highlight highlight-yellow'));
     }
@@ -1948,5 +1950,6 @@
   <script src="t3-editor.js"></script>
   <script src="french-only.js"></script>
   <script src="module-collapse.js"></script>
+  <script src="delete-one.js"></script>
 </body>
 </html>

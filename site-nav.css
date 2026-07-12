@@ -86,6 +86,7 @@ body { color: var(--studio-ink); background: var(--studio-paper); }
 .top-study-actions button:nth-child(1) { background:#fffceb; border-color:#fde68a; }
 .top-study-actions button:nth-child(2) { background:#f0fdf4; border-color:#bbf7d0; }
 .top-study-actions button:nth-child(3) { background:#fff7ed; border-color:#fed7aa; }
+.top-study-actions button.is-active { color:#fff!important; background:#dc2626!important; border-color:#dc2626!important; box-shadow:0 5px 14px rgba(220,38,38,.24); }.delete-one-mode mark,.delete-one-mode .annotation { cursor:crosshair!important; outline:2px dashed #dc2626; }
 
 .site-switcher a {
   display: inline-flex !important;

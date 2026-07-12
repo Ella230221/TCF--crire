@@ -10,7 +10,7 @@
   const tools = document.createElement('div');
   tools.className = 'top-study-actions';
   tools.setAttribute('aria-label','高亮与批注工具');
-  tools.innerHTML = `<button class="yellow" data-action="yellow" type="button" title="黄色高亮">🟨 <span>高亮</span></button><button class="green" data-action="green" type="button" title="绿色高亮">🟩 <span>高亮</span></button><button data-action="note" type="button" title="插入批注">✎ <span>批注</span></button><button data-action="clear-highlights" type="button" title="清除高亮">⌫ <span>高亮</span></button><button data-action="clear-notes" type="button" title="清除批注">⌫ <span>批注</span></button><div class="study-tools__list" hidden></div>`;
+  tools.innerHTML = `<button class="yellow" data-action="yellow" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button class="green" data-action="green" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button data-action="note" type="button" title="Annoter">✎ <span>Annoter</span></button><button data-action="delete-one" type="button" title="Supprimer un seul marquage">⌫ <span>Supprimer</span></button><div class="study-tools__list" hidden></div>`;
   document.querySelector('.site-switcher')?.appendChild(tools);
   const list = tools.querySelector('.study-tools__list');
 
@@ -89,8 +89,9 @@
   tools.querySelector('[data-action="yellow"]').addEventListener('click', () => annotate('yellow'));
   tools.querySelector('[data-action="green"]').addEventListener('click', () => annotate('green'));
   tools.querySelector('[data-action="note"]').addEventListener('click', () => annotate('note'));
-  tools.querySelector('[data-action="clear-highlights"]').addEventListener('click', () => clearType('highlight'));
-  tools.querySelector('[data-action="clear-notes"]').addEventListener('click', () => clearType('note'));
+  let deleteMode=false;const deleteButton=tools.querySelector('[data-action="delete-one"]');
+  deleteButton.addEventListener('click',()=>{deleteMode=!deleteMode;deleteButton.classList.toggle('is-active',deleteMode);deleteButton.innerHTML=deleteMode?'✕ <span>Cliquez sur le marquage</span>':'⌫ <span>Supprimer</span>';});
+  document.addEventListener('click',event=>{if(!deleteMode)return;const mark=event.target.closest('[data-study-annotation]');if(!mark)return;event.preventDefault();event.stopImmediatePropagation();removeRecord(mark.dataset.studyAnnotation);deleteMode=false;deleteButton.classList.remove('is-active');deleteButton.innerHTML='⌫ <span>Supprimer</span>';},true);
   document.addEventListener('click', event => {
     const mark = event.target.closest('.study-highlight-note');
     if (!mark) return;
