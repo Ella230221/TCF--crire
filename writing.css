@@ -14,7 +14,7 @@ button { cursor: pointer; }
 .site-switcher a:hover, .site-switcher a:focus-visible { color: #fff; background: #334155; }
 .site-switcher a.active { color: #fff; background: #2563eb; }
 
-.writing-app { width: min(1320px, calc(100% - 32px)); margin: 28px auto 64px; }
+.writing-app { width: min(1320px, calc(100% - 32px)); margin: 16px auto 64px; }
 .app-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
 .app-header h1, .result-heading h2 { margin: 3px 0 0; }
 .eyebrow { margin: 0; color: #64748b; font-size: .78rem; font-weight: 800; letter-spacing: .13em; }
