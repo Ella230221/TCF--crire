@@ -44,6 +44,7 @@
     card.innerHTML=`<details class="t3-details" open><summary><span class="t3-user-number"></span><span class="t3-user-title" contenteditable="true">${escapeHtml(item.title)}</span></summary><div class="t3-user-answer" contenteditable="true" spellcheck="true" lang="fr">${item.html||answerHtml(item.text||'')}</div><div class="t3-user-card-actions"><button class="t3-user-save" type="button">Enregistrer</button><button class="t3-user-delete" type="button">Supprimer</button></div></details>`;
     card.querySelector('.t3-user-save').addEventListener('click',()=>saveCard(card));
     card.querySelector('.t3-user-title').addEventListener('click',event=>event.stopPropagation());
+    card.querySelector('.t3-user-answer').addEventListener('focusout',()=>saveCard(card));
     card.querySelector('.t3-user-delete').addEventListener('click',()=>{if(!confirm('Supprimer cette question ?'))return;customQuestions=customQuestions.filter(entry=>entry.id!==item.id);card.remove();persist();updateSidebar();renumberCategory(item.category);if(!container.querySelector('.t3-question'))container.innerHTML='<p class="t3-category__empty">Aucune question pour le moment</p>';});
     card.addEventListener('input',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveCard(card),700);});
     container.appendChild(card);recolorTemplates(card);renumberCategory(item.category);

@@ -1399,11 +1399,14 @@
       ].sort((a, b) => b.length - a.length);
 
       const questionParagraphs = document.querySelectorAll(
-        '#t3-oral .t3-question p'
+        '#t3-oral .t3-question p, #t3-oral .t3-user-answer'
       );
+
+      const comparable = value => value.toLocaleLowerCase('fr').replace(/[’‘]/g, "'");
 
       function wrapTextNode(textNode) {
         const text = textNode.nodeValue;
+        const comparableText = comparable(text);
         let index = 0;
         const fragment = document.createDocumentFragment();
 
@@ -1412,7 +1415,7 @@
           let nextPosition = text.length;
 
           for (const pattern of templateFragments) {
-            const position = text.indexOf(pattern, index);
+            const position = comparableText.indexOf(comparable(pattern), index);
             if (position !== -1 && position < nextPosition) {
               nextPosition = position;
               nextMatch = pattern;
@@ -1457,6 +1460,8 @@
         nodes.forEach(wrapTextNode);
       });
     }
+
+    window.colorTemplateFragments = colorTemplateFragments;
 
     colorTemplateFragments();
 
