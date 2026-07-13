@@ -957,6 +957,18 @@ strong {
   }
 }
 
+@media (max-width: 1024px) {
+  .sidebar {
+    max-height: 52vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .sidebar .t3-category-list .nav-category > ul a {
+    text-wrap: pretty;
+  }
+}
+
 
 /* T3 navigation subgroup collapse */
 .nav-module--t3 {

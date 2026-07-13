@@ -72,8 +72,8 @@ function insertAtCursor(text) {
 function updateStatus() {
   const count = getWords(writingText()).length;
   const [minimum, maximum] = taskRanges[currentTask];
-  wordCount.textContent = `${count} 词`;
-  wordRequirement.textContent = `（Tâche ${currentTask} 参考：${minimum}–${maximum} 词，不限输入）`;
+  wordCount.textContent = `${count} mots`;
+  wordRequirement.textContent = `(Tâche ${currentTask} : repère ${minimum}–${maximum} mots, saisie libre)`;
   wordCount.style.color = count >= minimum && count <= maximum ? '#16a34a' : '#f04400';
 }
 
@@ -84,8 +84,8 @@ function saveDraft(showConfirmation = false) {
     currentTask,
     activeWritingIds
   }));
-  saveStatus.textContent = showConfirmation ? '已保存' : '草稿已自动保存';
-  if (showConfirmation) setTimeout(() => { saveStatus.textContent = '草稿已自动保存'; }, 1300);
+  saveStatus.textContent = showConfirmation ? 'Enregistré' : 'Brouillon enregistré automatiquement';
+  if (showConfirmation) setTimeout(() => { saveStatus.textContent = 'Brouillon enregistré automatiquement'; }, 1300);
 }
 
 function restoreDraft() {
@@ -181,7 +181,7 @@ function submitWriting() {
 
 function saveWritingToLibrary(showConfirmation=true){
   const text=writingText();
-  if(!text){if(showConfirmation)alert('请先输入写作内容。');return;}
+  if(!text){if(showConfirmation)alert('Veuillez d’abord saisir votre texte.');return;}
   const activeId=activeWritingIds[currentTask];
   const existing=writingLibrary.find(item=>item.id===activeId);
   const title=writingTitle.value.trim()||`Tâche ${currentTask} — ${text.slice(0,36)}`;
@@ -190,7 +190,7 @@ function saveWritingToLibrary(showConfirmation=true){
   writingLibrary=writingLibrary.sort((a,b)=>b.updatedAt-a.updatedAt).slice(0,maxWritingLibrarySize);
   activeWritingIds[currentTask]=data.id;writingTitle.value=title;
   localStorage.setItem(writingLibraryKey,JSON.stringify(writingLibrary));saveDraft();renderWritingLibrary();
-  if(showConfirmation)alert('已保存到写作练习库。');
+  if(showConfirmation)alert('Le texte a été enregistré dans votre bibliothèque.');
 }
 
 function loadWriting(item){
@@ -203,16 +203,16 @@ function loadWriting(item){
 function renderWritingLibrary(){
   const list=document.getElementById('savedWritingList');const mode=document.getElementById('writingSort').value;
   const items=[...writingLibrary].sort((a,b)=>mode==='oldest'?a.createdAt-b.createdAt:mode==='task'?Number(a.task)-Number(b.task)||b.updatedAt-a.updatedAt:mode==='title'?a.title.localeCompare(b.title,'zh'):b.updatedAt-a.updatedAt);
-  if(!items.length){list.innerHTML='<div class="writing-library-empty">还没有保存的写作练习。</div>';return;}
-  list.innerHTML=items.map((item,index)=>`<article class="saved-writing-card" data-id="${item.id}"><h3>${index+1}. ${escapeHtml(item.title)}</h3><p>Tâche ${item.task} · ${item.wordCount} 词 · ${new Date(item.updatedAt).toLocaleString('zh-CN')}</p><div class="saved-writing-preview">${escapeHtml(item.text)}</div><div class="saved-writing-actions"><button class="load-writing" type="button">载入继续编辑</button><button class="delete-writing" type="button">删除</button></div></article>`).join('');
-  list.querySelectorAll('.saved-writing-card').forEach(card=>{const item=writingLibrary.find(entry=>entry.id===card.dataset.id);card.querySelector('.load-writing').onclick=()=>loadWriting(item);card.querySelector('.delete-writing').onclick=()=>{if(confirm('确定删除这篇写作吗？')){writingLibrary=writingLibrary.filter(entry=>entry.id!==item.id);if(activeWritingIds[item.task]===item.id)activeWritingIds[item.task]=null;localStorage.setItem(writingLibraryKey,JSON.stringify(writingLibrary));saveDraft();renderWritingLibrary();}};});
+  if(!items.length){list.innerHTML='<div class="writing-library-empty">Aucun texte enregistré pour le moment.</div>';return;}
+  list.innerHTML=items.map((item,index)=>`<article class="saved-writing-card" data-id="${item.id}"><h3>${index+1}. ${escapeHtml(item.title)}</h3><p>Tâche ${item.task} · ${item.wordCount} mots · ${new Date(item.updatedAt).toLocaleString('fr-CA')}</p><div class="saved-writing-preview">${escapeHtml(item.text)}</div><div class="saved-writing-actions"><button class="load-writing" type="button">Ouvrir et modifier</button><button class="delete-writing" type="button">Supprimer</button></div></article>`).join('');
+  list.querySelectorAll('.saved-writing-card').forEach(card=>{const item=writingLibrary.find(entry=>entry.id===card.dataset.id);card.querySelector('.load-writing').onclick=()=>loadWriting(item);card.querySelector('.delete-writing').onclick=()=>{if(confirm('Supprimer définitivement ce texte ?')){writingLibrary=writingLibrary.filter(entry=>entry.id!==item.id);if(activeWritingIds[item.task]===item.id)activeWritingIds[item.task]=null;localStorage.setItem(writingLibraryKey,JSON.stringify(writingLibrary));saveDraft();renderWritingLibrary();}};});
 }
 
 practiceTab.addEventListener('click', () => switchTab('practice'));
 templateTab.addEventListener('click', () => switchTab('template'));
 document.getElementById('caseToggle').addEventListener('click', event => {
   uppercase = !uppercase;
-  event.currentTarget.textContent = uppercase ? '大写' : '小写';
+  event.currentTarget.textContent = uppercase ? 'Majuscules' : 'Minuscules';
   renderCharacters();
 });
 

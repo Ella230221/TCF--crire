@@ -13,6 +13,7 @@ let practiceLibrary = [];
 let activePracticeId = null;
 let autoUpdateTimer = null;
 let loadingSavedPractice = false;
+let libraryReady = false;
 let openPracticeCategories=new Set();try{openPracticeCategories=new Set(JSON.parse(localStorage.getItem('tcf-t2-open-categories'))||[]);}catch(_){}
 const t2Categories = [
   ['formation','🎓 Formation / Éducation'],['logement','🏠 Logement'],['voyage','✈️ Voyage / Tourisme'],['restaurant','🍽️ Restaurant / Alimentation'],['sport','⚽ Sport / Loisirs'],['sante','❤️ Santé'],['travail','💼 Travail / Emploi'],['banque','🏦 Banque / Assurance'],['administration','🏛️ Services administratifs'],['commerce','🛒 Commerce / Achat'],['animaux','🐾 Animaux'],['evenement','🎉 Événement'],['famille','👨‍👩‍👧 Enfants / Famille'],['quartier','🏘️ Quartier / Vie quotidienne'],['culture','🎭 Culture']
@@ -33,7 +34,7 @@ expressionToggle?.addEventListener('click', () => {
   const collapsed = expressionGroup.classList.toggle('is-collapsed');
   expressionToggle.textContent = collapsed ? '›' : '⌄';
   expressionToggle.setAttribute('aria-expanded', String(!collapsed));
-  expressionToggle.setAttribute('aria-label', collapsed ? '展开表达积累栏目' : '收起表达积累栏目');
+  expressionToggle.setAttribute('aria-label', collapsed ? 'Afficher les expressions utiles' : 'Masquer les expressions utiles');
 });
 
 function positionExpressionToggle() {
@@ -48,7 +49,7 @@ function getInteractionLines() { return getConversationLines().filter(line => !/
 function escapePracticeHtml(text) { return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function normalizePractice(text) { return text.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9œæ' ]/g,' ').replace(/\s+/g,' ').trim(); }
 
-function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} 个问题 · ${getInteractionLines().length} 句互动表达`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(activePracticeId&&!loadingSavedPractice){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
+function updateQuestionCount() { document.getElementById('practiceQuestionCount').textContent = `${getQuestions().length} questions · ${getInteractionLines().length} phrases d’interaction`; document.querySelector('.practice-form')?.classList.toggle('has-answer',Boolean(getDialogueText())); savePractice(); if(libraryReady&&activePracticeId&&!loadingSavedPractice){clearTimeout(autoUpdateTimer);autoUpdateTimer=setTimeout(()=>saveToPracticeLibrary(true),450);} }
 function savePractice() { localStorage.setItem(practiceStorageKey,JSON.stringify({fr:topicFr.value,questions:getDialogueText(),dialogueHtml:questionsEditor.innerHTML,category:practiceCategory.value,activePracticeId})); }
 
 function reviewQuestion(question) {
@@ -90,15 +91,16 @@ function localEvaluation() {
 }
 
 function practiceTitle() {
-  return (topicFr.value.trim() || '未命名真题').split(/\n/)[0].slice(0,70);
+  return (topicFr.value.trim() || 'Sujet sans titre').split(/\n/)[0].slice(0,70);
 }
 
 function openPracticeDb(){return new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error('IndexedDB timeout')),1500);const request=indexedDB.open(practiceDbName,1);request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(practiceDbStore))request.result.createObjectStore(practiceDbStore);};request.onsuccess=()=>{clearTimeout(timeout);resolve(request.result);};request.onerror=()=>{clearTimeout(timeout);reject(request.error);};request.onblocked=()=>{clearTimeout(timeout);reject(new Error('IndexedDB blocked'));};});}
 async function persistPracticeLibrary() { try{const db=await openPracticeDb();db.transaction(practiceDbStore,'readwrite').objectStore(practiceDbStore).put(practiceLibrary,'practices');}catch(_){} try{localStorage.setItem(practiceLibraryKey, JSON.stringify(practiceLibrary));}catch(_){} }
-async function loadPracticeLibrary(){let local=[];try{local=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){}let stored=[];try{const db=await openPracticeDb();stored=await new Promise(resolve=>{const request=db.transaction(practiceDbStore).objectStore(practiceDbStore).get('practices');request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>resolve([]);});}catch(_){}practiceLibrary=stored.length?stored:local;if(!stored.length&&local.length)persistPracticeLibrary();if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null;renderPracticeLibrary();}
+function mergePracticeLibraries(...libraries){const merged=new Map();libraries.flat().filter(item=>item&&item.id).forEach(item=>{const key=item.id||item.signature||normalizePractice(item.fr||item.title||'');const current=merged.get(key);if(!current){merged.set(key,item);return;}const newer=(item.updatedAt||0)>=(current.updatedAt||0)?item:current;const older=newer===item?current:item;merged.set(key,{...older,...newer,questions:newer.questions||older.questions||'',dialogueHtml:newer.dialogueHtml||older.dialogueHtml||'',category:newer.category||older.category||inferCategory(newer.fr||older.fr||'')});});const bySignature=new Map();[...merged.values()].forEach(item=>{const signature=item.signature||normalizePractice(item.fr||item.title||'');const current=bySignature.get(signature);if(!current||(item.updatedAt||0)>(current.updatedAt||0))bySignature.set(signature,item);});return[...bySignature.values()].sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).slice(0,maxPracticeLibrarySize);}
+async function loadPracticeLibrary(){let local=[];try{local=JSON.parse(localStorage.getItem(practiceLibraryKey))||[];}catch(_){}let stored=[];try{const db=await openPracticeDb();stored=await new Promise(resolve=>{const request=db.transaction(practiceDbStore).objectStore(practiceDbStore).get('practices');request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>resolve([]);});}catch(_){}practiceLibrary=mergePracticeLibraries(stored,local);practiceLibrary.forEach(item=>{item.signature=item.signature||normalizePractice(item.fr||item.title||'');item.category=t2Categories.some(([id])=>id===item.category)?item.category:inferCategory(item.fr||item.title||'');});if(activePracticeId&&!practiceLibrary.some(item=>item.id===activePracticeId))activePracticeId=null;libraryReady=true;await persistPracticeLibrary();renderPracticeLibrary();}
 
 function saveToPracticeLibrary(automatic = false) {
-  if (!topicFr.value.trim()) { if (!automatic) alert('请先输入题目。'); return; }
+  if (!topicFr.value.trim()) { if (!automatic) alert('Veuillez d’abord saisir le sujet.'); return; }
   const signature = normalizePractice(topicFr.value);
   const existing = practiceLibrary.find(item => item.signature === signature);
   const data = { id: existing?.id || activePracticeId || `practice-${Date.now()}`, signature, title: practiceTitle(), category:practiceCategory.value||existing?.category||inferCategory(topicFr.value), fr: topicFr.value, questions:getDialogueText(), dialogueHtml:questionsEditor.innerHTML, completed:Boolean(getDialogueText()), score: lastPracticeScore, favorite: existing?.favorite || false, updatedAt: Date.now(), createdAt: existing?.createdAt || Date.now() };
@@ -108,7 +110,7 @@ function saveToPracticeLibrary(automatic = false) {
   }
   activePracticeId = data.id;
   persistPracticeLibrary(); renderPracticeLibrary();
-  if (!automatic) alert('真题已保存到练习库。');
+  if (!automatic) alert('Le sujet a été enregistré dans votre bibliothèque.');
 }
 
 function renderPracticeLibrary() {
