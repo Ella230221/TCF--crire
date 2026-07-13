@@ -380,15 +380,15 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="site-nav.css?v=20260712.4">
-  <link rel="stylesheet" href="t2-practice.css?v=20260712.4">
+  <link rel="stylesheet" href="site-nav.css?v=20260712.5">
+  <link rel="stylesheet" href="t2-practice.css?v=20260712.5">
 </head>
 <body>
   <nav class="site-switcher" aria-label="学习页面切换">
-    <a href="t1.html?v=20260712.4">T1 自我介绍</a>
-    <a class="active" href="t2.html?v=20260712.4">T2 口语</a>
-    <a href="index.html?v=20260712.4">T3 口语</a>
-    <a href="writing.html?v=20260712.4">写作练习</a>
+    <a href="t1.html?v=20260712.5">T1 自我介绍</a>
+    <a class="active" href="t2.html?v=20260712.5">T2 口语</a>
+    <a href="index.html?v=20260712.5">T3 口语</a>
+    <a href="writing.html?v=20260712.5">写作练习</a>
     <div class="top-study-actions" aria-label="Outils de surlignage et d’annotation"><button id="highlight-yellow" type="button" title="Surligner en jaune">🟨 <span>Surligner</span></button><button id="highlight-green" type="button" title="Surligner en vert">🟩 <span>Surligner</span></button><button id="annotate" type="button" title="Annoter">✎ <span>Annoter</span></button><button data-delete-one type="button" title="Supprimer un seul marquage">⌫ <span>Supprimer</span></button></div><button id="clear-highlights" type="button" hidden></button><button id="clear-notes" type="button" hidden></button>
   </nav>
   <main>
@@ -7679,6 +7679,44 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     markContentHeadings();
     markQuestionStructure();
 
+    tocLinks.forEach(link => {
+      link.addEventListener("click", event => {
+        const hash = link.getAttribute("href") || "";
+        if (!hash.startsWith("#")) return;
+        const targetId = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        event.preventDefault();
+
+        const majorModule = target.closest(".major-collapsible");
+        if (majorModule?.classList.contains("is-major-collapsed")) {
+          majorModule.querySelector(":scope > .major-collapse-bar button")?.click();
+        }
+        if (target.classList.contains("detail-card")) {
+          setCardCollapsed(target, false);
+          saveCollapsedCards();
+        }
+
+        tocLinks.forEach(item => item.classList.toggle("active", item === link));
+        history.replaceState(null, "", hash);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const top = target.getBoundingClientRect().top + window.scrollY - 118;
+          window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+          updateNoteLines();
+        }));
+
+        if (window.matchMedia("(max-width: 900px)").matches) {
+          document.querySelector(".expression-nav-items")?.classList.add("is-collapsed");
+          const toggle = document.getElementById("expressionNavToggle");
+          if (toggle) {
+            toggle.textContent = "›";
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Afficher les expressions utiles");
+          }
+        }
+      });
+    });
+
     renderNotes();
     window.addEventListener("resize", updateNoteLines);
     window.addEventListener("scroll", () => {
@@ -7700,9 +7738,9 @@ Le lieu est-il facile d'accès ? / Disposez-vous d'un parking ? / Quelle serait 
     });
     document.querySelector("#top").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
   </script>
-  <script src="t2-practice.js?v=20260712.4"></script>
-  <script src="french-only.js?v=20260712.4"></script>
-  <script src="module-collapse.js?v=20260712.4"></script>
-  <script src="delete-one.js?v=20260712.4"></script>
+  <script src="t2-practice.js?v=20260712.5"></script>
+  <script src="french-only.js?v=20260712.5"></script>
+  <script src="module-collapse.js?v=20260712.5"></script>
+  <script src="delete-one.js?v=20260712.5"></script>
 </body>
 </html>
